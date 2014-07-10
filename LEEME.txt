@@ -1,0 +1,9 @@
+Repositorio git del proyecto, en caso de cambios editen este archivo
+para agregar notas.
+
+PROYECTOS DE NETBEANS
+------------------------------
+beans_y_daos --> aqui estan los beans y daos (duh)
+                 importen este proyecto para utilizarlo
+
+web_app      --> la aplicacion web
