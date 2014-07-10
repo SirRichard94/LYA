@@ -1,2 +1,3 @@
-/web_app/build
-/beans_y_daos/build
+/web_app/build/
+/beans_y_daos/build/
+*~
