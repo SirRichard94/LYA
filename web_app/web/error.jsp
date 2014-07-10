@@ -17,10 +17,7 @@
 	<%
 		if (exception.getMessage().contains("Acceso denegado")){
 			request.setAttribute("warning", "No tienes acceso, inicie sesion");
-			getServletConfig().
-				getServletContext().
-				getRequestDispatcher("/index.jsp").
-				forward(request, response);
+			response.sendRedirect("index.jsp");
 		}
 	%>
 		<div class="ww">

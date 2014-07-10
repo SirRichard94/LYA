@@ -56,7 +56,7 @@ public class ServletModificarUsuario extends HttpServlet {
 		
 		DaoUsuario dao = new DaoUsuario(con);
 		
-		String redirect = "/modificar_usuario.jsp";
+		String redirect = "modificar_usuario.jsp";
 		String guardar = request.getParameter("guardar");
 		
 		int usuario_id = Integer.parseInt(request.getParameter("u"));
@@ -65,6 +65,8 @@ public class ServletModificarUsuario extends HttpServlet {
 		if (!guardar.equals("true")){
 			
 			request.setAttribute("objetivo", usuario);
+			this.getServletContext().getRequestDispatcher("/"+redirect).forward(request, response);
+			//forward a modificar
 			
 		} else {
 			String nombre = request.getParameter("nombre");
@@ -89,11 +91,10 @@ public class ServletModificarUsuario extends HttpServlet {
 
 			}
 			
-			redirect = "/admin.jsp";
+			redirect = "admin.jsp";
+			String pagina = response.encodeRedirectURL(redirect);
+			response.sendRedirect(pagina);				//redirect a admin
 		}
-		
-		this.getServletContext().getRequestDispatcher(redirect).forward(request, response);
-		
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

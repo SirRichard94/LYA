@@ -33,6 +33,7 @@
 </form>
 
 <script type="text/javascript">
+	
 	$(document).ready(function (){
 		$("#form-usuario").submit(function (){
 			
@@ -43,6 +44,7 @@
 			success: function(data)
 			{
 				$("#alert-usuario").html(data);
+				
 			}
 			});
 			

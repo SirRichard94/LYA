@@ -62,7 +62,7 @@ public class ServletAgregarEjemplares extends HttpServlet {
 		}
 		
 		try (PrintWriter out = response.getWriter()) {
-			out.print("Ha sido insertado");
+			out.print("<div class=\"alert alert-info\"> Ejemplar agregado con exito </div>");
 		}
 	}
 

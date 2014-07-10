@@ -71,9 +71,12 @@ public class ServletEliminarUsuario extends HttpServlet {
 			
 		}
 		
-		this.getServletContext().getRequestDispatcher("/admin.jsp").forward(request, response);
+		//this.getServletContext().getRequestDispatcher("/admin.jsp").forward(request, response);
 		
-		
+		String pagina = response.encodeRedirectURL("admin.jsp");
+		response.sendRedirect(pagina);
+
+
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -7,6 +7,10 @@
 	<li><a data-toggle="tab" role="tab" href="#ejemplar-tab">Ejemplar</a></li>
 </ul>
 
+<div id="alert-libro">
+		
+</div>
+
 <div id="tab-libro-ejemplar-content" class="tab-content">
 	<div id="libro-tab" class="tab-pane active" >
 <form class="form-horizontal">
@@ -70,9 +74,6 @@
 	</div>
 	</fieldset>
 </form>
-	<div id="alert-ejemplar" class="alert alert-info hide">
-		
-	</div>
 </div>
 </div> <!-- tab content -->
 
@@ -87,8 +88,7 @@
 			data: $("#login-form").serialize(), // serializes the form's elements.
 			success: function(data)
 			{
-				$("#alert-ejemplar").removeClass("hide");
-				$("#alert-ejemplar").html(data);
+				$("#alert-libro").html(data);
 			}
 			});
 			

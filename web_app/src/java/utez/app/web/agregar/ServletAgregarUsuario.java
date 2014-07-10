@@ -70,16 +70,21 @@ public class ServletAgregarUsuario extends HttpServlet {
 		String mensaje;
 		if (new DaoUsuario(con).add(usuario)){
 			//request.setAttribute("info", "Usuario agregado con exito");
-			 mensaje = "<div class=\"alert alert-info\"> Usuario agregado con exito</div>";
+			mensaje = "<div class=\"alert alert-info\"> Usuario agregado con exito</div>";
 		} else{
 			//request.setAttribute("warning", "Error al agregar usuario");
-			 mensaje = "<div class=\"alert alert-danger\"> Error al agregar usuario</div>";
+			mensaje = "<div class=\"alert alert-danger\"> Error al agregar usuario</div>";
 		}
 		
 		try (PrintWriter out = response.getWriter()) {
 			out.print(mensaje);
 		}
+
 		//this.getServletContext().getRequestDispatcher("/admin.jsp").forward(request, response);
+		
+		//String pagina = response.encodeRedirectURL("admin.jsp");
+		//response.sendRedirect(pagina);
+
 		
 	}
 
