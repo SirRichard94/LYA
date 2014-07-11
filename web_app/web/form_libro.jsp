@@ -7,7 +7,7 @@
 	<li><a data-toggle="tab" role="tab" href="#ejemplar-tab">Ejemplar</a></li>
 </ul>
 
-<div id="alert-libro">
+<div id="alert-form-libro">
 		
 </div>
 
@@ -43,6 +43,15 @@
 			</select>
 		</div>
 	</div>
+	<div class="form-group">
+		<label class="col-md-4 control-label" for="autores"><small>Autores</small></label>
+		<div class="col-md-8">
+			<select multiple id="autores" name="autores" class="form-control">
+				<option value="1">Option one</option>
+				<option value="2">Option two</option>
+			</select>
+		</div>
+	</div>
 	
 	
 	<div class="form-group">
@@ -56,7 +65,7 @@
 
 <%-- Agregar ejemplares --%>
 <div id = "ejemplar-tab" class="tab-pane" >
-<form id="agregar-ejemplar" class="form-horizontal">
+	<form id="agregar-ejemplar" class="form-horizontal" action="AgregarEjemplares">
 	<fieldset>
 	<legend>Agregar Ejemplares</legend>
 	<div class="form-group">
@@ -70,7 +79,7 @@
 	</div>
 	
 	<div class="form-group">
-		<button class="btn btn-primary pull-right" >Agregar</button>
+		<button type="submit" class="btn btn-primary pull-right">Agregar</button>
 	</div>
 	</fieldset>
 </form>
@@ -81,16 +90,20 @@
 <script type="text/javascript">
 	$(document).ready(function (){
 		$("#agregar-ejemplar").submit(function (){
+			//alert("submit ejemplar");
 			
 			$.ajax({
-			type: "POST",
-			url: "AgregarEjemplares",
-			data: $("#login-form").serialize(), // serializes the form's elements.
-			success: function(data)
+				type: "POST",
+				url: "AgregarEjemplares",
+				data: $("#agregar-ejemplar").serialize(), // serializes the form's elements.
+				success: function(data)
 			{
-				$("#alert-libro").html(data);
+				$("#alert-form-libro").html(data);
+				
 			}
 			});
+			
+			$(this).find("input[type=text], textarea").val("");
 			
 			return false;
 		});
