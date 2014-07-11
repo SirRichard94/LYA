@@ -20,7 +20,9 @@ import utez.app.daos.DaoArea;
 import utez.app.daos.DaoAutor;
 import utez.app.daos.DaoEditorial;
 import utez.app.daos.DaoLibro;
+import utez.app.model.AreaBean;
 import utez.app.model.AutorBean;
+import utez.app.model.EditorialBean;
 import utez.app.model.LibroBean;
 import utez.app.web.eq4.util.DbConnection;
 
@@ -54,23 +56,49 @@ public class ServletBusqueda extends HttpServlet {
 		String categoria = request.getParameter("categoria");
 		
 		
-		//TODO: iterar sub-busquedas
+		
+		try{
 		if (busqueda == null || busqueda.equals("")){
 			lista = daoL.getActive();
 		}
 		else if (categoria.equals("autor")){
-			List<AutorBean> autor = new DaoAutor(con).findByNombre(busqueda);
-			lista = daoL.findByAutor(autor.get(0));
-		} else if(categoria.equals("editorial")){
+			//quitar true para sql
+			List<AutorBean> autor = new DaoAutor(con).findByNombreYApellido(busqueda, true);
 			
-			lista = daoL.findByEditorial(new DaoEditorial(con).findByNombre(busqueda).get(0));
+			for (AutorBean autorBean : autor) {
+				for (LibroBean libro : daoL.findByAutor(autorBean)) {
+					if (!lista.contains(libro)){
+					lista.add(libro);
+					}
+				}
+			}
+			
+		} else if(categoria.equals("editorial")){
+			List<EditorialBean> editorial = new DaoEditorial(con).findByNombre(busqueda);
+			
+			for (EditorialBean bean : editorial) {
+				for (LibroBean libro : daoL.findByEditorial(bean)) {
+					if (!lista.contains(libro)){
+					lista.add(libro);
+					}
+				}
+			}
 		} else if(categoria.equals("titulo")){
 			lista = daoL.findByTitulo(busqueda);
 			
 		} else if(categoria.equals("area")){
-			lista = daoL.findByArea(new DaoArea(con).findByNombre(busqueda).get(0));
+			List<AreaBean> area = new DaoArea(con).findByNombre(busqueda);
+			
+			for (AreaBean bean : area) {
+				for (LibroBean libro : daoL.findByArea(bean)) {
+					if (!lista.contains(libro)){
+					lista.add(libro);
+					}
+				}
+			}
 		}
 		
+		//llenar beans de libro
 		for (LibroBean libroBean : lista) {
 			libroBean.setArea( new DaoArea(con).get(libroBean.getArea().getArea_id()));
 			libroBean.setEditorial(new DaoEditorial(con).get(libroBean.getEditorial().getEditorial_id()));
@@ -78,7 +106,10 @@ public class ServletBusqueda extends HttpServlet {
 			libroBean.setAutores(new DaoAutor(con).findByLibro(libroBean));
 		}
 		
+		}catch(Exception e ){}		
+		
 		request.setAttribute("lista", lista);
+		request.setAttribute("busqueda", busqueda);
 		
 		this.getServletConfig().getServletContext().
                 getRequestDispatcher("/tabla_libros.jsp").

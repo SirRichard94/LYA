@@ -36,8 +36,14 @@
 	  
 	  <% 
 	  List<LibroBean> lista = new ArrayList();
+	  String busqueda = "";
 	  try{
 		  lista = (List) request.getAttribute("lista");
+		  busqueda = (String) request.getAttribute("busqueda");
+		  
+		  if (busqueda == null){
+			  busqueda = "";
+		  }
 	  }catch (NullPointerException e){
 	  }
 	  %>
@@ -52,7 +58,7 @@
 		    <div class="row">
 		    
 		    <div class="col-md-8">
-			    <h1>Resultados de la Busqueda</h1>
+			    <h1>Resultados de la Busqueda '<%=busqueda%>' </h1>
 			    
 			     <table class="table table-striped" id="tabla-libros">
             <thead>

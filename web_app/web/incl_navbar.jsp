@@ -73,7 +73,7 @@
 		<li><a  data-toggle="modal" data-target="#LoginMod" href="#login">inicio Sesion</a></li>
 		 <% } %>
 		
-            <li><a href="busqueda_avanzada.jsp">Busqueda avanzada</a></li>
+            <li><a href="Busqueda">Búsqueda</a></li>
 	    
 	    
           </ul>
