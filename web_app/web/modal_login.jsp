@@ -1,8 +1,5 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-
-
 
 <!-- Modal -->
 
@@ -13,6 +10,10 @@
 				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 				<h4 class="modal-title" id="myModalLabel">Inicio de Sesión</h4>
 			</div>
+			
+			
+			<div id="mensaje-modal"></div>
+			
 			
 <form id="login-form" class="form-horizontal" action="Login" method="POST">			
 			<div class="modal-body">
@@ -53,6 +54,9 @@
 	</div>
 </div>
 
+
+
+
 <script type="text/javascript">
 	$(document).ready(function (){
 		$("#login-form").submit(function (){
@@ -63,8 +67,22 @@
 			data: $("#login-form").serialize(), // serializes the form's elements.
 			success: function(data)
 			{
+				
+				
+				
+				if (data.contains("alert-danger")){
+				//agregar mensaje	
+				$("#mensaje-modal").html(data);	
+				
+				
+				}else{
+				//esconder modal
 				$("#LoginMod").modal('hide');
+				//recargar página
+				
 				location.href = location.pathname;
+				}
+			
 			}
 			});
 			

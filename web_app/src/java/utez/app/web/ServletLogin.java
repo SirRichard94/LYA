@@ -40,7 +40,7 @@ public class ServletLogin extends HttpServlet {
 	 */
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
-		response.setContentType("text/plain");
+		response.setContentType("text/html;charset=UTF-8");
 		
 		
         Connection con = DbConnection.getConnection();
@@ -62,6 +62,9 @@ public class ServletLogin extends HttpServlet {
         HttpSession sesion = request.getSession();
         sesion.setAttribute("login", existe);
         
+	
+	String mensaje = "<div class=\"alert alert-info\">  Sesion iniciada </div>";
+	
         if(existe){
         UsuarioBean usuario = daoUs.findByCorreo(correo);
         boolean admin = usuario.isEs_admi();
@@ -70,12 +73,12 @@ public class ServletLogin extends HttpServlet {
         sesion.setAttribute("usuario", usuario);
         }else{
         
-	request.setAttribute("warning", "Usuario o contraseña incorrectos");
+	mensaje = "<div class=\"alert alert-danger\">  Usuario o contraseña incorrectos </div>";
 		
 	}
 	
 	try (PrintWriter out = response.getWriter()) {
-		out.print("prueva");
+		out.print(mensaje);
 	}
 	
 //	this.getServletConfig().getServletContext().
