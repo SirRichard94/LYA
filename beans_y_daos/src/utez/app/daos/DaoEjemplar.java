@@ -79,8 +79,8 @@ public class DaoEjemplar extends AbstractDao<EjemplarBean>{
 	@Override
 	public boolean update(EjemplarBean bean) {
 		String query = "UPDATE "+TABLA+" SET"
-				+" libro_id = ?,"
-				+" localizacion = ?"
+				+" libro_id = ?"
+				+", localizacion = ?"
 				+" WHERE "+PK+" = ?;";
 		
 		try (PreparedStatement ps = con.prepareStatement(query)) {
@@ -122,17 +122,18 @@ public class DaoEjemplar extends AbstractDao<EjemplarBean>{
 
 	@Override
 	public boolean add(EjemplarBean bean) {
-		String query  = "INSERT INTO "+TABLA+" libro_id, localizacion VALUES (?, ?);";
+		String query  = "INSERT INTO "+TABLA+" (libro_id, localizacion) VALUES (?, ?);";
 		 
 		try(PreparedStatement ps = con.prepareStatement(query)){
 			ps.setInt(1, bean.getLibro().getLibro_id());
 			ps.setString(2, bean.getLocalizacion());
 
-			if (ps.executeUpdate() == 1) {
+			if (ps.executeUpdate() >= 1) {
 				ps.close();
 				return true;
 			}
 			ps.close();
+			
 		} catch (SQLException ex) {
 			Logger.getLogger(DaoAutor.class.getName()).log(Level.SEVERE, null, ex);
 		}

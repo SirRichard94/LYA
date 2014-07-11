@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -164,17 +165,37 @@ public class DaoLibro extends AbstractDao<LibroBean>{
 			+ "VALUES (?, ?, ?, ?, ?);";
 		 
 		try(PreparedStatement ps = con.prepareStatement(query)){
+			
 			ps.setString(1, bean.getNombre());
 			ps.setLong(2, bean.getIsbn());
 			ps.setInt(3, bean.getArea().getArea_id());
 			ps.setInt(4, bean.getEditorial().getEditorial_id());
 			ps.setInt(5, bean.getPaginas());
-
-			if (ps.executeUpdate() == 1) {
+			
+			if (ps.executeUpdate() != 1) {
 				ps.close();
-				return true;
+				return false;
 			}
 			ps.close();
+			
+			//insertar autores
+			if (bean.getAutores() != null){
+				
+				for (AutorBean autor : bean.getAutores()){
+					query = "INSERT INTO AUTOR_DE (autor_id, libro_id)"
+						 + " VALUES (?, ?);";
+					 PreparedStatement statement = con.prepareStatement(query);
+					 statement.setInt(1, autor.getAutor_id());
+					 statement.setInt(2, bean.getLibro_id());
+					 
+					if (statement.executeUpdate() != 1) {
+						return false;
+					}
+					statement.close();
+				}
+			}
+			
+			return true;
 		} catch (SQLException ex) {
 			Logger.getLogger(DaoAutor.class.getName()).log(Level.SEVERE, null, ex);
 		}
@@ -463,7 +484,8 @@ public class DaoLibro extends AbstractDao<LibroBean>{
 		LibroBean libro = null;
 		try {
 			PreparedStatement statement = con.prepareStatement(
-				"SELECT * FROM LIBRO where ISBN="+isbn+";");
+				"SELECT * FROM LIBRO WHERE ISBN=?;");
+			statement.setLong(1, isbn);
 			ResultSet result = statement.executeQuery();
 			
 			if(result.next()){
@@ -485,6 +507,8 @@ public class DaoLibro extends AbstractDao<LibroBean>{
 				libro.setArea(area);
 				
 			}
+			
+			statement.close();
 		} catch (SQLException ex) {
 			Logger.getLogger(DaoArea.class.getName()).log(Level.SEVERE, null, ex);
 		}
