@@ -154,7 +154,7 @@ public class DaoEditorial extends AbstractDao<EditorialBean>{
 		try {
 			
 			PreparedStatement ps = con.prepareStatement(query);
-			ps.setString(1, nombre);
+			ps.setString(1, "%"+nombre+"%");
 			ResultSet result = ps.executeQuery();
 			
 			list = passResultSet(result, list);

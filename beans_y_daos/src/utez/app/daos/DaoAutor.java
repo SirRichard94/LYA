@@ -160,7 +160,7 @@ public class DaoAutor extends AbstractDao<AutorBean>{
 		try {
 			
 			PreparedStatement ps = con.prepareStatement(query);
-			ps.setString(1, nombre);
+			ps.setString(1, "%"+nombre+"%");
 			ResultSet result = ps.executeQuery();
 			
 			list = passResultSet(result, list);
@@ -180,6 +180,40 @@ public class DaoAutor extends AbstractDao<AutorBean>{
 			
 			PreparedStatement ps = con.prepareStatement(query);
 			ps.setString(1, apellido);
+			ResultSet result = ps.executeQuery();
+			
+			list = passResultSet(result, list);
+			ps.close();
+			
+		} catch (SQLException ex) {
+			Logger.getLogger(DaoArea.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		
+		return list;
+	}
+	
+	/**
+	 * UNE NOMBRE Y APELLIDO PARA LA BÚSQUEDA
+	 * 
+	 * 
+	 * @param busqueda
+	 * @param verdadero si se va a utilizar mysql
+	 * @return
+	 */
+	public List<AutorBean> findByNombreYApellido(String busqueda){
+		return findByNombreYApellido(busqueda, false);
+	}
+	public List<AutorBean> findByNombreYApellido(String busqueda, boolean mysql){
+		List<AutorBean> list = new ArrayList<>();
+		
+		String query = "SELECT * FROM "+TABLA+" WHERE (nombre +' '+ apellido) LIKE ?;";
+		if (mysql){
+		 query = ( "SELECT * FROM "+TABLA+" WHERE CONCAT(nombre,' ',apellido) LIKE ?;");
+		}
+		try {
+			
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setString(1, "%"+busqueda+"%");
 			ResultSet result = ps.executeQuery();
 			
 			list = passResultSet(result, list);
