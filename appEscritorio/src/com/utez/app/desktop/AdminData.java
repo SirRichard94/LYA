@@ -7,6 +7,7 @@
 package com.utez.app.desktop;
 
 import Utilerias.ConexionSQLServer;
+import com.utez.app.desktop.controlador.ControlSesion;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -35,7 +36,9 @@ public class AdminData extends javax.swing.JFrame {
          Logger.getLogger(AdminData.class.getName()).log(Level.SEVERE, null, ex);
      }
      
-            
+     if(!ControlSesion.isAdmin()){
+         //cerrar ventana
+     }
     }
 
     /**

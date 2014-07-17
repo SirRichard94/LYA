@@ -24,28 +24,20 @@ import utez.app.model.LibroBean;
  *
  * @author Koffo
  */
-public class Bienvenida extends javax.swing.JFrame {
+public class Bienvenida1 extends javax.swing.JFrame {
     private Connection conexion;
 
     /**
      * Creates new form NewJFrame
      */
-    public Bienvenida() {
+    public Bienvenida1() {
         try {
             conexion=ConexionSQLServer.getConnection();
             
             initComponents();
             this.setLocationRelativeTo(null);
         } catch (SQLException ex) {
-            Logger.getLogger(Bienvenida.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        if(ControlSesion.sesionIniciada()){
-            lblSesion.setText("Cerrar Sesion");
-            lblNombre.setText(ControlSesion.getUsuario().getNombre());
-        }else{
-            lblSesion.setText("Iniciar Sesion");
-            lblNombre.setVisible(false);
+            Logger.getLogger(Bienvenida1.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -70,10 +62,7 @@ public class Bienvenida extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        lblSesion = new javax.swing.JLabel();
-        lblNombre = new javax.swing.JLabel();
+        barraSuperior1 = new com.utez.app.desktop.BarraSuperior();
         jMenuBar1 = new javax.swing.JMenuBar();
 
         jMenu3.setText("File");
@@ -106,67 +95,6 @@ public class Bienvenida extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Narkisim", 1, 48)); // NOI18N
         jLabel3.setText("Aprende");
-
-        jPanel1.setBackground(new java.awt.Color(0, 0, 102));
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("LYA");
-
-        lblSesion.setForeground(new java.awt.Color(255, 255, 255));
-        lblSesion.setText("Inicar Sesion");
-        lblSesion.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblSesionMouseClicked(evt);
-            }
-        });
-        lblSesion.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                lblSesionKeyPressed(evt);
-            }
-        });
-
-        lblNombre.setForeground(new java.awt.Color(255, 255, 255));
-        lblNombre.setText("Nombre");
-        lblNombre.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblNombreMouseClicked(evt);
-            }
-        });
-        lblNombre.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                lblNombreKeyPressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(47, 47, 47)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(lblNombre)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblSesion)))
-                .addContainerGap(52, Short.MAX_VALUE))
-        );
-
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -193,13 +121,13 @@ public class Bienvenida extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(barraSuperior1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(64, 64, 64)
+                .addComponent(barraSuperior1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(61, 61, 61)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -216,23 +144,6 @@ public class Bienvenida extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void lblSesionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lblSesionKeyPressed
-        // TODO add your handling code here:
-        new Login().setVisible(true);
-    }//GEN-LAST:event_lblSesionKeyPressed
-
-    private void lblSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSesionMouseClicked
-        // TODO add your handling code here:
-        if(ControlSesion.sesionIniciada()){
-            ControlSesion.logout();
-            new Bienvenida().setVisible(true);
-            this.dispose();
-        }else{
-        new Login().setVisible(true);
-        this.dispose();
-        }
-    }//GEN-LAST:event_lblSesionMouseClicked
 
     private void btnBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBusquedaActionPerformed
         // TODO add your handling code here:
@@ -264,14 +175,6 @@ public class Bienvenida extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnBusquedaActionPerformed
 
-    private void lblNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNombreMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lblNombreMouseClicked
-
-    private void lblNombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lblNombreKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lblNombreKeyPressed
-
     /**
      * @param args the command line arguments
      */
@@ -289,31 +192,31 @@ public class Bienvenida extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Bienvenida.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Bienvenida1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Bienvenida.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Bienvenida1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Bienvenida.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Bienvenida1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Bienvenida.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Bienvenida1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Bienvenida().setVisible(true);
+                new Bienvenida1().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.utez.app.desktop.BarraSuperior barraSuperior1;
     private javax.swing.JButton btnBusqueda;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
@@ -321,9 +224,6 @@ public class Bienvenida extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuBar jMenuBar3;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel lblNombre;
-    private javax.swing.JLabel lblSesion;
     private javax.swing.JTextField txtBusqueda;
     // End of variables declaration//GEN-END:variables
 }

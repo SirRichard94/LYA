@@ -7,6 +7,7 @@
 package com.utez.app.desktop;
 
 import Utilerias.ConexionSQLServer;
+import com.utez.app.desktop.controlador.ControlSesion;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -21,7 +22,7 @@ import utez.app.daos.DaoUsuario;
 public class Login extends javax.swing.JFrame {
    private Connection conexion;
   private  DaoUsuario daoUsuario;
-    /**
+   /**
      * Creates new form Login
      */
     public Login() {
@@ -171,18 +172,21 @@ public class Login extends javax.swing.JFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
         boolean aunt;
-         aunt=daoUsuario.autenticar(txtCorreo.getText(), txtPass.getText());
+         aunt=ControlSesion.iniciarSesion(txtCorreo.getText(), txtPass.getText());
         if (aunt){
-            if(daoUsuario.findByCorreo(txtCorreo.getText()).isEs_admi()){
+            if(ControlSesion.isAdmin()){
                 new AdminData().setVisible(true); 
             }
             else{
                 new Bienvenida().setVisible(true);
             }
+            
+            this.dispose();
         }else{
             JOptionPane.showMessageDialog(rootPane, "Datos Incorrectos");
         }
             
+        
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void txtCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCorreoActionPerformed
