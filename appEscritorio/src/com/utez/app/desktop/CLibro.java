@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ComboBoxEditor;
+import utez.app.daos.DaoLibro;
 import utez.app.daos.DaoUsuario;
 import utez.app.model.LibroBean;
 import utez.app.model.UsuarioBean;
@@ -293,45 +294,24 @@ public class CLibro extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField3ActionPerformed
 
     private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
-        // TODO add your handling code here:
-         DaoUsuario daoUsuario= new DaoUsuario(conexion);
-         boolean estado;
-         String nombre=jTextField1.getText();
-         String direccion=jTextField2.getText();
-         String correo=jTextField3.getText();
-         String tel=jTextField4.getText();  
-         String pass=jTextField5.getText();
-         ComboBoxEditor admin;
-        admin = jComboBox1.getEditor();
-         if(admin.equals("Admin")){
-            estado=true; 
-         }else{
-             estado=false;
-         }
-         
-        usuarioBean=new UsuarioBean(0, nombre, direccion, tel, correo, 0, pass, rootPaneCheckingEnabled, estado);
-        boolean ex= daoUsuario.add(usuarioBean);
-        if(ex){
-            System.out.println("exito"); 
-        }else{
-            System.out.println("tonto");
-        }
-         
+                 
        
     }//GEN-LAST:event_jButton1KeyPressed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-         DaoUsuario daoUsuario= new DaoUsuario(conexion);
+         DaoLibro daoLibro= new DaoLibro(conexion);
          boolean estado;
-         String isbn=jTextField1.getText();
+         long isbn= Long.parseLong(jTextField1.getText());
          String nombre=jTextField2.getText();
          String editorial=jTextField3.getText();
          String area=jTextField4.getText();  
          String paginas=jTextField5.getText();
         
          
-        libroBean=new LibroBean(0, isbn, nombre, rootPaneCheckingEnabled, editorial, paginas,daoUsuario );
+        libroBean=new LibroBean();
+        
+        
         boolean ex= daoLibro.add(libroBean);
         if(ex){
             System.out.println("exito"); 

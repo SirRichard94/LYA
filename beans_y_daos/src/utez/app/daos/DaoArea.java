@@ -161,7 +161,7 @@ public class DaoArea extends AbstractDao<AreaBean>{
 	 */
 	@Override
 	public boolean add(AreaBean bean) {
-		String query = "INSERT INTO AREA nombre VALUES (?);";
+		String query = "INSERT INTO AREA (nombre) VALUES (?);";
 		
 		try{
 			PreparedStatement ps = con.prepareStatement(query);
