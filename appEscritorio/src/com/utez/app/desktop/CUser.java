@@ -162,7 +162,7 @@ public class CUser extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Admin", "User", " ", " " }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecciona...", "Admin", "User" }));
 
         jLabel10.setText("Tipo");
 
@@ -310,21 +310,20 @@ public class CUser extends javax.swing.JFrame {
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         // TODO add your handling code here:
          DaoUsuario daoUsuario= new DaoUsuario(conexion);
-         boolean estado;
+         boolean esAdmin;
          String nombre=txtNombre.getText();
          String direccion=txtDireccion.getText();
          String correo=txtCorreo.getText();
          String tel=txtTelefono.getText();  
          String pass=txtPass.getText();
-         ComboBoxEditor admin;
-        admin = jComboBox1.getEditor();
-         if(admin.equals("Admin")){
-            estado=true; 
+        
+         if(jComboBox1.getSelectedIndex()==1){
+            esAdmin=true; 
          }else{
-             estado=false;
+             esAdmin=false;
          }
          
-        usuarioBean=new UsuarioBean(0, nombre, direccion, tel, correo, 0, pass, rootPaneCheckingEnabled, estado);
+        usuarioBean=new UsuarioBean(0, nombre, direccion, tel, correo, 0, pass, rootPaneCheckingEnabled, esAdmin);
         boolean ex= daoUsuario.add(usuarioBean);
         JFrame frame = new JFrame("no image");
         ImageIcon image = new ImageIcon("C:\\Users\\Koffo\\Documents\\GitHub\\LYA\\appEscritorio\\imagenes\\circular icons\\yes.png");
@@ -334,10 +333,17 @@ public class CUser extends javax.swing.JFrame {
             registro.setText("Registro guardado ");
             //jLabel6 imagelabel =jLabel6(image);
            imagen.setIcon(image);
+           
+           if(esAdmin){
+            daoUsuario.update(usuarioBean);
+            }
         }else{
              registro.setText("Error al guardar");
              imagen.setIcon(image1);
         }
+        
+        
+        
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

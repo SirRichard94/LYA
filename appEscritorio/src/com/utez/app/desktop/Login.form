@@ -54,8 +54,8 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel1" alignment="0" min="-2" pref="85" max="-2" attributes="0"/>
                       <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="pass" alignment="0" max="32767" attributes="0"/>
-                          <Component id="correo" alignment="0" pref="195" max="32767" attributes="0"/>
+                          <Component id="txtPass" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtCorreo" alignment="0" pref="195" max="32767" attributes="0"/>
                       </Group>
                       <Component id="jLabel2" alignment="0" min="-2" pref="68" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
@@ -80,11 +80,11 @@
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="correo" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtCorreo" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="pass" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtPass" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="btnLogin" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -108,9 +108,9 @@
             <Property name="text" type="java.lang.String" value="Correo:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="correo">
+        <Component class="javax.swing.JTextField" name="txtCorreo">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="correoActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCorreoActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
@@ -143,7 +143,7 @@
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="btnCancelarKeyPressed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JPasswordField" name="pass">
+        <Component class="javax.swing.JPasswordField" name="txtPass">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
