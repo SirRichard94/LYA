@@ -276,6 +276,11 @@ public class AdminData extends javax.swing.JFrame {
 
         jMenuItem26.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\eye.png")); // NOI18N
         jMenuItem26.setText("Consultar");
+        jMenuItem26.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem26ActionPerformed(evt);
+            }
+        });
         jMenu7.add(jMenuItem26);
 
         jMenuItem27.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\clock.png")); // NOI18N
@@ -331,6 +336,11 @@ public class AdminData extends javax.swing.JFrame {
 
         jMenuItem34.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\eye.png")); // NOI18N
         jMenuItem34.setText("Consultar");
+        jMenuItem34.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem34ActionPerformed(evt);
+            }
+        });
         jMenu9.add(jMenuItem34);
 
         jMenuItem35.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\clock.png")); // NOI18N
@@ -410,6 +420,7 @@ public class AdminData extends javax.swing.JFrame {
 
     private void jMenuItem25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem25ActionPerformed
         // TODO add your handling code here:
+        new CEditorial().setVisible(true);
     }//GEN-LAST:event_jMenuItem25ActionPerformed
 
     private void jMenuItem29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem29ActionPerformed
@@ -419,6 +430,7 @@ public class AdminData extends javax.swing.JFrame {
 
     private void jMenuItem33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem33ActionPerformed
         // TODO add your handling code here:
+        new CArea().setVisible(true);
     }//GEN-LAST:event_jMenuItem33ActionPerformed
 
     private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
@@ -430,6 +442,16 @@ public class AdminData extends javax.swing.JFrame {
         // TODO add your handling code here:
         new resultadoEditorial().setVisible(true);
     }//GEN-LAST:event_jMenuItem30ActionPerformed
+
+    private void jMenuItem34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem34ActionPerformed
+        // TODO add your handling code here:
+        new resultadoArea().setVisible(true);
+    }//GEN-LAST:event_jMenuItem34ActionPerformed
+
+    private void jMenuItem26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem26ActionPerformed
+        // TODO add your handling code here:
+        new resultadoEditorial().setVisible(true);
+    }//GEN-LAST:event_jMenuItem26ActionPerformed
 
     /**
      * @param args the command line arguments

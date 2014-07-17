@@ -6,18 +6,38 @@
 
 package com.utez.app.desktop;
 
+import Utilerias.ConexionSQLServer;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import utez.app.daos.DaoLibro;
+import utez.app.model.AreaBean;
+import utez.app.model.AutorBean;
+import utez.app.model.EditorialBean;
+import utez.app.model.LibroBean;
+
 /**
  *
  * @author Koffo
  */
 public class Bienvenida extends javax.swing.JFrame {
+    private Connection conexion;
 
     /**
      * Creates new form NewJFrame
      */
     public Bienvenida() {
-        initComponents();
+        try {
+            conexion=ConexionSQLServer.getConnection();
+            
+            initComponents();
             this.setLocationRelativeTo(null);
+        } catch (SQLException ex) {
+            Logger.getLogger(Bienvenida.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -35,8 +55,8 @@ public class Bienvenida extends javax.swing.JFrame {
         jMenuBar3 = new javax.swing.JMenuBar();
         jMenu5 = new javax.swing.JMenu();
         jMenu6 = new javax.swing.JMenu();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        txtBusqueda = new javax.swing.JTextField();
+        btnBusqueda = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -61,14 +81,14 @@ public class Bienvenida extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Busqueda");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnBusqueda.setText("Busqueda");
+        btnBusqueda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnBusquedaActionPerformed(evt);
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Libro", "Autor", "Editorial", "Area" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione..", "Libro", "Autor", "Editorial", "Area" }));
 
         jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Google Drive\\INTEGRADORA_\\logotipo de pag.png")); // NOI18N
 
@@ -157,11 +177,11 @@ public class Bienvenida extends javax.swing.JFrame {
                 .addGap(18, 18, 18))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addGap(26, 26, 26)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnBusqueda)
+                .addGap(18, 18, 18)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -178,8 +198,8 @@ public class Bienvenida extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 19, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
+                    .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBusqueda)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -206,12 +226,35 @@ public class Bienvenida extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel6KeyPressed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBusquedaActionPerformed
         // TODO add your handling code here:
-        if(jComboBox1.getEditor().equals("Area")){
-            new Login().setVisible(true);
+        DaoLibro daoLibro=new DaoLibro(conexion);
+        List<LibroBean> resultados = new ArrayList<>();
+        if (txtBusqueda.getText().length()==0){
+            resultados = daoLibro.getActive();
+            
+        }else{
+            if(jComboBox1.getSelectedIndex()==1){
+                LibroBean libro=new LibroBean();
+                libro.setNombre(txtBusqueda.getText());
+                resultados= daoLibro.findByTitulo(libro.getNombre());
+            }if(jComboBox1.getSelectedIndex()==2){
+                resultados = daoLibro.findByAutorNombre(txtBusqueda.getText());
+            } if(jComboBox1.getSelectedIndex()==3){
+              EditorialBean editorial = new EditorialBean();
+                editorial.setNombre(txtBusqueda.getText());
+                resultados = daoLibro.findByEditorialNombre(editorial);
+            }if(jComboBox1.getSelectedIndex()==4){
+             AreaBean area = new AreaBean();
+                area.setNombre(txtBusqueda.getText());
+                resultados = daoLibro.findByAreaNombre(area);
+             }
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+        new tablaLibros(resultados).setVisible(true);
+        //enviar a tablaLibros(resultados);
+        // class tabla extends Jframe {  tabla(List resultados) }
+        
+    }//GEN-LAST:event_btnBusquedaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -249,7 +292,7 @@ public class Bienvenida extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnBusqueda;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -265,6 +308,6 @@ public class Bienvenida extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuBar jMenuBar3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField txtBusqueda;
     // End of variables declaration//GEN-END:variables
 }
