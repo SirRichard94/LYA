@@ -56,7 +56,7 @@ public class tablaLibros extends javax.swing.JFrame {
     }
     
     public tablaLibros() {
-        this(new ArrayList<>());
+        this(new ArrayList<LibroBean>());
     }
 
     /**
