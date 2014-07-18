@@ -19,6 +19,7 @@ import utez.app.daos.DaoArea;
 import utez.app.daos.DaoAutor;
 import utez.app.daos.DaoEditorial;
 import utez.app.daos.DaoLibro;
+import utez.app.model.AreaBean;
 import utez.app.model.LibroBean;
 import utez.app.web.eq4.util.DbConnection;
 

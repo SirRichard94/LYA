@@ -61,9 +61,9 @@
 		  
 		 <% if (login){
 		 %>
-		 <li class="navbar-text" ><p>Bienvenido <%=usuario.getNombre() %></p></li>
+		 <li class="navbar-text" ><p><%=usuario.getNombre() %></p></li>
 			<% if ( admin ){ %>
-		<li><a href="admin.jsp">Admin</a></li>
+		<li><a href="admin.jsp">Administrador</a></li>
 			<% } else { %>
 				
 		<li><a href="perfil.jsp">Perfil</a></li>

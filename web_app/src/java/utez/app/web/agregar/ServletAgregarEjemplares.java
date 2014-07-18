@@ -51,7 +51,17 @@ public class ServletAgregarEjemplares extends HttpServlet {
 		DaoEjemplar daoE = new DaoEjemplar(con);
 		DaoLibro daoL = new DaoLibro(con);
 		
+		//mensaje de informacion
+		
+		String mensaje = "";
+		
 		LibroBean libroBean = daoL.getByIsbn(isbn);
+		
+		if (libroBean == null || libroBean.getNombre() == null || libroBean.getNombre().equals("") ){
+			mensaje += "<div class=\"alert alert-warning\"> No exíste libro con ISBN "
+				+ isbn +"</div>";
+		}
+		
 		
 		for (int i = 0; i < num; i++) {
 			EjemplarBean ejemplar = new EjemplarBean();
@@ -61,9 +71,8 @@ public class ServletAgregarEjemplares extends HttpServlet {
 			ejemplarList.add(ejemplar);
 		}
 		
-		String mensaje = "";
-		int cuenta = 0;
 		
+		int cuenta = 0;
 		for (EjemplarBean ejemplarBean : ejemplarList) {
 			if(!daoE.add(ejemplarBean)){
 				mensaje += "<div class=\"alert alert-warning\"> Error al agregar ejemplar "
@@ -72,7 +81,12 @@ public class ServletAgregarEjemplares extends HttpServlet {
 				cuenta++;
 			}
 		}
-		mensaje += "<div class=\"alert alert-info\">"+cuenta+" Ejemplares agregados <div>";
+		
+		if (cuenta > 0){
+		mensaje += "<div class=\"alert alert-info\"> Agregados "+cuenta+" ejemplares </div>";
+		}else{
+			mensaje += "<div class=\"alert alert-warning\"> no se agregaron ejemplares </div>";
+		}
 		
 		try (PrintWriter out = response.getWriter()) {
 			out.print(mensaje);

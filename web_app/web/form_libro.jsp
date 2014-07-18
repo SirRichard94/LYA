@@ -103,7 +103,7 @@
 			}
 			});
 			
-			$(this).find("input[type=text], textarea").val("");
+			$(this).find("input[type=text], textarea, input[type=number]").val("");
 			
 			return false;
 		});

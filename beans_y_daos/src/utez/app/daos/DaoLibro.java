@@ -139,13 +139,18 @@ public class DaoLibro extends AbstractDao<LibroBean>{
 
 	@Override
 	public boolean delete(LibroBean bean) {
-		String sentence = "DELETE FROM LIBRO WHERE libro_id = " + bean.getLibro_id();
+		String sentence = "DELETE FROM LIBRO WHERE libro_id = " + bean.getLibro_id()+";";
 		
 		try {
 			PreparedStatement statement = con.prepareStatement(sentence);
 			
 			if(statement.executeUpdate()== 1){
 				statement.close();
+				DaoEjemplar daoE = new DaoEjemplar(con);
+				for (EjemplarBean ejemplar: daoE.findByLibro(bean)){
+					daoE.delete(ejemplar);
+				}
+				
 				return true;
 			}
 			statement.close();
