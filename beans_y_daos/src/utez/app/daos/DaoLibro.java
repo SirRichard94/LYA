@@ -306,6 +306,26 @@ public class DaoLibro extends AbstractDao<LibroBean>{
 		
 		return list;
 	}
+        
+        public List<LibroBean> findByAreaNombre(AreaBean area){
+		List<LibroBean> list = new ArrayList<>();
+		String query = "SELECT * FROM LIBRO WHERE alta = 'true' and area_id IN (SELECT area_id FROM AREA WHERE nombre LIKE ?);";
+		
+		try {
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setString(1, "%"+area.getNombre()+"%");
+			
+			ResultSet result = ps.executeQuery();
+			
+			list = passResultSet(result, list);
+			ps.close();
+			
+		} catch (SQLException ex) {
+			Logger.getLogger(DaoEditorial.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		
+		return list;
+	}
 	
 	/**
 	 * Obtener los libros del area
@@ -362,7 +382,22 @@ public class DaoLibro extends AbstractDao<LibroBean>{
 		return list;
 	}
 	
-		
+        
+        public List<LibroBean> findByAutorNombre(String nombre){
+		List<LibroBean> list = new ArrayList<>();
+		List<AutorBean> autores = new DaoAutor(con).findByNombreYApellido(nombre);
+                
+                for (AutorBean autorBean : autores) {
+                    for (LibroBean libro : findByAutor(autorBean)) {
+                        if (!list.contains(libro)){
+                        list.add(libro);
+                        }
+                    }
+            }
+                
+                return list;
+	}
+        
 	/**
 	 * Obtener los libros de la Editorial
 	 * @param editorial
@@ -376,6 +411,26 @@ public class DaoLibro extends AbstractDao<LibroBean>{
 				+ " WHERE editorial_id = "+ editorial.getEditorial_id()
 				+ " and alta = 'true'"
 				+ " ;");
+			ResultSet result = statement.executeQuery();
+			
+			list = passResultSet(result, list);
+			
+		} catch (SQLException ex) {
+			Logger.getLogger(DaoEditorial.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		
+		return list;
+	}
+        
+        public List<LibroBean> findByEditorialNombre(EditorialBean editorial){
+		List<LibroBean> list = new ArrayList<>();
+		
+		try {
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM LIBRO"
+				+ " WHERE alta = 'true' and editorial_id in ("
+                                + " SELECT editorial_id FROM EDITORIAL WHERE nombre like ?"
+				+ " );");
+                        statement.setString(1, "%"+editorial.getNombre()+"%");
 			ResultSet result = statement.executeQuery();
 			
 			list = passResultSet(result, list);

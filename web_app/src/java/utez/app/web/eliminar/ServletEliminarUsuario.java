@@ -6,7 +6,6 @@
 
 package utez.app.web.eliminar;
 
-import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.rmi.ServerException;
