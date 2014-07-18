@@ -41,15 +41,26 @@ if (usuario == null){
 				<div class="col-lg-8 col-lg-offset-2 centered">
                                     
                                         
-					<img src="assets/img/user.png" alt="Stanley">
+					<img src="assets/img/user.png" alt="Perfil">
                                        
 					<h1>(<%=usuario.getNombre() %>)</h1>
                                         <p>(<%=usuario.getCorreo() %>)</p>  
-					
-					<button type="submit">Cambiar</button> 
-					
-					<p> <button type="submit">Cambiar Password</button> </p> 
                                        
+					Prestamos:
+					<table>
+						<thead>
+						<th>Libro</th>
+						<th>Fecha de entrega</th>
+						</thead>
+						<tbody>
+							<%for(int i = 0; i<0; i++){%>
+							<tr>
+								<td> </td>
+							</tr>
+							<%}%>
+						</tbody>
+					</table>
+					
 				</div><!-- /col-lg-8 -->
 			</div><!-- /row -->
 	    </div> <!-- /container -->

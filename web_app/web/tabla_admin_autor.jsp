@@ -34,21 +34,31 @@ $(document).ready(function (){
             <thead>
               <tr>
 		 <th class="centered">Nombre</th>
-		 <th class="centered">Apellido</th>
 		 <th class="centered">Num. Libros</th>
 		 <th class="centered">Accciones</th>
               </tr>
             </thead>
             <tbody>
 		    
-               <% for(int i = 0; i< lista.size(); i++){ %>
+               <% for(int i = 0; i< lista.size(); i++){ 
+		       int id = lista.get(i).getAutor_id();
+	       %>
 			    <tr>
-				    <td><%=lista.get(i).getNombre()%></td>
-				    <td><%=lista.get(i).getApellido()%></td>
-				    <td class="centered"><%=listaLibros.get(i)%></td>
+				    <td>
+				    <%=lista.get(i).getNombre()%> 
+				    <%=lista.get(i).getApellido() != null ? 
+					lista.get(i).getApellido() : ""%>
+				    </td>
+				    <%-- num de libros --%>
+				    <td class="centered"><%=listaLibros.get(i)%></td> 
+				     <%-- accciones --%>
 				    <td class="centered">
-					    <span class="glyphicon glyphicon-pencil"></span>
-					    <span class="glyphicon glyphicon-trash"></span>
+					    
+<a href="#ModificarAutor?guardar=false&AMP;u=<%=id%>" title="modificar">
+	<span class="glyphicon glyphicon-pencil"></span></a>
+<a href="#EliminarAutor?u=<%=id%>" title="eliminar">
+	<span class="glyphicon glyphicon-trash"></span></a>
+		
 				    </td>
 			    </tr>
 		<% } %>
