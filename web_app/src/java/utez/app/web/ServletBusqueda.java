@@ -61,7 +61,7 @@ public class ServletBusqueda extends HttpServlet {
 		}
 		else if (categoria.equals("autor")){
 			//quitar true para sql
-			List<AutorBean> autor = new DaoAutor(con).findByNombreYApellido(busqueda, true);
+			List<AutorBean> autor = new DaoAutor(con).findByNombreYApellido(busqueda, true); //mysql
 			
 			for (AutorBean autorBean : autor) {
 				for (LibroBean libro : daoL.findByAutor(autorBean)) {

@@ -90,18 +90,12 @@
 <script type="text/javascript">
 	$(document).ready(function (){
 		$("#agregar-ejemplar").submit(function (){
-			//alert("submit ejemplar");
-			
-			$.ajax({
-				type: "POST",
-				url: "AgregarEjemplares",
-				data: $("#agregar-ejemplar").serialize(), // serializes the form's elements.
-				success: function(data)
-			{
-				$("#alert-form-libro").html(data);
-				
-			}
-			});
+						
+			$.get(
+				'AgregarEjemplares', 
+				$("#agregar-ejemplar").serialize(), function (data){
+					 $( "#alert-form-libro" ).html( data );
+				});
 			
 			$(this).find("input[type=text], textarea, input[type=number]").val("");
 			

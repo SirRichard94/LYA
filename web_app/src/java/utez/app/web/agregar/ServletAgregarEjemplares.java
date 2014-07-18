@@ -58,10 +58,10 @@ public class ServletAgregarEjemplares extends HttpServlet {
 		LibroBean libroBean = daoL.getByIsbn(isbn);
 		
 		if (libroBean == null || libroBean.getNombre() == null || libroBean.getNombre().equals("") ){
-			mensaje += "<div class=\"alert alert-warning\"> No exíste libro con ISBN "
+			mensaje += "<div class=\"alert alert-warning\" > No existe libro con ISBN "
 				+ isbn +"</div>";
 		}
-		
+		else {
 		
 		for (int i = 0; i < num; i++) {
 			EjemplarBean ejemplar = new EjemplarBean();
@@ -71,23 +71,25 @@ public class ServletAgregarEjemplares extends HttpServlet {
 			ejemplarList.add(ejemplar);
 		}
 		
-		
-		int cuenta = 0;
-		for (EjemplarBean ejemplarBean : ejemplarList) {
-			if(!daoE.add(ejemplarBean)){
-				mensaje += "<div class=\"alert alert-warning\"> Error al agregar ejemplar "
-					+ ejemplarBean.getEjemplar_id()+"</div>";
-			}else{
-				cuenta++;
+			int cuenta = 0;
+			for (EjemplarBean ejemplarBean : ejemplarList) {
+				if (!daoE.add(ejemplarBean)) {
+					mensaje += "<div class=\"alert alert-warning\"> Error al agregar ejemplar "
+						+ ejemplarBean.getEjemplar_id() + "</div>";
+				} else {
+					cuenta++;
+				}
 			}
+
+			if (cuenta > 0) {
+				mensaje += "<div class=\"alert alert-info\"> Agregados " + cuenta + " ejemplares" + " de " + libroBean.getNombre()
+					+ "</div>";
+			}
+//		else{
+//			mensaje += "<div class=\"alert alert-warning\"> no se agregaron ejemplares </div>";
+//		}
+
 		}
-		
-		if (cuenta > 0){
-		mensaje += "<div class=\"alert alert-info\"> Agregados "+cuenta+" ejemplares </div>";
-		}else{
-			mensaje += "<div class=\"alert alert-warning\"> no se agregaron ejemplares </div>";
-		}
-		
 		try (PrintWriter out = response.getWriter()) {
 			out.print(mensaje);
 		}
