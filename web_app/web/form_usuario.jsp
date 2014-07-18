@@ -37,15 +37,10 @@
 	$(document).ready(function (){
 		$("#form-usuario").submit(function (){
 			
-			$.ajax({
-			type: "POST",
-			url: "AgregarUsuario",
-			data: $("#form-usuario").serialize(), // serializes the form's elements.
-			success: function(data)
-			{
+			$.post("AgregarUsuario", $("#form-usuario").serialize(),
+			function(data){
 				$("#alert-usuario").html(data);
 				
-			}
 			});
 			
 			return false;

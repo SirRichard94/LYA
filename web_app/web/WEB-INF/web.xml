@@ -28,6 +28,10 @@
         <servlet-name>ServletTablaEditorial</servlet-name>
         <servlet-class>utez.app.web.tables.ServletTablaEditorial</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AgregarAutor</servlet-name>
+        <servlet-class>utez.app.web.agregar.ServletAgregarAutor</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -55,6 +59,10 @@
     <servlet-mapping>
         <servlet-name>ServletTablaEditorial</servlet-name>
         <url-pattern>/ServletTablaEditorial</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AgregarAutor</servlet-name>
+        <url-pattern>/AgregarAutor</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

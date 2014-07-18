@@ -11,12 +11,13 @@ import java.io.PrintWriter;
 import java.rmi.ServerException;
 import java.sql.Connection;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import utez.app.daos.DaoAutor;
 import utez.app.daos.DaoUsuario;
+import utez.app.model.AutorBean;
 import utez.app.model.UsuarioBean;
 import utez.app.web.eq4.util.DbConnection;
 
@@ -24,8 +25,7 @@ import utez.app.web.eq4.util.DbConnection;
  *
  * @author ricardo
  */
-@WebServlet(name = "AgregarUsuario", urlPatterns = {"/AgregarUsuario"})
-public class ServletAgregarUsuario extends HttpServlet {
+public class ServletAgregarAutor extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and
@@ -54,38 +54,27 @@ public class ServletAgregarUsuario extends HttpServlet {
 			throw new ServerException("No hay coneccion con la BD");
 		}
 		
-		String nombre = request.getParameter("nombre");
-		String email = request.getParameter("email");
-		String pass = request.getParameter("pass");
-		String tel = request.getParameter("tel");
-		String direccion = request.getParameter("dir");
 		
-		UsuarioBean usuario = new UsuarioBean();
-		usuario.setNombre(nombre);
-		usuario.setCorreo(email);
-		usuario.setPasswd(pass);
-		usuario.setTelefono(tel);
-		usuario.setDireccion(direccion);
+		String nombre = request.getParameter("n");
+		String apellido = request.getParameter("a");
+		
+		AutorBean autor = new AutorBean();
+		autor.setNombre(nombre);
+		autor.setApellido(apellido);
 		
 		String mensaje;
-		if (new DaoUsuario(con).add(usuario)){
+		if (new DaoAutor(con).add(autor)){
 			//request.setAttribute("info", "Usuario agregado con exito");
-			mensaje = "<div class=\"alert alert-info\"> Usuario agregado con exito</div>";
+			mensaje = "<div class=\"alert alert-info\"> "
+				+autor.getNombre()+" "+autor.getApellido()+" agregado con exito</div>";
 		} else{
 			//request.setAttribute("warning", "Error al agregar usuario");
-			mensaje = "<div class=\"alert alert-danger\"> Error al agregar usuario</div>";
+			mensaje = "<div class=\"alert alert-danger\"> Error al agregar Autor</div>";
 		}
 		
 		try (PrintWriter out = response.getWriter()) {
 			out.print(mensaje);
 		}
-
-		//this.getServletContext().getRequestDispatcher("/admin.jsp").forward(request, response);
-		
-		//String pagina = response.encodeRedirectURL("admin.jsp");
-		//response.sendRedirect(pagina);
-
-		
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
