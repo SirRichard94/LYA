@@ -77,4 +77,6 @@ $(document).ready(function (){
 		    <%}%>
             </tbody>
           </table>
+	    
+	       <small>*Marcados en color rojo, los usuarios con deuda</small>
 	   

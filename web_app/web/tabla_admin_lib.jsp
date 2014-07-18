@@ -71,4 +71,5 @@ $(document).ready(function (){
 		    <%}%>
             </tbody>
           </table>
-		    
+
+	       <small>*Marcados en amarillo, libros con 4 o menos ejemplares en existencia</small>

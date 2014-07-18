@@ -3,8 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/ricardo/projects/repos/sb-lya/web_app/src/java/utez/app/web/agregar/ServletAgregarEjemplares.java</file>
+            <file>file:/home/ricardo/projects/repos/sb-lya/web_app/src/java/utez/app/web/ServletBusqueda.java</file>
+            <file>file:/home/ricardo/projects/repos/sb-lya/web_app/nbproject/build-impl.xml</file>
             <file>file:/home/ricardo/projects/repos/sb-lya/web_app/web/form_libro.jsp</file>
+            <file>file:/home/ricardo/projects/repos/sb-lya/web_app/src/java/utez/app/web/tables/ServletTablaLibro.java</file>
             <file>file:/home/ricardo/projects/repos/sb-lya/web_app/src/java/utez/app/web/agregar/ServletAgregarUsuario.java</file>
             <file>file:/home/ricardo/projects/repos/sb-lya/web_app/web/form_usuario.jsp</file>
         </group>
