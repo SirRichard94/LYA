@@ -1,4 +1,7 @@
 
+<%@page import="utez.app.model.PrestamoBean"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
 <%@page import="utez.app.model.UsuarioBean"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
@@ -34,7 +37,15 @@ if (usuario == null){
 			<div class="row">
                              <div class="col-lg-8 col-lg-push-8">
 				     
+				     <%
+			    List<PrestamoBean> list = new ArrayList();
+			    try{
+				    list = (List) request.getAttribute("prestamos");
+			    }catch(NullPointerException e){
+			    
+			    }
 				     
+				     %>
 				     
 				     Penalizaciones:  <b> <%=usuario.getDeuda()%></b>
                                         </div>
@@ -46,21 +57,33 @@ if (usuario == null){
 					<h1>(<%=usuario.getNombre() %>)</h1>
                                         <p>(<%=usuario.getCorreo() %>)</p>  
                                        
+					<% if (list != null && list.size() > 0){ %>
 					Prestamos:
-					<table>
+					<table class="table table-bordered">
 						<thead>
 						<th>Libro</th>
 						<th>Fecha de entrega</th>
 						</thead>
 						<tbody>
-							<%for(int i = 0; i<0; i++){%>
+							<%for(int i = 0; i< list.size(); i++){
+							PrestamoBean prestamo = list.get(i);
+							%>
+
 							<tr>
-								<td> </td>
+								<td>
+								<%=prestamo.getEjemplar().
+									getLibro().getNombre()%> 
+								</td>
+								
+								<td>
+								<%=prestamo.getFecha_entrega()%>
+								</td>
 							</tr>
-							<%}%>
+							
+							<%} //for%>
 						</tbody>
 					</table>
-					
+					<%} //if%>
 				</div><!-- /col-lg-8 -->
 			</div><!-- /row -->
 	    </div> <!-- /container -->

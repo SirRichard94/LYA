@@ -66,7 +66,7 @@
 		<li><a href="admin.jsp">Administrador</a></li>
 			<% } else { %>
 				
-		<li><a href="perfil.jsp">Perfil</a></li>
+		<li><a href="PerfilUsuario">Perfil</a></li>
 			<%  }%>
 		<li><a id="logout" href="index.jsp">Cerrar Sesion</a></li>
 		  <% } else{ %>

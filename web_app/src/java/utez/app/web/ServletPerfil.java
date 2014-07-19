@@ -9,11 +9,16 @@ package utez.app.web;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import utez.app.daos.DaoPrestamo;
 import utez.app.daos.DaoUsuario;
+import utez.app.model.PrestamoBean;
+import utez.app.model.UsuarioBean;
 import utez.app.web.eq4.util.DbConnection;
 
 /**
@@ -39,15 +44,20 @@ public class ServletPerfil extends HttpServlet {
 		if (con==null){
 		throw new ServletException("No hay conexion con la BD");
 		}
+		HttpSession session = request.getSession();
+		UsuarioBean usuario = (UsuarioBean) request.getAttribute("usuario");
 		
+		if (usuario==null){
+			usuario = new UsuarioBean();
+			usuario.setUsuario_id(1);
+		}
 		
+		List<PrestamoBean> lista = new DaoPrestamo(con).findByUsuario(usuario);
 		
-		
-		request.setAttribute("lista", lista);
-		request.setAttribute("busqueda", busqueda);
+		request.setAttribute("prestamos", lista);
 		
 		this.getServletConfig().getServletContext().
-                getRequestDispatcher("/tabla_libros.jsp").
+                getRequestDispatcher("/perfil.jsp").
                 forward(request, response);
 	
 	}

@@ -51,16 +51,6 @@ public class ServletTablaLibro extends HttpServlet {
 		List<Integer> ejemplaresDisponibles = new ArrayList<>();
 		
 		for (LibroBean libroBean : lista) {
-			libroBean.setArea( 
-				new DaoArea(con).get(
-					libroBean.getArea().getArea_id()));
-			
-			libroBean.setEditorial(
-				new DaoEditorial(con).get(
-					libroBean.getEditorial().getEditorial_id()));
-			
-			libroBean.setAutores(new DaoAutor(con).findByLibro(libroBean));
-			
 			ejemplares.add(daoL.countEjemplares(libroBean));
 			ejemplaresDisponibles.add(daoL.countEjemplaresDisponibles(libroBean));
 		}
