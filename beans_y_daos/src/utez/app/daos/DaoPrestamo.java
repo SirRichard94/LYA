@@ -224,4 +224,22 @@ public class DaoPrestamo extends AbstractDao<PrestamoBean>{
 	public double penalizacion(PrestamoBean prestamo){
 		return penalizacion(prestamo, false);
 	}
+	
+	public List<PrestamoBean> findByUsuario(UsuarioBean usuario){
+		 List<PrestamoBean>  lista = new ArrayList<>();	 
+		 
+		try {
+			
+			String query = "SELECT * FROM PRESTAMO WHERE usuario_id = "+usuario.getUsuario_id()+";";
+			PreparedStatement ps = con.prepareStatement(query);
+			lista = passResultSet(ps.executeQuery(), lista);
+			
+		} catch (SQLException ex) {
+			Logger.getLogger(DaoPrestamo.class.getName()).log(Level.SEVERE, null, ex);
+		}catch (NullPointerException e){
+			
+		}
+		 
+		 return lista;
+	}
 }

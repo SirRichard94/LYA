@@ -15,7 +15,7 @@
 	</head>
 <body>
 	<%
-		if (exception.getMessage().contains("Acceso denegado")){
+		if (exception.getMessage() != null && exception.getMessage().contains("Acceso denegado")){
 			request.setAttribute("warning", "No tienes acceso, inicie sesion");
 			response.sendRedirect("index.jsp");
 		}
