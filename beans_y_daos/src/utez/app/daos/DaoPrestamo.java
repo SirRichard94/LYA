@@ -7,6 +7,8 @@
 package utez.app.daos;
 
 import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -67,22 +69,159 @@ public class DaoPrestamo extends AbstractDao<PrestamoBean>{
 
 	@Override
 	public PrestamoBean get(int id) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		PrestamoBean bean = null;
+		
+		String query  = "SELECT * FROM PRESTAMO WHERE prestamo_id = ?";
+		
+		try {
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setInt(1, id);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			bean = passResultSet(rs, new ArrayList<PrestamoBean>()).get(0);
+			
+			ps.close();
+		} catch (SQLException ex) {
+			Logger.getLogger(DaoPrestamo.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		
+		return bean;
 	}
 
 	@Override
 	public boolean update(PrestamoBean bean) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		String query =  ("UPDATE PRESTAMO SET"
+			+ " ejemplar_id = ?"
+			+ ", usuario_id = ?"
+			+ ", fecha_salida = ?"
+			+ ", fecha_entrega = ?"
+			+ " WHERE prestamo_id = ?;"
+			);
+		
+		try{
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setInt(1, bean.getEjemplar().getEjemplar_id());
+			ps.setInt(2, bean.getUsuario().getUsuario_id());
+			ps.setDate(3, bean.getFecha_salida());
+			ps.setDate(4, bean.getFecha_entrega());
+			ps.setInt(5, bean.getPrestamo_id());
+			
+			if(ps.executeUpdate()==1){
+				ps.close();
+				return true;
+			}
+			
+			
+		} catch (SQLException ex) {
+			Logger.getLogger(DaoArea.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return false;
 	}
 
 	@Override
 	public boolean delete(PrestamoBean id) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		String query = "DELETE FROM PRESTAMO WHERE area_id = ?";
+		
+		try{
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setInt(1, id.getPrestamo_id());
+			
+			if(ps.executeUpdate()==1){
+				ps.close();
+				return true;
+			}
+			
+			
+		} catch (SQLException ex) {
+			Logger.getLogger(DaoArea.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return false;
 	}
 
 	@Override
 	public boolean add(PrestamoBean bean) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		String query =  ( "INSERT INTO PRESTAMO ("
+			+ " ejemplar_id"
+			+ ", usuario_id"
+			+ ", fecha_salida"
+			+ ", fecha_entrega"
+			+ ") VALUES (?,?,?,?);"
+			);
+		try{
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setInt(1, bean.getEjemplar().getEjemplar_id());
+			ps.setInt(2, bean.getUsuario().getUsuario_id());
+			ps.setDate(3, bean.getFecha_salida());
+			ps.setDate(4, bean.getFecha_entrega());
+			
+			if(ps.executeUpdate()==1){
+				ps.close();
+				return true;
+			}
+			
+			
+		} catch (SQLException ex) {
+			Logger.getLogger(DaoArea.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return false;
 	}
 	
+	/**
+	 *	Regresa cuanta penalizacion hay de x dias
+	 * @param dias retraso
+	 * @return  costo de el retraso
+	 */
+	public double penalizacion(int dias){
+		double penalizacion = 0;
+			String query = "SELECT costo FROM PENALIZACION"
+				+ " WHERE ? BETWEEN limite_inferior and limite_superior";
+			
+		try {
+			
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setInt(1, dias);
+			ResultSet rs = ps.executeQuery();
+			
+			if (rs.next()){
+				penalizacion = rs.getDouble("costo");
+			}
+			
+		} catch (SQLException ex) {
+			Logger.getLogger(DaoPrestamo.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return penalizacion;
+	}
+	
+	public double penalizacion(PrestamoBean prestamo, boolean mysql){
+		double penalizacion = 0;
+		
+		
+			String query = "SELECT costo FROM PENALIZACION"
+				+ " WHERE datediff(day, ?, GETDATE()) BETWEEN limite_inferior and limite_superior";
+			if (mysql){
+				query = "SELECT costo FROM PENALIZACION"
+				+ " WHERE datediff(CURRDATE(), ?) BETWEEN limite_inferior and limite_superior";
+			}
+			
+		try {
+			
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setDate(1, prestamo.getFecha_entrega());
+			
+			ResultSet rs = ps.executeQuery();
+			
+			if (rs.next()){
+				penalizacion = rs.getDouble("costo");
+			}
+			
+		} catch (SQLException ex) {
+			Logger.getLogger(DaoPrestamo.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return penalizacion;
+	}
+	
+	public double penalizacion(PrestamoBean prestamo){
+		return penalizacion(prestamo, false);
+	}
 }
