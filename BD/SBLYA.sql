@@ -1,6 +1,5 @@
 CREATE DATABASE SB_LYA;
 
-
 USE SB_LYA;
 
 
@@ -41,7 +40,7 @@ CREATE TABLE AREA(
 
 CREATE TABLE LIBRO(
     libro_id int IDENTITY(1,1),
-    ISBN long not null unique,
+    ISBN bigint not null unique,
     nombre varchar(42) not null,
     area_id int,
     editorial_id int,
@@ -247,10 +246,8 @@ on LIBRO.libro_id = EJEMPLAR.libro_id;
 select count(*) from LIBRO join AUTOR_DE on LIBRO.libro_id = AUTOR_DE.libro_id
 where autor_id in (SELECT autor_id FROM AUTOR where nombre = 'Arthur');
 
--- shit creo que cambia para sql server --
--- en este caso quiero numeros positivos si faltan dias y negativos si ya paso --
-SELECT DATEDIFF('2014-8-5', curdate()); 
--- select datediff(day, curdate(), '2014-7-5');--
-SELECT DATEDIFF( (SELECT fecha_entrega FROM PRESTAMO where prestamo_id = 2),  curdate());
-
-select * FROM PRESTAMO WHERE fecha_entrega > fecha_salida;
+INSERT INTO PENALIZACION (limite_inferior, limite_superior, costo)
+VALUES (1,3,5),
+	(4,6,10),
+	(7,10,20),
+	(11, null ,50);

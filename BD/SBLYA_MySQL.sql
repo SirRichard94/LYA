@@ -199,7 +199,7 @@ VALUES('Ricardo Rodriguez', '311-04-33', 'SirRichard94@gmail.com', 'ola','londre
 
 update USUARIO SET es_admi = 'true' where usuario_id = 1;
 		
-insert PRESTAMO(usuario_id, ejemplar_id, fecha_salida, fecha_entrega)
+insert PRESTAMO (usuario_id, ejemplar_id, fecha_salida, fecha_entrega)
 VALUES(1, 1, '2013-04-12', '2014-05-19'),
 	(2, 2, '2014-07-01', '2014-07-09'),
 	(3, 3, '2014-02-18', '2014-02-27'),
@@ -253,3 +253,20 @@ SELECT DATEDIFF('2014-8-5', curdate());
 SELECT DATEDIFF( (SELECT fecha_entrega FROM PRESTAMO where prestamo_id = 2),  curdate());
 
 select * FROM PRESTAMO WHERE fecha_entrega > fecha_salida;
+
+
+
+
+INSERT INTO PENALIZACION (limite_inferior, limite_superior, costo)
+VALUES (1,3,5),
+		(4,6,10),
+		(7,10,20),
+		(11, null ,50);
+
+-- elegir penalizacion con x dias de retraso --
+SELECT costo FROM PENALIZACION where limite_inferior IN 
+(SELECT MAX(limite_inferior) FROM PENALIZACION WHERE limite_inferior <= 11 );
+
+-- elegir penalizacion de  la diferencia entre hoy y una fecha --
+SELECT costo FROM PENALIZACION where limite_inferior IN 
+(SELECT MAX(limite_inferior) FROM PENALIZACION WHERE limite_inferior <= datediff(CURDATE(), '2014-7-18') );
