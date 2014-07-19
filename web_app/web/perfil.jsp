@@ -47,7 +47,12 @@ if (usuario == null){
 				     
 				     %>
 				     
-				     Penalizaciones:  <b> <%=usuario.getDeuda()%></b>
+				     Penalizaciones:  <b class="penalizacion "> <%=usuario.getDeuda()%></b>
+				     <script type="text/javascript">
+					     if ($(".penalizacion").html() > 0){
+						     $(".penalizacion").addClass("text-danger");
+					     }
+				     </script>
                                         </div>
 				<div class="col-lg-8 col-lg-offset-2 centered">
                                     

@@ -40,7 +40,7 @@ public class ServletLogout extends HttpServlet {
 		sesion.setAttribute("usuario", null);
 		sesion.invalidate();
 		
-		response.sendRedirect("/index.jsp");
+		response.sendRedirect("index.jsp");
 		
 		
 		//this.getServletConfig().getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
