@@ -45,21 +45,33 @@ public class ServletPerfil extends HttpServlet {
 		throw new ServletException("No hay conexion con la BD");
 		}
 		HttpSession session = request.getSession();
-		UsuarioBean usuario = (UsuarioBean) request.getAttribute("usuario");
+		UsuarioBean usuario = (UsuarioBean) session.getAttribute("usuario");
 		
 		if (usuario==null){
-			usuario = new UsuarioBean();
-			usuario.setUsuario_id(1);
+			response.sendRedirect("index.jsp");	//si no hay usuario, redirect a index
+		}else{
+		
+			DaoPrestamo daoP = new DaoPrestamo(con);
+			List<PrestamoBean> lista = daoP.findByUsuario(usuario);
+
+			//sumar las penalizaciones que tenga el usuario
+			usuario.setDeuda(0);
+			for (PrestamoBean prestamoBean : lista) {
+				usuario.setDeuda(
+					usuario.getDeuda() + daoP.penalizacion(prestamoBean, true) //mysql
+				);
+			}
+
+			new DaoUsuario(con).update(usuario);
+			
+			request.setAttribute("prestamos", lista);
+			session.setAttribute("usuario", usuario);
+
+			this.getServletConfig().getServletContext().
+				getRequestDispatcher("/perfil.jsp").
+				forward(request, response);
+
 		}
-		
-		List<PrestamoBean> lista = new DaoPrestamo(con).findByUsuario(usuario);
-		
-		request.setAttribute("prestamos", lista);
-		
-		this.getServletConfig().getServletContext().
-                getRequestDispatcher("/perfil.jsp").
-                forward(request, response);
-	
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

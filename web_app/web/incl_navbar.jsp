@@ -29,7 +29,7 @@
 	 UsuarioBean usuario = null;
 	 
 	 try{
-		 usuario = (UsuarioBean) session.getAttribute("usuario");
+		usuario = (UsuarioBean) session.getAttribute("usuario");
 	 } catch (NullPointerException ex){
 		 
 	 }
