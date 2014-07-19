@@ -1,19 +1,38 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<!DOCTYPE html>
-<form class="form-horizontal">
+
+<div id ="alert-editorial"></div>
+
+<form class="form-horizontal" id = "form-editorial">
 	<fieldset>
 	<legend>Agregar Editorial</legend>
 	<div class="form-group">
-		<input type="text" class="form-control" placeholder="Nombre" name="nombre" required=""> 
+		<input type="text" class="form-control" placeholder="Nombre" name="nom" required=""> 
 	</div>
 	<div class="form-group">
 		<textarea class="form-control" placeholder="Direccion" name="dir" rows="4"></textarea>
 	</div>
 	<br>
 	<div class="form-group">
-		<button class="btn btn-primary pull-right" >Crear</button>
+		<button type="submit" class="btn btn-primary pull-right" >Crear</button>
 	</div>
 	</fieldset>
 </form>
+
+
+<script type="text/javascript">
+	
+	$(document).ready(function (){
+		$("#form-editorial").submit(function (){
+			var form = $(this);
+			$.get("AgregarEditorial", form.serialize(),
+			function(data){
+				$("#alert-editorial").html(data);
+				
+			});
+			
+			return false;
+		});
+	});
+</script>

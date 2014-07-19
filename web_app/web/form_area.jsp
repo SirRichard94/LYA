@@ -1,12 +1,13 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<!DOCTYPE html>
-<form class="form-horizontal">
+<div id="alert-area"></div>
+
+<form class="form-horizontal" id="form-area">
 	<fieldset>
 	<legend>Agregar Area</legend>
 	<div class="form-group">
-		<input type="text" class="form-control" placeholder="Nombre" name="nombre" required=""> 
+		<input type="text" class="form-control" placeholder="Nombre" name="n" required=""> 
 	</div>
 	<br>
 	<div class="form-group">
@@ -14,3 +15,19 @@
 	</div>
 	</fieldset>
 </form>
+
+<script type="text/javascript">
+	
+	$(document).ready(function (){
+		$("#form-area").submit(function (){
+			var form = $(this);
+			$.get("AgregarArea", form.serialize(),
+			function(data){
+				$("#alert-area").html(data);
+				
+			});
+			
+			return false;
+		});
+	});
+</script>
