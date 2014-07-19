@@ -104,7 +104,7 @@ public class DaoArea extends AbstractDao<AreaBean>{
 	public boolean update(AreaBean bean) {
 		String query =  ("UPDATE AREA SET"
 			+ " nombre = ?"
-			+ " alta = ?"
+			+ ", alta = ?"
 			+ " WHERE area_id = ?;"
 			);
 		
@@ -137,9 +137,7 @@ public class DaoArea extends AbstractDao<AreaBean>{
 		
 		try{
 			PreparedStatement ps = con.prepareStatement(query);
-			ps.setString(1, bean.getNombre());
-			ps.setString(2, ""+bean.isAlta());
-			ps.setInt(3, bean.getArea_id());
+			ps.setInt(1, bean.getArea_id());
 			
 			if(ps.executeUpdate()==1){
 				ps.close();
