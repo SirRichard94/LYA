@@ -17,7 +17,7 @@ public class PenalizacionBean implements Serializable{
 	private int limite_inferior;
 	private int limite_superior;
 	private double costo;
-
+	
 	public PenalizacionBean() {
 	}
 

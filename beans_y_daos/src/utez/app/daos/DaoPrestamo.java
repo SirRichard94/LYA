@@ -174,13 +174,14 @@ public class DaoPrestamo extends AbstractDao<PrestamoBean>{
 	 */
 	public double penalizacion(int dias){
 		double penalizacion = 0;
-			String query = "SELECT costo FROM PENALIZACION"
-				+ " WHERE ? BETWEEN limite_inferior and limite_superior";
+			String query = "SELECT costo FROM PENALIZACION WHERE limite_inferior IN"
+				+ " (SELECT MAX(limite_inferior) FROM PENALIZACION WHERE limite_inferior <= ? );";
 			
 		try {
 			
 			PreparedStatement ps = con.prepareStatement(query);
 			ps.setInt(1, dias);
+			
 			ResultSet rs = ps.executeQuery();
 			
 			if (rs.next()){
@@ -197,13 +198,16 @@ public class DaoPrestamo extends AbstractDao<PrestamoBean>{
 		double penalizacion = 0;
 		
 		
-			String query = "SELECT costo FROM PENALIZACION"
-				+ " WHERE datediff(day, ?, GETDATE()) BETWEEN limite_inferior and limite_superior";
+			String datediff = "datediff(day, ?, GETDATE())";
 			if (mysql){
-				query = "SELECT costo FROM PENALIZACION"
-				+ " WHERE datediff(CURRDATE(), ?) BETWEEN limite_inferior and limite_superior";
+				datediff = "datediff(CURDATE(), ?)";
 			}
 			
+			String query = "SELECT costo FROM PENALIZACION"
+				+ " WHERE  limite_inferior IN"
+				+ " (SELECT MAX(limite_inferior) FROM PENALIZACION WHERE limite_inferior <= "
+				+ datediff
+				+ ");";
 		try {
 			
 			PreparedStatement ps = con.prepareStatement(query);
@@ -231,6 +235,25 @@ public class DaoPrestamo extends AbstractDao<PrestamoBean>{
 		try {
 			
 			String query = "SELECT * FROM PRESTAMO WHERE usuario_id = "+usuario.getUsuario_id()+";";
+			PreparedStatement ps = con.prepareStatement(query);
+			lista = passResultSet(ps.executeQuery(), lista);
+			
+		} catch (SQLException ex) {
+			Logger.getLogger(DaoPrestamo.class.getName()).log(Level.SEVERE, null, ex);
+		}catch (NullPointerException e){
+			
+		}
+		 
+		 return lista;
+	}
+	
+	public List<PrestamoBean> findByLibro(LibroBean libro){
+		 List<PrestamoBean>  lista = new ArrayList<>();	 
+		 
+		try {
+			
+			String query = "SELECT * FROM PRESTAMO WHERE ejemplar_id IN"
+				+ " (SELECT ejemplar_id from EJEMPLAR WHERE libro_id = "+libro.getLibro_id()+");";
 			PreparedStatement ps = con.prepareStatement(query);
 			lista = passResultSet(ps.executeQuery(), lista);
 			
