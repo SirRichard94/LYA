@@ -32,6 +32,31 @@ public class DaoLibro extends AbstractDao<LibroBean>{
 	private static final String[] ATRIBUTES =
 	{"ISBN", "nombre", "area_id", "editorial_id", "paginas", "alta"};
 	
+	@Override
+	 List<LibroBean> passResultSet(ResultSet result, List<LibroBean> list) throws SQLException{
+		
+			while (result.next()){
+				LibroBean libro = new LibroBean();
+				libro.setLibro_id(result.getInt("libro_id"));
+				libro.setIsbn(result.getLong("ISBN"));
+				libro.setNombre(result.getString("nombre"));
+				libro.setAlta(result.getBoolean("alta"));
+				libro.setPaginas(result.getInt("paginas"));
+				
+				EditorialBean editorial = new DaoEditorial(con).get(result.getInt("editorial_id"));
+				AreaBean area = new DaoArea(con).get(result.getInt("area_id"));
+				List<AutorBean> autores = new DaoAutor(con).findByLibro(libro);
+				
+				libro.setEditorial(editorial);
+				libro.setArea(area);
+				libro.setAutores(autores);
+				
+				list.add(libro);
+			}
+			
+		return list;
+	}
+	
 
 	public DaoLibro(Connection con) {
 		super(con);
@@ -75,25 +100,8 @@ public class DaoLibro extends AbstractDao<LibroBean>{
 				"SELECT * FROM LIBRO where area_id="+id+";");
 			ResultSet result = statement.executeQuery();
 			
-			if(result.next()){
-				libro = new LibroBean();
-				
-				libro.setLibro_id(result.getInt("libro_id"));
-				libro.setIsbn(result.getLong("ISBN"));
-				libro.setNombre(result.getString("nombre"));
-				libro.setAlta(result.getBoolean("alta"));
-				libro.setPaginas(result.getInt("paginas"));
-				
-				EditorialBean edit = new EditorialBean();
-				AreaBean area = new AreaBean();
-				
-				edit.setEditorial_id(result.getInt("editorial_id"));
-				area.setArea_id(result.getInt("area_id"));
-				
-				libro.setEditorial(edit);
-				libro.setArea(area);
-				
-			}
+			libro = passResultSet(result, new ArrayList<LibroBean>()).get(0);
+			
 		} catch (SQLException ex) {
 			Logger.getLogger(DaoArea.class.getName()).log(Level.SEVERE, null, ex);
 		}
@@ -254,33 +262,6 @@ public class DaoLibro extends AbstractDao<LibroBean>{
 		
 		return n;
 	}
-	
-	@Override
-	 List<LibroBean> passResultSet(ResultSet result, List<LibroBean> list) throws SQLException{
-		
-			while (result.next()){
-				LibroBean libro = new LibroBean();
-				libro.setLibro_id(result.getInt("libro_id"));
-				libro.setIsbn(result.getLong("ISBN"));
-				libro.setNombre(result.getString("nombre"));
-				libro.setAlta(result.getBoolean("alta"));
-				libro.setPaginas(result.getInt("paginas"));
-				
-				EditorialBean edit = new EditorialBean();
-				AreaBean area = new AreaBean();
-				
-				edit.setEditorial_id(result.getInt("editorial_id"));
-				area.setArea_id(result.getInt("area_id"));
-				
-				libro.setEditorial(edit);
-				libro.setArea(area);
-				
-				list.add(libro);
-			}
-			
-		return list;
-	}
-	
 		
 	/**
 	 * Obtener los libros del area
@@ -548,25 +529,8 @@ public class DaoLibro extends AbstractDao<LibroBean>{
 			statement.setLong(1, isbn);
 			ResultSet result = statement.executeQuery();
 			
-			if(result.next()){
-				libro = new LibroBean();
-				
-				libro.setLibro_id(result.getInt("libro_id"));
-				libro.setIsbn(result.getLong("ISBN"));
-				libro.setNombre(result.getString("nombre"));
-				libro.setAlta(result.getBoolean("alta"));
-				libro.setPaginas(result.getInt("paginas"));
-				
-				EditorialBean edit = new EditorialBean();
-				AreaBean area = new AreaBean();
-				
-				edit.setEditorial_id(result.getInt("editorial_id"));
-				area.setArea_id(result.getInt("area_id"));
-				
-				libro.setEditorial(edit);
-				libro.setArea(area);
-				
-			}
+			libro = passResultSet(result, new ArrayList<LibroBean>()).get(0);
+			
 			
 			statement.close();
 		} catch (SQLException ex) {

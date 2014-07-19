@@ -59,14 +59,7 @@ public class DaoEjemplar extends AbstractDao<EjemplarBean>{
 			sql.setInt(1, id);
 			
 			ResultSet result = sql.executeQuery();
-			if (result.next()){
-				ejemplar = new EjemplarBean();
-				ejemplar.setEjemplar_id(result.getInt("ejemplar_id"));
-				ejemplar.setLocalizacion(result.getString("localizacion"));
-				LibroBean libr = new LibroBean();
-				libr.setLibro_id(result.getInt("libro_id"));
-				ejemplar.setLibro(libr);
-			}
+			ejemplar = passResultSet(result, new ArrayList<EjemplarBean>()).get(0);
 			
 		} catch (SQLException ex) {
 			Logger.getLogger(DaoUsuario.class.getName()).log(Level.SEVERE, null, ex);
@@ -146,7 +139,12 @@ public class DaoEjemplar extends AbstractDao<EjemplarBean>{
 		List<EjemplarBean> list = new ArrayList<>();
 		try {
 			PreparedStatement statement = con.prepareStatement(
-				"SELECT * FROM EJEMPLAR WHERE libro_id = " + libro.getLibro_id() + ";");
+				"SELECT * FROM EJEMPLAR WHERE libro_id in "
+					+ "(SELECT libro_id from LIBRO"
+					+ " where libro_id = ? or nombre = ?"
+					+ ");");
+			statement.setInt(1, libro.getLibro_id());
+			statement.setString(2, libro.getNombre());
 			
 			ResultSet result = statement.executeQuery();
 			
@@ -209,9 +207,7 @@ public class DaoEjemplar extends AbstractDao<EjemplarBean>{
 				ejempl.setEjemplar_id(result.getInt("ejemplar_id"));
 				ejempl.setLocalizacion(result.getString("localizacion"));
 				
-				LibroBean lib = new LibroBean();
-				
-				lib.setLibro_id(result.getInt("libro_id"));
+				LibroBean lib = new DaoLibro(con).get(result.getInt("libro_id"));
 				
 				ejempl.setLibro(lib);
 				
