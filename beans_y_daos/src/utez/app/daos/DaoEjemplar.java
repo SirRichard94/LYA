@@ -50,12 +50,10 @@ public class DaoEjemplar extends AbstractDao<EjemplarBean>{
 
 	@Override
 	public EjemplarBean get(int id) {
-		
-		
 		EjemplarBean ejemplar = null;
 		try {
 			PreparedStatement sql = con.prepareStatement(
-			"SELECT * FROM "+TABLA+" WHERE "+PK+" = ?;");
+			"SELECT * FROM EJEMPLAR WHERE ejemplar_id = ?;");
 			sql.setInt(1, id);
 			
 			ResultSet result = sql.executeQuery();
@@ -63,8 +61,8 @@ public class DaoEjemplar extends AbstractDao<EjemplarBean>{
 			
 		} catch (SQLException ex) {
 			Logger.getLogger(DaoUsuario.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (NullPointerException ex){
-			
+		} catch (IndexOutOfBoundsException e){
+			System.err.println("Ejemplar, indexOutOfbounds");
 		}
 		return ejemplar;
 	}

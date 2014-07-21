@@ -38,7 +38,8 @@ public class DaoPrestamo extends AbstractDao<PrestamoBean>{
 				prestamo.setFecha_entrega(result.getDate("fecha_entrega"));
 				prestamo.setFecha_salida(result.getDate("fecha_salida"));
 				
-				EjemplarBean ejemplar = new DaoEjemplar(con).get(result.getInt("ejemplar_id"));
+				EjemplarBean ejemplar = 
+					new DaoEjemplar(con).get(result.getInt("ejemplar_id"));
 				UsuarioBean usuario = new DaoUsuario(con).get(result.getInt("usuario_id"));
 				
 				prestamo.setEjemplar(ejemplar);
@@ -57,13 +58,11 @@ public class DaoPrestamo extends AbstractDao<PrestamoBean>{
 		String query ="SELECT * FROM PRESTAMO;";
 		try {
 			ResultSet result = executeQuery(query);
-			list = passResultSet(result, list);
+			passResultSet(result, list);
 			
 		} catch (SQLException ex) {
 			Logger.getLogger(DaoArea.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		
-		
 		return list;
 	}
 
@@ -84,7 +83,7 @@ public class DaoPrestamo extends AbstractDao<PrestamoBean>{
 			ps.close();
 		} catch (SQLException ex) {
 			Logger.getLogger(DaoPrestamo.class.getName()).log(Level.SEVERE, null, ex);
-		}
+		} catch (IndexOutOfBoundsException e){}
 		
 		return bean;
 	}

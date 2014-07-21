@@ -65,7 +65,7 @@ public class DaoEditorial extends AbstractDao<EditorialBean>{
 
 	@Override
 	public EditorialBean get(int id) {
-		List<EditorialBean> lista = new ArrayList<>();
+		EditorialBean editorial = null;
 		
 		try {
 			PreparedStatement statement = con.prepareStatement(
@@ -73,13 +73,15 @@ public class DaoEditorial extends AbstractDao<EditorialBean>{
 			
 			ResultSet result = statement.executeQuery();
 			
-			lista = passResultSet(result, lista);
+			editorial = passResultSet(result, new ArrayList<EditorialBean>()).get(0);
 			
 		} catch (SQLException ex) {
 			Logger.getLogger(DaoEditorial.class.getName()).log(Level.SEVERE, null, ex);
+		}catch (IndexOutOfBoundsException e){
+			
 		}
 		
-		return lista.get(0);
+		return editorial;
 	}
 
 	@Override

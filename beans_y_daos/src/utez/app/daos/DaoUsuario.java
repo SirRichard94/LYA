@@ -86,7 +86,7 @@ public class DaoUsuario extends AbstractDao<UsuarioBean>{
 			sql.close();
 		} catch (SQLException ex) {
 			Logger.getLogger(DaoUsuario.class.getName()).log(Level.SEVERE, null, ex);
-		}
+		} catch (IndexOutOfBoundsException ex){}
 		
 		return usr;
 	}
