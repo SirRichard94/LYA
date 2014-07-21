@@ -115,7 +115,7 @@ CREATE TABLE USUARIO(
 
 CREATE TABLE PRESTAMO(
 	prestamo_id int IDENTITY(1,1),
-	ejemplar_id int not null,
+	ejemplar_id int not null unique,
 	usuario_id int not null,
 	fecha_salida date not null,
 	fecha_entrega date not null,

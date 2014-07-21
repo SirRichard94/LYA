@@ -216,4 +216,28 @@ public class DaoEjemplar extends AbstractDao<EjemplarBean>{
 		
 		return list;
 	}
+	
+	public EjemplarBean getDisponibleByLibro(LibroBean libro){
+		String query = "SELECT * FROM EJEMPLAR WHERE libro_id = ? " 
+			+" AND ejemplar_id NOT IN (SELECT ejemplar_id FROM PRESTAMO);";
+		EjemplarBean ejemplar = null;
+		try{
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setInt(1, libro.getLibro_id());
+			
+			ResultSet res = ps.executeQuery();
+			if (res.next()){
+				ejemplar = new EjemplarBean();
+				ejemplar.setEjemplar_id(res.getInt("ejemplar_id"));
+				ejemplar.setLibro(libro);
+				ejemplar.setLocalizacion(res.getString("localizacion"));
+			}
+			
+		} catch (SQLException ex) {
+			Logger.getLogger(DaoEjemplar.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		
+		
+		return ejemplar;
+	}
 }

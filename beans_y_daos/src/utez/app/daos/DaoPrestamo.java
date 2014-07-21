@@ -167,6 +167,48 @@ public class DaoPrestamo extends AbstractDao<PrestamoBean>{
 		return false;
 	}
 	
+	public boolean nuevoPrestamo(UsuarioBean usuario, LibroBean libro, int dias){
+	return nuevoPrestamo(usuario, libro, dias, false);
+	}
+	
+	public boolean nuevoPrestamo(UsuarioBean usuario, LibroBean libro, int dias, boolean mysql){
+		EjemplarBean ejemplar = new DaoEjemplar(con).getDisponibleByLibro(libro);
+		if (ejemplar == null || usuario == null){
+			return false;
+		}
+		
+		try{
+			String query = "INSERT INTO PRESTAMO (usuario_id, ejemplar_id, fecha_salida, fecha_entrega)"
+				+ " VALUES (?,?,"
+				+ "GETDATE(), DATEADD(day,?,GETDATE()) "
+				+ ");";
+			
+			if(mysql){
+				query = "INSERT INTO PRESTAMO (usuario_id, ejemplar_id, fecha_salida, fecha_entrega)"
+				+ " VALUES (?,?,"
+				+ "CURDATE(), DATE_ADD(CURDATE(),INTERVAL ? DAY )"
+				+ ");";
+			}
+			
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setInt(1, usuario.getUsuario_id());
+			ps.setInt(2, ejemplar.getEjemplar_id());
+			ps.setInt(3, dias);
+			
+			if (ps.executeUpdate() == 1){
+				ps.close();
+				return true;
+			}
+			
+		} catch (SQLException ex) {
+			Logger.getLogger(DaoPrestamo.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		
+		
+		
+		return false;
+	}
+	
 	/**
 	 *	Regresa cuanta penalizacion hay de x dias
 	 * @param dias retraso
