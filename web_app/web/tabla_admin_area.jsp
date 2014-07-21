@@ -9,14 +9,14 @@
 <script type="text/javascript">
 $(document).ready(function (){ 
 	$("#tabla-autor").dataTable({
-		"lengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
+		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todo"]],
 		"language": {
             "lengthMenu": "_MENU_ filas por página",
             "search": "Busqueda",
-            "zeroRecords": "No se encontro informacion",
+            "zeroRecords": "No se encontró informacion",
             "info": "Mostrando página _PAGE_ de _PAGES_",
             "infoEmpty": "No hay informacion disponible",
-            "infoFiltered": "(filtrados de _MAX_ filas)"
+            "infoFiltered": "(Filtrados de _MAX_ filas)"
 		}
 	});
 	
