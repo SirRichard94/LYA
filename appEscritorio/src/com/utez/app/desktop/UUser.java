@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.utez.app.desktop;
 
 import Utilerias.ConexionSQLServer;
@@ -12,6 +11,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ComboBoxEditor;
+import javax.swing.JOptionPane;
 import utez.app.daos.DaoUsuario;
 import utez.app.model.UsuarioBean;
 
@@ -20,20 +20,41 @@ import utez.app.model.UsuarioBean;
  * @author Koffo
  */
 public class UUser extends javax.swing.JFrame {
+
     //private List<UsuarioBean> lista;
     //private DaoUsuario daoUsuario;
+
     private Connection conexion;
     private UsuarioBean usuarioBean;
-    
+    private UsuarioBean consultaBean;
+
     public UUser() {
         try {
-            conexion=ConexionSQLServer.getConnection();
+            conexion = ConexionSQLServer.getConnection();
         } catch (SQLException ex) {
             Logger.getLogger(UUser.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
-        
+
         initComponents();
+    }
+    
+    public UUser(UsuarioBean consultaBean){
+        this();
+        this.consultaBean = consultaBean;
+        llenarValores();
+    }
+    
+    private void llenarValores(){
+         txtNombre.setText(consultaBean.getNombre());
+        txtDireccion.setText(consultaBean.getDireccion());
+        txtTelefono.setText(consultaBean.getTelefono());
+        txtCorreo.setText(consultaBean.getCorreo());
+        txtPass.setText(consultaBean.getPasswd());
+        if(consultaBean.isEs_admi()){
+        jComboBox1.setSelectedIndex(1);
+        }else{
+        jComboBox1.setSelectedIndex(2);
+        }
     }
 
     /**
@@ -56,19 +77,20 @@ public class UUser extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        txtNombre = new javax.swing.JTextField();
+        txtDireccion = new javax.swing.JTextField();
+        txtTelefono = new javax.swing.JTextField();
+        txtCorreo = new javax.swing.JTextField();
+        txtPass = new javax.swing.JTextField();
+        btnActualizar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox();
         jLabel10 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
+        txtDato = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
+        btnEliminar = new javax.swing.JButton();
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -152,42 +174,42 @@ public class UUser extends javax.swing.JFrame {
 
         jLabel8.setText("Pass");
 
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        txtTelefono.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                txtTelefonoActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Actualizar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnActualizar.setText("Guardar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnActualizarActionPerformed(evt);
             }
         });
-        jButton1.addKeyListener(new java.awt.event.KeyAdapter() {
+        btnActualizar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jButton1KeyPressed(evt);
+                btnActualizarKeyPressed(evt);
             }
         });
 
         jButton2.setText("Cancelar");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Admin", "User", " ", " " }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione", "Admin", "User", " ", " " }));
 
         jLabel10.setText("Tipo");
 
         jLabel9.setText("Correo Usuario");
 
-        jTextField6.addActionListener(new java.awt.event.ActionListener() {
+        txtDato.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField6ActionPerformed(evt);
+                txtDatoActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Buscar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnBuscarActionPerformed(evt);
             }
         });
 
@@ -196,6 +218,13 @@ public class UUser extends javax.swing.JFrame {
         jLabel11.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jLabel11KeyPressed(evt);
+            }
+        });
+
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
             }
         });
 
@@ -208,7 +237,7 @@ public class UUser extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtDato, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -222,27 +251,30 @@ public class UUser extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(10, 10, 10)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(txtPass, javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(0, 0, Short.MAX_VALUE))))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jTextField2)))))
+                                            .addComponent(txtCorreo, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(txtTelefono, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(txtDireccion)))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(jButton1)
+                                .addComponent(btnActualizar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2))
+                                .addComponent(btnEliminar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton2)
+                                .addGap(75, 75, 75))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton3)
+                                .addComponent(btnBuscar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel11)))
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -254,30 +286,30 @@ public class UUser extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
+                    .addComponent(btnBuscar)
                     .addComponent(jLabel11))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -285,8 +317,9 @@ public class UUser extends javax.swing.JFrame {
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btnActualizar)
+                    .addComponent(jButton2)
+                    .addComponent(btnEliminar))
                 .addGap(19, 19, 19))
         );
 
@@ -298,7 +331,7 @@ public class UUser extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(134, Short.MAX_VALUE))
+                .addContainerGap(97, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -335,57 +368,83 @@ public class UUser extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel6KeyPressed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void txtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_txtTelefonoActionPerformed
 
-    private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
+    private void btnActualizarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnActualizarKeyPressed
         // TODO add your handling code here:
+
+
+    }//GEN-LAST:event_btnActualizarKeyPressed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        // TODO add your handling code here:
+        DaoUsuario daoUsuario = new DaoUsuario(conexion);
+        boolean admi = false;
+//      
+        consultaBean.setCorreo(txtCorreo.getText());
+        consultaBean.setNombre(txtNombre.getText());
+        consultaBean.setPasswd(txtPass.getText());
+        consultaBean.setDireccion(txtDireccion.getText());
+        consultaBean.setTelefono(txtTelefono.getText());
         
-         
-       
-    }//GEN-LAST:event_jButton1KeyPressed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-         DaoUsuario daoUsuario= new DaoUsuario(conexion);
-         String nombre=jTextField1.getText();
-         String direccion=jTextField2.getText();
-         String correo=jTextField4.getText();
-         String tel=jTextField3.getText();  
-         String pass=jTextField5.getText();
-        usuarioBean=new UsuarioBean(0, nombre, direccion, tel, correo, 0, pass, rootPaneCheckingEnabled, rootPaneCheckingEnabled);
-        boolean ex= daoUsuario.update(usuarioBean);
-        if(ex){
-            System.out.println("exito"); 
-        }else{
+        if (jComboBox1.getSelectedIndex()== 1){
+            consultaBean.setEs_admi(true);
+        }else if (jComboBox1.getSelectedIndex()== 2){
+            consultaBean.setEs_admi(false);
+        }
+        System.out.println(admi);
+       // usuarioBean = new UsuarioBean(consultaBean);
+        
+        boolean ex = daoUsuario.update(consultaBean);
+        
+        if (ex) {
+            System.out.println("exito");
+        } else {
             System.out.println("tonto");
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+        new resultadoUsuario().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnActualizarActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-        DaoUsuario daoUsuario=new DaoUsuario(conexion);
-         String correo= jTextField6.getText();
-        UsuarioBean ex= daoUsuario.findByCorreo(correo);
-        jTextField1.setText(ex.getNombre());
-         jTextField2.setText(ex.getDireccion());
-          jTextField3.setText(ex.getCorreo());
-           jTextField4.setText(ex.getTelefono());
-            jTextField5.setText(ex.getPasswd());
-         
-         
-         
-    }//GEN-LAST:event_jButton3ActionPerformed
+        DaoUsuario daoUsuario = new DaoUsuario(conexion);
+        String correo = txtDato.getText();
+       
+        consultaBean= daoUsuario.findByCorreo(correo);
+        
+        llenarValores();
+        
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+    private void txtDatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDatoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
+    }//GEN-LAST:event_txtDatoActionPerformed
 
     private void jLabel11KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLabel11KeyPressed
         // TODO add your handling code here:
         new resultadoUsuario().setVisible(true);
     }//GEN-LAST:event_jLabel11KeyPressed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        if (JOptionPane.showConfirmDialog(rootPane, "Seguuura")== JOptionPane.YES_OPTION) {
+
+            DaoUsuario daoUsuario = new DaoUsuario(conexion);
+
+            consultaBean.setAlta(false);
+            boolean ex = daoUsuario.update(consultaBean);
+            if (ex) {
+                System.out.println("exito");
+            } else {
+                System.out.println("tonto");
+            }
+        } else {
+
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -423,9 +482,10 @@ public class UUser extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
@@ -441,11 +501,11 @@ public class UUser extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField txtCorreo;
+    private javax.swing.JTextField txtDato;
+    private javax.swing.JTextField txtDireccion;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtPass;
+    private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 }

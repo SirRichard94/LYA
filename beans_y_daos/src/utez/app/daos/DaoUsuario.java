@@ -102,8 +102,7 @@ public class DaoUsuario extends AbstractDao<UsuarioBean>{
 			+ ", deuda = ?"
 			+ ", alta= ?"
 			+ ", es_admi= ?"
-			+ " WHERE usuario_id = " + bean.getUsuario_id()
-			+ " ;";
+			+ " WHERE usuario_id = " + bean.getUsuario_id() + ";";
 		
 		try {
 			PreparedStatement ps = con.prepareStatement(query);
