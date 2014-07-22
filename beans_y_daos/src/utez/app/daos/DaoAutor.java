@@ -154,8 +154,9 @@ public class DaoAutor extends AbstractDao<AutorBean>{
 		return false;
 	}
 	
-	public List<AutorBean> findByNombre(String nombre){
-		List<AutorBean> list = new ArrayList<>();
+	public AutorBean findByNombre(String nombre){
+		//List<AutorBean> list = new ArrayList<>();
+                AutorBean autor=new AutorBean();
 		String query = ( "SELECT * FROM "+TABLA+" WHERE nombre LIKE ?;");
 		try {
 			
@@ -163,14 +164,18 @@ public class DaoAutor extends AbstractDao<AutorBean>{
 			ps.setString(1, "%"+nombre+"%");
 			ResultSet result = ps.executeQuery();
 			
-			list = passResultSet(result, list);
+			//list = passResultSet(result, list);
+                        if(result.next()){
+                            autor.setNombre(result.getString("nombre"));
+                            autor.setApellido(result.getString("apellido"));
+                        }
 			ps.close();
 			
 		} catch (SQLException ex) {
 			Logger.getLogger(DaoArea.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		
-		return list;
+		return autor;
 	}
 	
 	public List<AutorBean> findByApellido(String apellido){

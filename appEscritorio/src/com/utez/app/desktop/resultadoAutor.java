@@ -8,14 +8,12 @@ package com.utez.app.desktop;
 
 import Utilerias.ConexionSQLServer;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import utez.app.daos.DaoAutor;
 import utez.app.daos.DaoUsuario;
@@ -42,21 +40,44 @@ public class resultadoAutor extends javax.swing.JFrame {
         }
         daoAutor = new DaoAutor(coneccion);
         
-        modelo= new DefaultTableModel (new String[]{"Autor_id","Nombre","Apellido","Alta"},0);
-        
-        List<AutorBean> lista =daoAutor.getAll();
-             for (AutorBean bean : lista) {
-                 Object[] arreglo = 
-                 {bean.getAutor_id(), bean.getNombre(),bean.getApellido(),bean.isAlta()};
-                 
-                 modelo.addRow(arreglo);
-        }
+        actualizarTabla();
 
         
         
         initComponents();
     }
+    
+    private void actualizarTabla(){
+        modelo= new DefaultTableModel (new String[]{"Autor_id","Nombre","Apellido"},0);
+        
+        List<AutorBean> lista =daoAutor.getActive();
+             for (AutorBean bean : lista) {
+                 Object[] arreglo = 
+                 {bean.getAutor_id(), bean.getNombre(),bean.getApellido()};
+                 
+                 modelo.addRow(arreglo);
+        }
+        try{tblUsuarios.setModel(modelo);}catch(NullPointerException e){}
+    }
 
+    public void tablaBusqueda(String busqueda){
+        if (busqueda.length() < 0) {
+            actualizarTabla();
+        } else {
+
+             modelo= new DefaultTableModel (new String[]{"Autor_id","Nombre","Apellido"},0);
+            List<AutorBean> lista =daoAutor.getActive();
+            for (AutorBean bean : lista) {
+                if (bean.getNombre().toLowerCase().contains(busqueda.toLowerCase())) {
+                   Object[] arreglo = 
+                 {bean.getAutor_id(), bean.getNombre(),bean.getApellido()};
+                 
+                 modelo.addRow(arreglo);
+                }
+            }
+        }
+        tblUsuarios.setModel(modelo);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -74,9 +95,11 @@ public class resultadoAutor extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        tblUsuarios = new javax.swing.JTable();
+        btnBusqueda = new javax.swing.JButton();
         txtDato = new javax.swing.JTextField();
+        btnActualizar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Resultados Usuario"));
 
@@ -160,7 +183,7 @@ public class resultadoAutor extends javax.swing.JFrame {
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(310, Short.MAX_VALUE)
+                .addContainerGap(294, Short.MAX_VALUE)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
@@ -178,19 +201,33 @@ public class resultadoAutor extends javax.swing.JFrame {
                 .addContainerGap(52, Short.MAX_VALUE))
         );
 
-        jTable2.setModel(modelo);
-        jScrollPane2.setViewportView(jTable2);
+        tblUsuarios.setModel(modelo);
+        jScrollPane2.setViewportView(tblUsuarios);
 
-        jButton1.setText("Buscar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnBusqueda.setText("Buscar");
+        btnBusqueda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnBusquedaActionPerformed(evt);
             }
         });
 
         txtDato.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtDatoKeyPressed(evt);
+            }
+        });
+
+        btnActualizar.setText("Cambiar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
+
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
             }
         });
 
@@ -202,10 +239,16 @@ public class resultadoAutor extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDato, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtDato, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBusqueda)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnActualizar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEliminar)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,11 +256,13 @@ public class resultadoAutor extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
-                .addComponent(txtDato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtDato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnActualizar)
+                    .addComponent(btnEliminar)
+                    .addComponent(btnBusqueda))
+                .addGap(45, 45, 45))
         );
 
         pack();
@@ -242,75 +287,15 @@ public class resultadoAutor extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel6KeyPressed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBusquedaActionPerformed
         // TODO add your handling code here:
-        if (txtDato.getText().length() > 0) {
-            modelo= new DefaultTableModel (new String[]{"Autor_id","Nombre","Apellido","Alta"},0);
-        
-        List<AutorBean> lista =daoAutor.getAll();
-             for (AutorBean bean : lista) {
-                 if (bean.getNombre().contains(txtDato.getText())) {
-                 Object[] arreglo = 
-                 {bean.getAutor_id(), bean.getNombre(),bean.getApellido(),bean.isAlta()};
-                 
-                 modelo.addRow(arreglo);
-                 }
-                  jTable2.setModel(modelo);
-        }
-            
-            
-        }else{
-            modelo= new DefaultTableModel (new String[]{"Autor_id","Nombre","Apellido","Alta"},0);
-        
-       List<AutorBean> lista =daoAutor.getAll();
-             for (AutorBean bean : lista) {
-                 if (bean.getNombre().contains(txtDato.getText())) {
-                 Object[] arreglo = 
-                 {bean.getAutor_id(), bean.getNombre(),bean.getApellido(),bean.isAlta()};
-                 
-                 modelo.addRow(arreglo);
-                 }
-                 jTable2.setModel(modelo);
-        }
-             
-            
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
+        tablaBusqueda(txtDato.getText());
+    }//GEN-LAST:event_btnBusquedaActionPerformed
 
     private void txtDatoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDatoKeyPressed
         // TODO add your handling code here:
          if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-        if (txtDato.getText().length() > 0) {
-            modelo= new DefaultTableModel (new String[]{"Autor_id","Nombre","Apellido","Alta"},0);
-        
-         List<AutorBean> lista =daoAutor.getAll();
-             for (AutorBean bean : lista) {
-                 if (bean.getNombre().contains(txtDato.getText())) {
-                 Object[] arreglo = 
-                 {bean.getAutor_id(), bean.getNombre(),bean.getApellido(),bean.isAlta()};
-                 
-                 modelo.addRow(arreglo);
-                 }
-                  jTable2.setModel(modelo);
-        }
-            
-            
-        }else{
-           modelo= new DefaultTableModel (new String[]{"Autor_id","Nombre","Apellido","Alta"},0);
-        
-        List<AutorBean> lista =daoAutor.getAll();
-             for (AutorBean bean : lista) {
-                 if (bean.getNombre().contains(txtDato.getText())) {
-                 Object[] arreglo = 
-                 {bean.getAutor_id(), bean.getNombre(),bean.getApellido(),bean.isAlta()};
-                 
-                 modelo.addRow(arreglo);
-                 }
-                  jTable2.setModel(modelo);
-        }
-            
-            
-        }
+             tablaBusqueda(txtDato.getText());
          }
     }//GEN-LAST:event_txtDatoKeyPressed
 
@@ -318,6 +303,27 @@ public class resultadoAutor extends javax.swing.JFrame {
         // TODO add your handling code here:
         new Bienvenida().setVisible(true);
     }//GEN-LAST:event_jLabel4MouseClicked
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+    
+        int id =(Integer) modelo.getValueAt(tblUsuarios.getSelectedRow(), 0);
+       // JOptionPane.showMessageDialog(rootPane, id);
+        AutorBean autor = daoAutor.get(id);
+        new UAutor(autor).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        if(JOptionPane.showConfirmDialog(rootPane, "Seguro que desea eliminar Este registro?") == JOptionPane.OK_OPTION){
+        int id =(Integer) modelo.getValueAt(tblUsuarios.getSelectedRow(), 0);
+        AutorBean autor = daoAutor.get(id);
+        autor.setAlta(false);
+        daoAutor.update(autor);
+        
+        actualizarTabla();
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -355,7 +361,9 @@ public class resultadoAutor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnBusqueda;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -364,7 +372,7 @@ public class resultadoAutor extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable tblUsuarios;
     private javax.swing.JTextField txtDato;
     // End of variables declaration//GEN-END:variables
 }
