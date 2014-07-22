@@ -116,7 +116,7 @@ CREATE TABLE USUARIO(
 
 CREATE TABLE PRESTAMO(
 	prestamo_id int AUTO_INCREMENT,
-	ejemplar_id int not null,
+	ejemplar_id int not null unique,
 	usuario_id int not null,
 	fecha_salida date not null,
 	fecha_entrega date not null,
@@ -255,8 +255,6 @@ SELECT DATEDIFF( (SELECT fecha_entrega FROM PRESTAMO where prestamo_id = 2),  cu
 select * FROM PRESTAMO WHERE fecha_entrega > fecha_salida;
 
 
-
-
 INSERT INTO PENALIZACION (limite_inferior, limite_superior, costo)
 VALUES (1,3,5),
 		(4,6,10),
@@ -270,3 +268,12 @@ SELECT costo FROM PENALIZACION where limite_inferior IN
 -- elegir penalizacion de  la diferencia entre hoy y una fecha --
 SELECT costo FROM PENALIZACION where limite_inferior IN 
 (SELECT MAX(limite_inferior) FROM PENALIZACION WHERE limite_inferior <= datediff(CURDATE(), '2014-7-18') );
+
+
+INSERT INTO PRESTAMO (usuario_id, ejemplar_id, fecha_salida, fecha_entrega)
+VALUES (
+	1, 
+	2,
+	CURDATE(), 
+	DATE_ADD(CURDATE(),INTERVAL 3 DAY )
+	);

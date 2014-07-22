@@ -9,14 +9,14 @@
 <script type="text/javascript">
 $(document).ready(function (){ 
 	$("#tabla-autor").dataTable({
-		"lengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
+		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todo"]],
 		"language": {
             "lengthMenu": "_MENU_ filas por página",
             "search": "Busqueda",
-            "zeroRecords": "No se encontro informacion",
+            "zeroRecords": "No se encontró informacion",
             "info": "Mostrando página _PAGE_ de _PAGES_",
             "infoEmpty": "No hay informacion disponible",
-            "infoFiltered": "(filtrados de _MAX_ filas)"
+            "infoFiltered": "(Filtrados de _MAX_ filas)"
 		}
 	});
 	
@@ -42,13 +42,20 @@ $(document).ready(function (){
             <tbody>
 		    
                <% for(int i = 0; i< lista.size(); i++){ %>
+	       <%int id = lista.get(i).getEditorial_id();%>
 			    <tr>
 				    <td><%=lista.get(i).getNombre()%></td>
 				    <td><%=lista.get(i).getDireccion()%></td>
 				    <td class="centered"><%=listaLibros.get(i)%></td>
 				    <td class="centered">
-					    <span class="glyphicon glyphicon-pencil"></span>
-					    <span class="glyphicon glyphicon-trash"></span>
+					    <a href="#ModificarEditorial?guardar=false&AMP;u=<%=id%>" 
+					       title="modificar">
+						    <span class="glyphicon glyphicon-pencil"></span>
+					    </a>
+					    <a href="#EliminarEditorial?e=<%=id%>" 
+					       title="eliminar">
+						    <span class="glyphicon glyphicon-trash"></span>
+					    </a>
 				    </td>
 			    </tr>
 		<% } %>

@@ -97,13 +97,18 @@ public class DaoLibro extends AbstractDao<LibroBean>{
 		LibroBean libro = null;
 		try {
 			PreparedStatement statement = con.prepareStatement(
-				"SELECT * FROM LIBRO where area_id="+id+";");
+				"SELECT * FROM LIBRO where libro_id=?;");
+			statement.setInt(1, id);
 			ResultSet result = statement.executeQuery();
 			
 			libro = passResultSet(result, new ArrayList<LibroBean>()).get(0);
 			
+			
 		} catch (SQLException ex) {
 			Logger.getLogger(DaoArea.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (IndexOutOfBoundsException ex){
+			System.err.println("Libro IndexOutOfBounds");
+			return null;
 		}
 		
 		return libro;
@@ -535,6 +540,8 @@ public class DaoLibro extends AbstractDao<LibroBean>{
 			statement.close();
 		} catch (SQLException ex) {
 			Logger.getLogger(DaoArea.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (IndexOutOfBoundsException ex){
+			
 		}
 		
 		return libro;

@@ -38,7 +38,8 @@ public class DaoPrestamo extends AbstractDao<PrestamoBean>{
 				prestamo.setFecha_entrega(result.getDate("fecha_entrega"));
 				prestamo.setFecha_salida(result.getDate("fecha_salida"));
 				
-				EjemplarBean ejemplar = new DaoEjemplar(con).get(result.getInt("ejemplar_id"));
+				EjemplarBean ejemplar = 
+					new DaoEjemplar(con).get(result.getInt("ejemplar_id"));
 				UsuarioBean usuario = new DaoUsuario(con).get(result.getInt("usuario_id"));
 				
 				prestamo.setEjemplar(ejemplar);
@@ -57,13 +58,11 @@ public class DaoPrestamo extends AbstractDao<PrestamoBean>{
 		String query ="SELECT * FROM PRESTAMO;";
 		try {
 			ResultSet result = executeQuery(query);
-			list = passResultSet(result, list);
+			passResultSet(result, list);
 			
 		} catch (SQLException ex) {
 			Logger.getLogger(DaoArea.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		
-		
 		return list;
 	}
 
@@ -84,7 +83,7 @@ public class DaoPrestamo extends AbstractDao<PrestamoBean>{
 			ps.close();
 		} catch (SQLException ex) {
 			Logger.getLogger(DaoPrestamo.class.getName()).log(Level.SEVERE, null, ex);
-		}
+		} catch (IndexOutOfBoundsException e){}
 		
 		return bean;
 	}
@@ -164,6 +163,48 @@ public class DaoPrestamo extends AbstractDao<PrestamoBean>{
 		} catch (SQLException ex) {
 			Logger.getLogger(DaoArea.class.getName()).log(Level.SEVERE, null, ex);
 		}
+		return false;
+	}
+	
+	public boolean nuevoPrestamo(UsuarioBean usuario, LibroBean libro, int dias){
+	return nuevoPrestamo(usuario, libro, dias, false);
+	}
+	
+	public boolean nuevoPrestamo(UsuarioBean usuario, LibroBean libro, int dias, boolean mysql){
+		EjemplarBean ejemplar = new DaoEjemplar(con).getDisponibleByLibro(libro);
+		if (ejemplar == null || usuario == null){
+			return false;
+		}
+		
+		try{
+			String query = "INSERT INTO PRESTAMO (usuario_id, ejemplar_id, fecha_salida, fecha_entrega)"
+				+ " VALUES (?,?,"
+				+ "GETDATE(), DATEADD(day,?,GETDATE()) "
+				+ ");";
+			
+			if(mysql){
+				query = "INSERT INTO PRESTAMO (usuario_id, ejemplar_id, fecha_salida, fecha_entrega)"
+				+ " VALUES (?,?,"
+				+ "CURDATE(), DATE_ADD(CURDATE(),INTERVAL ? DAY )"
+				+ ");";
+			}
+			
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setInt(1, usuario.getUsuario_id());
+			ps.setInt(2, ejemplar.getEjemplar_id());
+			ps.setInt(3, dias);
+			
+			if (ps.executeUpdate() == 1){
+				ps.close();
+				return true;
+			}
+			
+		} catch (SQLException ex) {
+			Logger.getLogger(DaoPrestamo.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		
+		
+		
 		return false;
 	}
 	
