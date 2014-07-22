@@ -7,7 +7,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <%@include file="incl_headmeta.html" %>
     <title>Biblioteca Lee y Aprende </title>

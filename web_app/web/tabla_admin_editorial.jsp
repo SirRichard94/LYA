@@ -48,11 +48,13 @@ $(document).ready(function (){
 				    <td><%=lista.get(i).getDireccion()%></td>
 				    <td class="centered"><%=listaLibros.get(i)%></td>
 				    <td class="centered">
-					    <a href="#ModificarEditorial?guardar=false&AMP;u=<%=id%>" 
+					    <a class ="mod-editorial"
+						href="ModificarEditorial?guardar=false&AMP;i=<%=id%>" 
 					       title="modificar">
 						    <span class="glyphicon glyphicon-pencil"></span>
 					    </a>
-					    <a href="#EliminarEditorial?e=<%=id%>" 
+					    <a class ="elim-editorial"
+						    href="EliminarEditorial?i=<%=id%>" 
 					       title="eliminar">
 						    <span class="glyphicon glyphicon-trash"></span>
 					    </a>
@@ -61,3 +63,13 @@ $(document).ready(function (){
 		<% } %>
             </tbody>
           </table>
+
+	    <script type="text/javascript">
+		    $(document).ready(function (){
+			    $(".elim-editorial").click(function(){
+				if(!confirm("Seguro que desea eliminarla?")){
+					return false;
+				}
+			    });
+		    });
+	    </script>

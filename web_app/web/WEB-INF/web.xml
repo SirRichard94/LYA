@@ -40,6 +40,14 @@
         <servlet-name>AgregarArea</servlet-name>
         <servlet-class>utez.app.web.agregar.ServletAgregarArea</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EliminarEditorial</servlet-name>
+        <servlet-class>utez.app.web.eliminar.ServletEliminarEditorial</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ModificarEditorial</servlet-name>
+        <servlet-class>utez.app.web.modificar.ServletModificarEditorial</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -79,6 +87,14 @@
     <servlet-mapping>
         <servlet-name>AgregarArea</servlet-name>
         <url-pattern>/AgregarArea</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EliminarEditorial</servlet-name>
+        <url-pattern>/EliminarEditorial</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ModificarEditorial</servlet-name>
+        <url-pattern>/ModificarEditorial</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
