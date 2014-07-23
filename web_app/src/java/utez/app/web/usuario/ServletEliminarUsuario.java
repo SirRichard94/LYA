@@ -4,28 +4,28 @@
  * and open the template in the editor.
  */
 
-package utez.app.web.agregar;
+package utez.app.web.usuario;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.rmi.ServerException;
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import utez.app.daos.DaoEjemplar;
-import utez.app.daos.DaoLibro;
-import utez.app.model.EjemplarBean;
-import utez.app.model.LibroBean;
+import javax.servlet.http.HttpSession;
+import utez.app.daos.DaoUsuario;
+import utez.app.model.UsuarioBean;
 import utez.app.web.eq4.util.DbConnection;
 
 /**
  *
  * @author ricardo
  */
-public class ServletAgregarEjemplares extends HttpServlet {
+@WebServlet(name = "EliminarUsuario", urlPatterns = {"/EliminarUsuario"})
+public class ServletEliminarUsuario extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and
@@ -38,61 +38,44 @@ public class ServletAgregarEjemplares extends HttpServlet {
 	 */
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
-		response.setContentType("text/html;charset=UTF-8");
+		try{
 		
-		//PARAMTETROS i = isbn, l = localizacion, n = numero de ejemplares
-		long isbn = Long.parseLong(request.getParameter("i"));
-		String localizacion = request.getParameter("l");
-		int num = Integer.parseInt(request.getParameter("n"));
+		HttpSession sesion = request.getSession();
+		if ((Boolean)sesion.getAttribute("admin") == false || (Boolean) sesion.getAttribute("admin") == null){
+			throw new ServerException("Acceso denegado");
+		}
+		}catch (NullPointerException ex){
+			throw new ServerException("Acceso denegado");
+		}
 		
-		//Beans,Daos y conecciones
-		List<EjemplarBean> ejemplarList = new ArrayList();
 		Connection con = DbConnection.getConnection();
-		DaoEjemplar daoE = new DaoEjemplar(con);
-		DaoLibro daoL = new DaoLibro(con);
-		
-		//mensaje de informacion
-		
-		String mensaje = "";
-		
-		LibroBean libroBean = daoL.getByIsbn(isbn);
-		
-		if (libroBean == null || libroBean.getNombre() == null || libroBean.getNombre().equals("") ){
-			mensaje += "<div class=\"alert alert-warning\" > No existe libro con ISBN "
-				+ isbn +"</div>";
-		}
-		else {
-		
-		for (int i = 0; i < num; i++) {
-			EjemplarBean ejemplar = new EjemplarBean();
-			ejemplar.setLibro(libroBean);
-			ejemplar.setLocalizacion(localizacion);
-			ejemplar.setEjemplar_id(i);
-			ejemplarList.add(ejemplar);
+		if (con == null){
+			throw new ServerException("No hay coneccion con la BD");
 		}
 		
-			int cuenta = 0;
-			for (EjemplarBean ejemplarBean : ejemplarList) {
-				if (!daoE.add(ejemplarBean)) {
-					mensaje += "<div class=\"alert alert-warning\"> Error al agregar ejemplar "
-						+ ejemplarBean.getEjemplar_id() + "</div>";
-				} else {
-					cuenta++;
-				}
-			}
+		int usuario_id = Integer.parseInt(request.getParameter("u"));
+		DaoUsuario dao = new DaoUsuario(con);
+		
+		UsuarioBean usuario = dao.get(usuario_id);
+		usuario.setAlta(false);
+		
+		
+		 
+		String mensaje;
+		if (dao.update(usuario)){
+			request.setAttribute("info", "Ha sido eliminado con exito");
+			
+		} else{
+			request.setAttribute("warning", "Error al eliminar usuario");
+			
+		}
+		
+		//this.getServletContext().getRequestDispatcher("/admin.jsp").forward(request, response);
+		
+		String pagina = response.encodeRedirectURL("admin.jsp");
+		response.sendRedirect(pagina);
 
-			if (cuenta > 0) {
-				mensaje += "<div class=\"alert alert-info\"> Agregados " + cuenta + " ejemplares" + " de " + libroBean.getNombre()
-					+ "</div>";
-			}
-//		else{
-//			mensaje += "<div class=\"alert alert-warning\"> no se agregaron ejemplares </div>";
-//		}
 
-		}
-		try (PrintWriter out = response.getWriter()) {
-			out.print(mensaje);
-		}
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -4,28 +4,28 @@
  * and open the template in the editor.
  */
 
-package utez.app.web.agregar;
+package utez.app.web.autor;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.rmi.ServerException;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import utez.app.daos.DaoUsuario;
-import utez.app.model.UsuarioBean;
+import utez.app.daos.DaoAutor;
+import utez.app.daos.DaoLibro;
 import utez.app.web.eq4.util.DbConnection;
+import utez.app.model.AutorBean;
 
 /**
  *
  * @author ricardo
  */
-@WebServlet(name = "AgregarUsuario", urlPatterns = {"/AgregarUsuario"})
-public class ServletAgregarUsuario extends HttpServlet {
+@WebServlet(name = "ServletTablaAutor", urlPatterns = {"/ServletTablaAutor"})
+public class ServletTablaAutor extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and
@@ -38,54 +38,27 @@ public class ServletAgregarUsuario extends HttpServlet {
 	 */
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
-		response.setContentType("text/html;charset=UTF-8");
 		
-//		try{
-//		
-//		HttpSession sesion = request.getSession();
-//		if ((Boolean)sesion.getAttribute("admin") == false || (Boolean) sesion.getAttribute("admin") == null){
-//			throw new ServerException("Acceso denegado");
-//		}
-//		}catch (NullPointerException ex){
-//			throw new ServerException("Acceso denegado");
-//		}
 		Connection con = DbConnection.getConnection();
-		if (con == null){
-			throw new ServerException("No hay coneccion con la BD");
-		}
-		
-		String nombre = request.getParameter("nombre");
-		String email = request.getParameter("email");
-		String pass = request.getParameter("pass");
-		String tel = request.getParameter("tel");
-		String direccion = request.getParameter("dir");
-		
-		UsuarioBean usuario = new UsuarioBean();
-		usuario.setNombre(nombre);
-		usuario.setCorreo(email);
-		usuario.setPasswd(pass);
-		usuario.setTelefono(tel);
-		usuario.setDireccion(direccion);
-		
-		String mensaje;
-		if (new DaoUsuario(con).add(usuario)){
-			//request.setAttribute("info", "Usuario agregado con exito");
-			mensaje = "<div class=\"alert alert-info\"> Usuario agregado con exito</div>";
-		} else{
-			//request.setAttribute("warning", "Error al agregar usuario");
-			mensaje = "<div class=\"alert alert-danger\"> Error al agregar usuario</div>";
-		}
-		
-		try (PrintWriter out = response.getWriter()) {
-			out.print(mensaje);
-		}
+		DaoAutor dao = new DaoAutor(con);
+		List<AutorBean> lista ;
 
-		//this.getServletContext().getRequestDispatcher("/admin.jsp").forward(request, response);
+		lista = dao.getActive();
+		List<Integer> listaLibros = new ArrayList();
 		
-		//String pagina = response.encodeRedirectURL("admin.jsp");
-		//response.sendRedirect(pagina);
+		for (AutorBean autorBean : lista) {
+			listaLibros.add(
+				dao.countLibros(autorBean)
+			);
+		}
+		
+		request.setAttribute("lista", lista);
+		request.setAttribute("listaLibros", listaLibros);
 
-		
+		this.getServletConfig().getServletContext().
+			getRequestDispatcher("/tabla_admin_autor.jsp").
+			forward(request, response);
+
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package utez.app.web.tables;
+package utez.app.web.usuario;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,19 +16,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import utez.app.daos.DaoArea;
-import utez.app.daos.DaoEditorial;
-import utez.app.daos.DaoLibro;
-import utez.app.model.AreaBean;
-import utez.app.model.EditorialBean;
+import utez.app.daos.DaoUsuario;
+import utez.app.model.UsuarioBean;
 import utez.app.web.eq4.util.DbConnection;
 
 /**
  *
  * @author ricardo
  */
-@WebServlet(name = "ServletTablaArea", urlPatterns = {"/ServletTablaArea"})
-public class ServletTablaArea extends HttpServlet {
+@WebServlet(name = "ServletTablaUsuario", urlPatterns = {"/ServletTablaUsuario"})
+public class ServletTablaUsuario extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and
@@ -41,28 +38,26 @@ public class ServletTablaArea extends HttpServlet {
 	 */
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
-		response.setContentType("text/html;charset=UTF-8");
 		
 		Connection con = DbConnection.getConnection();
-		DaoArea dao = new DaoArea(con);
-		
-		List<AreaBean> lista ;
+		DaoUsuario dao = new DaoUsuario(con);
+		List<UsuarioBean> lista = new ArrayList<>();
 
 		lista = dao.getActive();
-		List<Integer> listaLibros = new ArrayList();
+		List<Integer> prestamos = new ArrayList<>();
 		
-		for (AreaBean area : lista) {
-			listaLibros.add(
-				new DaoLibro(con).countByArea(area)
-			);
+		
+		for (UsuarioBean usuario : lista) {
+			prestamos.add(dao.countPrestamos(usuario));
 		}
 		
 		request.setAttribute("lista", lista);
-		request.setAttribute("listaLibros", listaLibros);
+		request.setAttribute("prestamos", prestamos);
 
 		this.getServletConfig().getServletContext().
-			getRequestDispatcher("/tabla_admin_area.jsp").
+			getRequestDispatcher("/tabla_admin_usr.jsp").
 			forward(request, response);
+
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -4,31 +4,31 @@
  * and open the template in the editor.
  */
 
-package utez.app.web.agregar;
+package utez.app.web.libro;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.rmi.ServerException;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import utez.app.daos.DaoArea;
 import utez.app.daos.DaoAutor;
 import utez.app.daos.DaoEditorial;
-import utez.app.daos.DaoUsuario;
-import utez.app.model.AutorBean;
-import utez.app.model.EditorialBean;
-import utez.app.model.UsuarioBean;
+import utez.app.daos.DaoLibro;
+import utez.app.model.AreaBean;
+import utez.app.model.LibroBean;
 import utez.app.web.eq4.util.DbConnection;
 
 /**
  *
  * @author ricardo
  */
-@WebServlet(name = "AgregarEditorial", urlPatterns = {"/AgregarEditorial"})
-public class ServletAgregarEditorial extends HttpServlet {
+@WebServlet(name = "ServletTablaLibro", urlPatterns = {"/ServletTablaLibro"})
+public class ServletTablaLibro extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and
@@ -41,43 +41,27 @@ public class ServletAgregarEditorial extends HttpServlet {
 	 */
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
-		response.setContentType("text/html;charset=UTF-8");
 		
-//		try{
-//		
-//		HttpSession sesion = request.getSession();
-//		if ((Boolean)sesion.getAttribute("admin") == false || (Boolean) sesion.getAttribute("admin") == null){
-//			throw new ServerException("Acceso denegado");
-//		}
-//		}catch (NullPointerException ex){
-//			throw new ServerException("Acceso denegado");
-//		}
 		Connection con = DbConnection.getConnection();
-		if (con == null){
-			throw new ServerException("No hay coneccion con la BD");
+		DaoLibro daoL = new DaoLibro(con);
+		List<LibroBean> lista = new ArrayList<>();
+		
+		lista = daoL.getActive();
+		List<Integer> ejemplares = new ArrayList<>();
+		List<Integer> ejemplaresDisponibles = new ArrayList<>();
+		
+		for (LibroBean libroBean : lista) {
+			ejemplares.add(daoL.countEjemplares(libroBean));
+			ejemplaresDisponibles.add(daoL.countEjemplaresDisponibles(libroBean));
 		}
 		
+		request.setAttribute("lista", lista);
+		request.setAttribute("ej", ejemplares);
+		request.setAttribute("ejDisp", ejemplaresDisponibles);
 		
-		String nombre = request.getParameter("nom");
-		String dir = request.getParameter("dir");
-		
-		EditorialBean nuevaEditorial = new EditorialBean();
-		nuevaEditorial.setNombre(nombre);
-		nuevaEditorial.setDireccion(dir);
-		
-		String mensaje;
-		if (new DaoEditorial(con).add(nuevaEditorial)){
-			
-			mensaje = "<div class=\"alert alert-info\"> "
-				+nuevaEditorial.getNombre()+" agregada con exito</div>";
-		} else{
-			
-			mensaje = "<div class=\"alert alert-danger\"> Error al agregar editorial</div>";
-		}
-		
-		try (PrintWriter out = response.getWriter()) {
-			out.print(mensaje);
-		}
+		this.getServletConfig().getServletContext().
+                getRequestDispatcher("/tabla_admin_lib.jsp").
+                forward(request, response);
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

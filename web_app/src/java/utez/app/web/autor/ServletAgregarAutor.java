@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package utez.app.web.agregar;
+package utez.app.web.autor;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,17 +14,18 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import utez.app.daos.DaoArea;
-import utez.app.daos.DaoEditorial;
-import utez.app.model.AreaBean;
-import utez.app.model.EditorialBean;
+import javax.servlet.http.HttpSession;
+import utez.app.daos.DaoAutor;
+import utez.app.daos.DaoUsuario;
+import utez.app.model.AutorBean;
+import utez.app.model.UsuarioBean;
 import utez.app.web.eq4.util.DbConnection;
 
 /**
  *
  * @author ricardo
  */
-public class ServletAgregarArea extends HttpServlet {
+public class ServletAgregarAutor extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and
@@ -55,19 +56,20 @@ public class ServletAgregarArea extends HttpServlet {
 		
 		
 		String nombre = request.getParameter("n");
+		String apellido = request.getParameter("a");
 		
-		AreaBean nuevaArea = new AreaBean();
-		nuevaArea.setNombre(nombre);
-		
+		AutorBean autor = new AutorBean();
+		autor.setNombre(nombre);
+		autor.setApellido(apellido);
 		
 		String mensaje;
-		if (new DaoArea(con).add(nuevaArea)){
-			
+		if (new DaoAutor(con).add(autor)){
+			//request.setAttribute("info", "Usuario agregado con exito");
 			mensaje = "<div class=\"alert alert-info\"> "
-				+nuevaArea.getNombre()+" agregada con exito</div>";
+				+autor.getNombre()+" "+autor.getApellido()+" agregado con exito</div>";
 		} else{
-			
-			mensaje = "<div class=\"alert alert-danger\"> Error al agregar area</div>";
+			//request.setAttribute("warning", "Error al agregar usuario");
+			mensaje = "<div class=\"alert alert-danger\"> Error al agregar Autor</div>";
 		}
 		
 		try (PrintWriter out = response.getWriter()) {

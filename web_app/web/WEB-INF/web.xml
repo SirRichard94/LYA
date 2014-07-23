@@ -18,19 +18,19 @@
     </servlet>
     <servlet>
         <servlet-name>ModificarUsuario</servlet-name>
-        <servlet-class>utez.app.web.modificar.ServletModificarUsuario</servlet-class>
+        <servlet-class>utez.app.web.usuario.ServletModificarUsuario</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AgregarEjemplares</servlet-name>
-        <servlet-class>utez.app.web.agregar.ServletAgregarEjemplares</servlet-class>
+        <servlet-class>utez.app.web.ejemplar.ServletAgregarEjemplares</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ServletTablaEditorial</servlet-name>
-        <servlet-class>utez.app.web.tables.ServletTablaEditorial</servlet-class>
+        <servlet-class>utez.app.web.editorial.ServletTablaEditorial</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AgregarAutor</servlet-name>
-        <servlet-class>utez.app.web.agregar.ServletAgregarAutor</servlet-class>
+        <servlet-class>utez.app.web.autor.ServletAgregarAutor</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>PerfilUsuario</servlet-name>
@@ -38,15 +38,15 @@
     </servlet>
     <servlet>
         <servlet-name>AgregarArea</servlet-name>
-        <servlet-class>utez.app.web.agregar.ServletAgregarArea</servlet-class>
+        <servlet-class>utez.app.web.area.ServletAgregarArea</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EliminarEditorial</servlet-name>
-        <servlet-class>utez.app.web.eliminar.ServletEliminarEditorial</servlet-class>
+        <servlet-class>utez.app.web.editorial.ServletEliminarEditorial</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ModificarEditorial</servlet-name>
-        <servlet-class>utez.app.web.modificar.ServletModificarEditorial</servlet-class>
+        <servlet-class>utez.app.web.editorial.ServletModificarEditorial</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>

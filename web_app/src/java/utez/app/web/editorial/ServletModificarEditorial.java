@@ -4,28 +4,28 @@
  * and open the template in the editor.
  */
 
-package utez.app.web.tables;
+package utez.app.web.editorial;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.rmi.ServerException;
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import utez.app.daos.DaoAutor;
-import utez.app.daos.DaoLibro;
+import javax.servlet.http.HttpSession;
+import utez.app.daos.DaoEditorial;
+import utez.app.daos.DaoUsuario;
+import utez.app.model.EditorialBean;
+import utez.app.model.UsuarioBean;
 import utez.app.web.eq4.util.DbConnection;
-import utez.app.model.AutorBean;
 
 /**
  *
  * @author ricardo
  */
-@WebServlet(name = "ServletTablaAutor", urlPatterns = {"/ServletTablaAutor"})
-public class ServletTablaAutor extends HttpServlet {
+public class ServletModificarEditorial extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and
@@ -38,27 +38,58 @@ public class ServletTablaAutor extends HttpServlet {
 	 */
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
+		response.setContentType("charset=UTF-8");
 		
-		Connection con = DbConnection.getConnection();
-		DaoAutor dao = new DaoAutor(con);
-		List<AutorBean> lista ;
-
-		lista = dao.getActive();
-		List<Integer> listaLibros = new ArrayList();
+		try{
 		
-		for (AutorBean autorBean : lista) {
-			listaLibros.add(
-				dao.countLibros(autorBean)
-			);
+		HttpSession sesion = request.getSession();
+		if ((Boolean)sesion.getAttribute("admin") == false || (Boolean) sesion.getAttribute("admin") == null){
+			throw new ServerException("Acceso denegado");
+		}
+		}catch (NullPointerException ex){
+			throw new ServerException("Acceso denegado");
 		}
 		
-		request.setAttribute("lista", lista);
-		request.setAttribute("listaLibros", listaLibros);
+		
+		Connection con = DbConnection.getConnection();
+		if (con == null){
+			throw new ServerException("No hay coneccion con la BD");
+		}
+		
+		///
+		DaoEditorial dao = new DaoEditorial(con);
+		
+		String redirect = "modificar_editorial.jsp";
+		String guardar = request.getParameter("guardar");
+		
+		int id = Integer.parseInt(request.getParameter("i"));
+		EditorialBean bean = dao.get(id);
+		
+		if (!guardar.equals("true")){
+			
+			request.setAttribute("objetivo", bean);
+			this.getServletContext().getRequestDispatcher("/"+redirect).forward(request, response);
+			//forward a modificar
+			
+		} else {
+			String nombre = request.getParameter("nombre");
+			String direccion = request.getParameter("dir");
 
-		this.getServletConfig().getServletContext().
-			getRequestDispatcher("/tabla_admin_autor.jsp").
-			forward(request, response);
+			bean.setNombre(nombre);
+			bean.setDireccion(direccion);
 
+			if (dao.update(bean)) {
+				request.setAttribute("info", "Ha sido actualizado con exito");
+
+			} else {
+				request.setAttribute("warning", "Error al actualizar usuario");
+
+			}
+			
+			redirect = "admin.jsp";
+			String pagina = response.encodeRedirectURL(redirect);
+			response.sendRedirect(pagina);				//redirect a admin
+		}
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package utez.app.web.tables;
+package utez.app.web.ejemplar;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,18 +15,17 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import utez.app.daos.DaoAutor;
-import utez.app.daos.DaoEditorial;
+import utez.app.daos.DaoEjemplar;
 import utez.app.daos.DaoLibro;
-import utez.app.model.AutorBean;
-import utez.app.model.EditorialBean;
+import utez.app.model.EjemplarBean;
+import utez.app.model.LibroBean;
 import utez.app.web.eq4.util.DbConnection;
 
 /**
  *
  * @author ricardo
  */
-public class ServletTablaEditorial extends HttpServlet {
+public class ServletAgregarEjemplares extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and
@@ -41,26 +40,59 @@ public class ServletTablaEditorial extends HttpServlet {
 		throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
 		
+		//PARAMTETROS i = isbn, l = localizacion, n = numero de ejemplares
+		long isbn = Long.parseLong(request.getParameter("i"));
+		String localizacion = request.getParameter("l");
+		int num = Integer.parseInt(request.getParameter("n"));
+		
+		//Beans,Daos y conecciones
+		List<EjemplarBean> ejemplarList = new ArrayList();
 		Connection con = DbConnection.getConnection();
-		DaoEditorial dao = new DaoEditorial(con);
+		DaoEjemplar daoE = new DaoEjemplar(con);
+		DaoLibro daoL = new DaoLibro(con);
 		
-		List<EditorialBean> lista ;
-
-		lista = dao.getActive();
-		List<Integer> listaLibros = new ArrayList();
+		//mensaje de informacion
 		
-		for (EditorialBean editorial : lista) {
-			listaLibros.add(
-				new DaoLibro(con).countByEditorial(editorial)
-			);
+		String mensaje = "";
+		
+		LibroBean libroBean = daoL.getByIsbn(isbn);
+		
+		if (libroBean == null || libroBean.getNombre() == null || libroBean.getNombre().equals("") ){
+			mensaje += "<div class=\"alert alert-warning\" > No existe libro con ISBN "
+				+ isbn +"</div>";
+		}
+		else {
+		
+		for (int i = 0; i < num; i++) {
+			EjemplarBean ejemplar = new EjemplarBean();
+			ejemplar.setLibro(libroBean);
+			ejemplar.setLocalizacion(localizacion);
+			ejemplar.setEjemplar_id(i);
+			ejemplarList.add(ejemplar);
 		}
 		
-		request.setAttribute("lista", lista);
-		request.setAttribute("listaLibros", listaLibros);
+			int cuenta = 0;
+			for (EjemplarBean ejemplarBean : ejemplarList) {
+				if (!daoE.add(ejemplarBean)) {
+					mensaje += "<div class=\"alert alert-warning\"> Error al agregar ejemplar "
+						+ ejemplarBean.getEjemplar_id() + "</div>";
+				} else {
+					cuenta++;
+				}
+			}
 
-		this.getServletConfig().getServletContext().
-			getRequestDispatcher("/tabla_admin_editorial.jsp").
-			forward(request, response);
+			if (cuenta > 0) {
+				mensaje += "<div class=\"alert alert-info\"> Agregados " + cuenta + " ejemplares" + " de " + libroBean.getNombre()
+					+ "</div>";
+			}
+//		else{
+//			mensaje += "<div class=\"alert alert-warning\"> no se agregaron ejemplares </div>";
+//		}
+
+		}
+		try (PrintWriter out = response.getWriter()) {
+			out.print(mensaje);
+		}
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

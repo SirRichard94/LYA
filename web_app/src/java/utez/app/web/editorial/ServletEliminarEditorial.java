@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package utez.app.web.modificar;
+package utez.app.web.editorial;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,7 +15,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import utez.app.daos.DaoEditorial;
+import utez.app.daos.DaoEjemplar;
 import utez.app.daos.DaoUsuario;
+import utez.app.model.EditorialBean;
+import utez.app.model.EjemplarBean;
 import utez.app.model.UsuarioBean;
 import utez.app.web.eq4.util.DbConnection;
 
@@ -23,7 +27,7 @@ import utez.app.web.eq4.util.DbConnection;
  *
  * @author ricardo
  */
-public class ServletModificarUsuario extends HttpServlet {
+public class ServletEliminarEditorial extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and
@@ -36,8 +40,7 @@ public class ServletModificarUsuario extends HttpServlet {
 	 */
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
-		response.setContentType("charset=UTF-8");
-		
+		response.setContentType("text/html;charset=UTF-8");
 		try{
 		
 		HttpSession sesion = request.getSession();
@@ -48,53 +51,33 @@ public class ServletModificarUsuario extends HttpServlet {
 			throw new ServerException("Acceso denegado");
 		}
 		
-		
 		Connection con = DbConnection.getConnection();
 		if (con == null){
 			throw new ServerException("No hay coneccion con la BD");
 		}
 		
-		DaoUsuario dao = new DaoUsuario(con);
+		// Eliminar logica
+		int id = Integer.parseInt(request.getParameter("i"));
+		DaoEditorial dao = new DaoEditorial(con);
 		
-		String redirect = "modificar_usuario.jsp";
-		String guardar = request.getParameter("guardar");
+		EditorialBean bean = dao.get(id);
+		bean.setAlta(false);
 		
-		int usuario_id = Integer.parseInt(request.getParameter("u"));
-		UsuarioBean usuario = dao.get(usuario_id);
-		
-		if (!guardar.equals("true")){
+		//
+		 
+		String mensaje;
+		if (dao.update(bean)){
+			request.setAttribute("info", "Ha sido eliminada con exito");
 			
-			request.setAttribute("objetivo", usuario);
-			this.getServletContext().getRequestDispatcher("/"+redirect).forward(request, response);
-			//forward a modificar
+		} else{
+			request.setAttribute("warning", "Error al eliminar Editorial");
 			
-		} else {
-			String nombre = request.getParameter("nombre");
-			String email = request.getParameter("email");
-			String pass = request.getParameter("pass");
-			String tel = request.getParameter("tel");
-			String direccion = request.getParameter("dir");
-			double deuda = Double.parseDouble(request.getParameter("deuda"));
-
-			usuario.setNombre(nombre);
-			usuario.setCorreo(email);
-			usuario.setPasswd(pass);
-			usuario.setTelefono(tel);
-			usuario.setDireccion(direccion);
-			usuario.setDeuda(deuda);
-
-			if (dao.update(usuario)) {
-				request.setAttribute("info", "Ha sido actualizado con exito");
-
-			} else {
-				request.setAttribute("warning", "Error al actualizar usuario");
-
-			}
-			
-			redirect = "admin.jsp";
-			String pagina = response.encodeRedirectURL(redirect);
-			response.sendRedirect(pagina);				//redirect a admin
 		}
+		
+		//this.getServletContext().getRequestDispatcher("/admin.jsp").forward(request, response);
+		
+		String pagina = response.encodeRedirectURL("admin.jsp");
+		response.sendRedirect(pagina);
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
