@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package utez.app.web.editorial;
+package utez.app.web.autor;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,17 +15,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import utez.app.daos.DaoAutor;
 import utez.app.daos.DaoEditorial;
-import utez.app.daos.DaoUsuario;
+import utez.app.model.AutorBean;
 import utez.app.model.EditorialBean;
-import utez.app.model.UsuarioBean;
 import utez.app.web.eq4.util.DbConnection;
 
 /**
  *
  * @author ricardo
  */
-public class ServletModificarEditorial extends HttpServlet {
+public class ServletEliminarAutor extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and
@@ -38,8 +38,7 @@ public class ServletModificarEditorial extends HttpServlet {
 	 */
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
-		response.setContentType("charset=UTF-8");
-		
+		response.setContentType("text/html;charset=UTF-8");
 		try{
 		
 		HttpSession sesion = request.getSession();
@@ -50,46 +49,33 @@ public class ServletModificarEditorial extends HttpServlet {
 			throw new ServerException("Acceso denegado");
 		}
 		
-		
 		Connection con = DbConnection.getConnection();
 		if (con == null){
 			throw new ServerException("No hay coneccion con la BD");
 		}
 		
-		///
-		DaoEditorial dao = new DaoEditorial(con);
+		// Eliminar logica
+		int id = Integer.parseInt(request.getParameter("id"));
+		DaoAutor dao = new DaoAutor(con);
 		
-		String redirect = "modificar_editorial.jsp";
-		String guardar = request.getParameter("guardar");
+		AutorBean bean = dao.get(id);
+		bean.setAlta(false);
 		
-		int id = Integer.parseInt(request.getParameter("i"));
-		EditorialBean bean = dao.get(id);
-		
-		if (!guardar.equals("true")){
+		//
+		 
+		String mensaje;
+		if (dao.update(bean)){
+			request.setAttribute("info", "Ha sido eliminado con exito");
 			
-			request.setAttribute("objetivo", bean);
-			this.getServletContext().getRequestDispatcher("/"+redirect).forward(request, response);
-			//forward a modificar
+		} else{
+			request.setAttribute("warning", "Error al eliminar Autor");
 			
-		} else {
-			String nombre = request.getParameter("nombre");
-			String direccion = request.getParameter("dir");
-
-			bean.setNombre(nombre);
-			bean.setDireccion(direccion);
-
-			if (dao.update(bean)) {
-				request.setAttribute("info", "Ha sido actualizado con exito");
-
-			} else {
-				request.setAttribute("warning", "Error al actualizar Editorial");
-
-			}
-			
-			redirect = "admin.jsp";
-			String pagina = response.encodeRedirectURL(redirect);
-			response.sendRedirect(pagina);				//redirect a admin
 		}
+		
+		//this.getServletContext().getRequestDispatcher("/admin.jsp").forward(request, response);
+		
+		String pagina = response.encodeRedirectURL("admin.jsp");
+		response.sendRedirect(pagina);
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -48,6 +48,14 @@
         <servlet-name>ModificarEditorial</servlet-name>
         <servlet-class>utez.app.web.editorial.ServletModificarEditorial</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EliminarAutor</servlet-name>
+        <servlet-class>utez.app.web.autor.ServletEliminarAutor</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ModificarAutor</servlet-name>
+        <servlet-class>utez.app.web.autor.ServletModificarAutor</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -95,6 +103,14 @@
     <servlet-mapping>
         <servlet-name>ModificarEditorial</servlet-name>
         <url-pattern>/ModificarEditorial</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EliminarAutor</servlet-name>
+        <url-pattern>/EliminarAutor</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ModificarAutor</servlet-name>
+        <url-pattern>/ModificarAutor</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

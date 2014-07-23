@@ -52,15 +52,29 @@ $(document).ready(function (){
 				    <%-- num de libros --%>
 				    <td class="centered"><%=listaLibros.get(i)%></td> 
 				     <%-- accciones --%>
-				    <td class="centered">
-					    
-<a href="#ModificarAutor?guardar=false&AMP;u=<%=id%>" title="modificar">
-	<span class="glyphicon glyphicon-pencil"></span></a>
-<a href="#EliminarAutor?u=<%=id%>" title="eliminar">
-	<span class="glyphicon glyphicon-trash"></span></a>
-		
-				    </td>
+				     <td class="centered">
+
+					     <a Href="ModificarAutor?guardar=false&AMP;id=<%=id%>" 
+						title="modificar" >
+						     <span class="glyphicon glyphicon-pencil"></span>
+					     </a>
+					     <a href="EliminarAutor?id=<%=id%>" title="eliminar"
+						class="eliminar">
+						     <span class="glyphicon glyphicon-trash"></span>
+					     </a>
+
+				     </td>
 			    </tr>
 		<% } %>
             </tbody>
           </table>
+
+	    <script type="text/javascript">
+		    $(document).ready(function (){
+			    $(".eliminar").click(function(){
+				if(!confirm("Seguro que desea eliminarlo?")){
+					return false;
+				}
+			    });
+		    });
+	    </script>

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package utez.app.web.editorial;
+package utez.app.web.autor;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,17 +15,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import utez.app.daos.DaoAutor;
 import utez.app.daos.DaoEditorial;
-import utez.app.daos.DaoUsuario;
+import utez.app.model.AutorBean;
 import utez.app.model.EditorialBean;
-import utez.app.model.UsuarioBean;
 import utez.app.web.eq4.util.DbConnection;
 
 /**
  *
  * @author ricardo
  */
-public class ServletModificarEditorial extends HttpServlet {
+public class ServletModificarAutor extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and
@@ -57,13 +57,13 @@ public class ServletModificarEditorial extends HttpServlet {
 		}
 		
 		///
-		DaoEditorial dao = new DaoEditorial(con);
+		DaoAutor dao = new DaoAutor(con);
 		
-		String redirect = "modificar_editorial.jsp";
+		String redirect = "modificar_autor.jsp";
 		String guardar = request.getParameter("guardar");
 		
-		int id = Integer.parseInt(request.getParameter("i"));
-		EditorialBean bean = dao.get(id);
+		int id = Integer.parseInt(request.getParameter("id"));
+		AutorBean bean = dao.get(id);
 		
 		if (!guardar.equals("true")){
 			
@@ -73,16 +73,16 @@ public class ServletModificarEditorial extends HttpServlet {
 			
 		} else {
 			String nombre = request.getParameter("nombre");
-			String direccion = request.getParameter("dir");
+			String apellido = request.getParameter("apellido");
 
 			bean.setNombre(nombre);
-			bean.setDireccion(direccion);
+			bean.setApellido(apellido);
 
 			if (dao.update(bean)) {
 				request.setAttribute("info", "Ha sido actualizado con exito");
 
 			} else {
-				request.setAttribute("warning", "Error al actualizar Editorial");
+				request.setAttribute("warning", "Error al actualizar Autor");
 
 			}
 			
