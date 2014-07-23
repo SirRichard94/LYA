@@ -82,7 +82,7 @@
 			    --%>
 			    <div id="tbl" style="overflow: auto; width: 100%">
 				    <!-- Tabla -->
-				    Elija una opcion
+				    Elija una opción
 			    </div>
 			    
 			    
@@ -92,7 +92,7 @@
 			    <!-- Agregar  -->
 			    <div class="well" >
 				    <div id="agregar">
-					    
+					   
 				    </div>   
 			    </div>
 		    </div>
@@ -118,9 +118,17 @@
     <script src="assets/js/bootstrap.min.js"></script>
     
     <!-- my scripts -->
-    <script type="text/javascript">
+    <script type="text/javascript">	    
 	    $(document).ready(function(){
+		//default
+		$("#selectUsr").addClass("active");
+		$.get("ServletTablaUsuario", function (responseText){
+			$("#tbl").html(responseText);
+		});
+		$("#agregar").load("form_usuario.jsp");
+		    
 
+		//seleccion
 		$("#selectPill li").click(function(){
 			$("ul li").removeClass("active");
 			$(this).addClass("active");
