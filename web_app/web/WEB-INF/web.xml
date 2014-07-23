@@ -56,6 +56,14 @@
         <servlet-name>ModificarAutor</servlet-name>
         <servlet-class>utez.app.web.autor.ServletModificarAutor</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ModificarArea</servlet-name>
+        <servlet-class>utez.app.web.area.ServletModificarArea</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EliminarArea</servlet-name>
+        <servlet-class>utez.app.web.area.ServletEliminarArea</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -111,6 +119,14 @@
     <servlet-mapping>
         <servlet-name>ModificarAutor</servlet-name>
         <url-pattern>/ModificarAutor</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ModificarArea</servlet-name>
+        <url-pattern>/ModificarArea</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EliminarArea</servlet-name>
+        <url-pattern>/EliminarArea</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
