@@ -64,6 +64,18 @@
         <servlet-name>EliminarArea</servlet-name>
         <servlet-class>utez.app.web.area.ServletEliminarArea</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletOptionListArea</servlet-name>
+        <servlet-class>utez.app.web.area.ServletOptionListArea</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletOptionListEditorial</servlet-name>
+        <servlet-class>utez.app.web.editorial.ServletOptionListEditorial</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletOptionListAutor</servlet-name>
+        <servlet-class>utez.app.web.autor.ServletOptionListAutor</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -127,6 +139,18 @@
     <servlet-mapping>
         <servlet-name>EliminarArea</servlet-name>
         <url-pattern>/EliminarArea</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletOptionListArea</servlet-name>
+        <url-pattern>/ServletOptionListArea</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletOptionListEditorial</servlet-name>
+        <url-pattern>/ServletOptionListEditorial</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletOptionListAutor</servlet-name>
+        <url-pattern>/ServletOptionListAutor</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
