@@ -344,8 +344,11 @@ public class UDAutor extends javax.swing.JFrame {
         // TODO add your handling code here:
         DaoAutor daoAutor = new DaoAutor(conexion);
         String nombre = txtDato.getText();
-        consultaBean= daoAutor.findByNombre(nombre);
+	
+        consultaBean= daoAutor.getByNombre(nombre);
+	if (consultaBean != null){
         llenarValores();
+	}
         
     }//GEN-LAST:event_btnBuscarActionPerformed
 

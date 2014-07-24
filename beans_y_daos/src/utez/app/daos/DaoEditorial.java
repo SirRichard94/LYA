@@ -187,23 +187,21 @@ public class DaoEditorial extends AbstractDao<EditorialBean>{
 		return list;
 	}
          public EditorialBean getByNombre(String nombre){
-		EditorialBean editorial=new EditorialBean();
-		String query = ( "SELECT nombre, direccion, alta FROM "+TABLA+" WHERE nombre LIKE ? and alta = 'true';");
+		EditorialBean editorial=null;
+		String query = ( "SELECT nombre, direccion, alta FROM "+TABLA+" WHERE nombre = ? and alta = 'true';");
 		try {
 			
 			PreparedStatement ps = con.prepareStatement(query);
-			ps.setString(1, "%"+nombre+"%");
+			ps.setString(1, nombre);
 			ResultSet result = ps.executeQuery();
 			
-			if(result.next()){
-                            editorial.setNombre(result.getString("nombre"));
-                            editorial.setDireccion(result.getString("direccion"));
-                        }
+			editorial = 
+				passResultSet(result, new ArrayList<EditorialBean>()).get(0);
 			ps.close();
 			
 		} catch (SQLException ex) {
 			Logger.getLogger(DaoArea.class.getName()).log(Level.SEVERE, null, ex);
-		}
+		}catch (IndexOutOfBoundsException e){}
 		
 		return editorial;
 	}

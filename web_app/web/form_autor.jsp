@@ -2,7 +2,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <div id="alert-autor"></div>
-<form class="form-horizontal" id="form-autor">
+<form class="form-horizontal" id="form-autor" accept-charset="utf-8" enctype="multipart/form-data">
 	<fieldset>
 	<legend>Agregar Autor</legend>
 	<div class="form-group">

@@ -39,6 +39,8 @@ public class ServletAgregarAutor extends HttpServlet {
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
+		request.setCharacterEncoding("UTF-8");
+		
 		
 //		try{
 //		
@@ -66,7 +68,8 @@ public class ServletAgregarAutor extends HttpServlet {
 		if (new DaoAutor(con).add(autor)){
 			//request.setAttribute("info", "Usuario agregado con exito");
 			mensaje = "<div class=\"alert alert-info\"> "
-				+autor.getNombre()+" "+autor.getApellido()+" agregado con exito</div>";
+				+autor.getNombre()+" "+autor.getApellido()+" agregado con exito"
+				+ request.getContentType()+"</div>";
 		} else{
 			//request.setAttribute("warning", "Error al agregar usuario");
 			mensaje = "<div class=\"alert alert-danger\"> Error al agregar Autor</div>";

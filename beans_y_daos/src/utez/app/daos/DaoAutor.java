@@ -154,28 +154,45 @@ public class DaoAutor extends AbstractDao<AutorBean>{
 		return false;
 	}
 	
-	public AutorBean findByNombre(String nombre){
+	public AutorBean getByNombre(String nombre){
 		//List<AutorBean> list = new ArrayList<>();
-                AutorBean autor=new AutorBean();
-		String query = ( "SELECT * FROM "+TABLA+" WHERE nombre LIKE ?;");
+                AutorBean autor=null;
+		String query = ( "SELECT * FROM "+TABLA+" WHERE nombre = ? and alta = 'true';");
+		try {
+			
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setString(1, nombre);
+			ResultSet result = ps.executeQuery();
+			
+			autor = passResultSet(result, new ArrayList<AutorBean>()).get(0);
+                        
+			ps.close();
+			
+		} catch (SQLException ex) {
+			Logger.getLogger(DaoArea.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (IndexOutOfBoundsException e){}
+		
+		return autor;
+	}
+
+	public List<AutorBean> findByNombre(String nombre){
+		List<AutorBean> list = new ArrayList<>();
+		String query = ( "SELECT * FROM "+TABLA+" WHERE nombre LIKE ? and alta = 'true';");
 		try {
 			
 			PreparedStatement ps = con.prepareStatement(query);
 			ps.setString(1, "%"+nombre+"%");
 			ResultSet result = ps.executeQuery();
 			
-			//list = passResultSet(result, list);
-                        if(result.next()){
-                            autor.setNombre(result.getString("nombre"));
-                            autor.setApellido(result.getString("apellido"));
-                        }
+			list = passResultSet(result, list);
+                        
 			ps.close();
 			
 		} catch (SQLException ex) {
 			Logger.getLogger(DaoArea.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		
-		return autor;
+		return list;
 	}
 	
 	public List<AutorBean> findByApellido(String apellido){
