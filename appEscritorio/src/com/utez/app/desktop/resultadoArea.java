@@ -16,11 +16,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import utez.app.daos.DaoArea;
-import utez.app.daos.DaoAutor;
-import utez.app.daos.DaoEditorial;
 import utez.app.model.AreaBean;
-import utez.app.model.AutorBean;
-import utez.app.model.EditorialBean;
 
 /**
  *

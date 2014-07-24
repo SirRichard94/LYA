@@ -10,13 +10,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import utez.app.daos.DaoAutor;
-import utez.app.daos.DaoEditorial;
-import utez.app.daos.DaoUsuario;
-import utez.app.model.AutorBean;
+import utez.app.daos.DaoArea;
+import utez.app.model.AreaBean;
 import utez.app.model.EditorialBean;
-import utez.app.model.UsuarioBean;
 
 /**
  *
@@ -28,8 +24,8 @@ public class UDArea extends javax.swing.JFrame {
     //private DaoUsuario daoUsuario;
 
     private Connection conexion;
-    private EditorialBean EditorialBean;
-    private EditorialBean consultaBean;
+    private AreaBean AreaBean;
+    private AreaBean consultaBean;
 
     public UDArea() {
         try {
@@ -41,7 +37,7 @@ public class UDArea extends javax.swing.JFrame {
         initComponents();
     }
     
-    public UDArea(EditorialBean consultaBean){
+    public UDArea(AreaBean consultaBean){
         this();
         this.consultaBean = consultaBean;
         llenarValores();
@@ -49,7 +45,7 @@ public class UDArea extends javax.swing.JFrame {
     
     private void llenarValores(){
          txtNombre.setText(consultaBean.getNombre());
-        txtDireccion.setText(consultaBean.getDireccion());
+       
         if(consultaBean.isAlta()){
         cmbAlta.setSelectedIndex(0);
         }else{
@@ -132,7 +128,7 @@ public class UDArea extends javax.swing.JFrame {
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(205, Short.MAX_VALUE)
+                .addContainerGap(243, Short.MAX_VALUE)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
@@ -177,32 +173,31 @@ public class UDArea extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtNombre))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnActualizar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(26, 26, 26)
-                                .addComponent(cmbAlta, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(174, 174, 174)))
-                .addContainerGap(54, Short.MAX_VALUE))
+                                .addComponent(cmbAlta, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 56, Short.MAX_VALUE))
+                            .addComponent(txtNombre)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnActualizar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton2)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(16, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(56, 56, 56)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(cmbAlta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -210,7 +205,7 @@ public class UDArea extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnActualizar)
                     .addComponent(jButton2))
-                .addGap(137, 137, 137))
+                .addGap(178, 178, 178))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -228,8 +223,8 @@ public class UDArea extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
@@ -267,9 +262,8 @@ public class UDArea extends javax.swing.JFrame {
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         // TODO add your handling code here:
-        DaoEditorial daoEditorial = new DaoEditorial(conexion); 
+        DaoArea daoArea = new DaoArea(conexion); 
         consultaBean.setNombre(txtNombre.getText());
-        consultaBean.setDireccion(txtDireccion.getText());
          if (cmbAlta.getSelectedIndex()== 0){
             consultaBean.setAlta(true);
         }else if (cmbAlta.getSelectedIndex()== 1){
@@ -277,13 +271,13 @@ public class UDArea extends javax.swing.JFrame {
         }
          System.out.println(consultaBean);
        // usuarioBean = new UsuarioBean(consultaBean);
-        boolean ex = daoEditorial.update(consultaBean);
+        boolean ex = daoArea.update(consultaBean);
         if (ex) {
             System.out.println("exito");
         } else {
             System.out.println("tonto");
         }
-        new resultadoEditorial().setVisible(true);
+        new resultadoArea().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnActualizarActionPerformed
 
