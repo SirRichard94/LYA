@@ -16,9 +16,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import utez.app.daos.DaoAutor;
-import utez.app.daos.DaoUsuario;
 import utez.app.model.AutorBean;
-import utez.app.model.UsuarioBean;
 
 /**
  *
@@ -39,11 +37,7 @@ public class resultadoAutor extends javax.swing.JFrame {
             Logger.getLogger(resultadoAutor.class.getName()).log(Level.SEVERE, null, ex);
         }
         daoAutor = new DaoAutor(coneccion);
-        
         actualizarTabla();
-
-        
-        
         initComponents();
     }
     
