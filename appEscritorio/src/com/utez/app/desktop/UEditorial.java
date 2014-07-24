@@ -338,7 +338,7 @@ public class UEditorial extends javax.swing.JFrame {
         } else {
             System.out.println("tonto");
         }
-        new resultadoAutor().setVisible(true);
+        new resultadoEditorial().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnActualizarActionPerformed
 
