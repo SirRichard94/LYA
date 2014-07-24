@@ -303,7 +303,7 @@ public class resultadoAutor extends javax.swing.JFrame {
         int id =(Integer) modelo.getValueAt(tblUsuarios.getSelectedRow(), 0);
        // JOptionPane.showMessageDialog(rootPane, id);
         AutorBean autor = daoAutor.get(id);
-        new UAutor(autor).setVisible(true);
+        new UDAutor(autor).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnActualizarActionPerformed
 
