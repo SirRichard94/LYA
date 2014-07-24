@@ -127,7 +127,7 @@ public class CArea extends javax.swing.JFrame {
                 .addContainerGap(52, Short.MAX_VALUE))
         );
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Nuevo Usuario"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Nuevo Area"));
 
         jLabel1.setText("Nombre");
 
