@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import utez.app.biblioteca.BibliotecaLYA;
 import utez.app.daos.DaoArea;
 import utez.app.daos.DaoAutor;
 import utez.app.daos.DaoEditorial;
@@ -42,71 +43,70 @@ public class ServletBusqueda extends HttpServlet {
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		Connection con = DbConnection.getConnection();
-		if (con==null){
+		BibliotecaLYA biblioteca = new BibliotecaLYA(true);
+		
+		if (biblioteca.getConnection()==null){
 		throw new ServletException("No hay conexion con la BD");
 		}
 		
-		DaoLibro daoL = new DaoLibro(con);
-		List<LibroBean> lista = new ArrayList<>();
 		
-		String busqueda = request.getParameter("search");
+		List<LibroBean> lista = biblioteca.listarLibros();
+		List<LibroBean> resultado = new ArrayList<>();
+		
+		String busqueda = request.getParameter("search").toLowerCase();
 		String categoria = request.getParameter("categoria");
 		
 		
 		
-		try{
+		
 		if (busqueda == null || busqueda.equals("")){
-			lista = daoL.getActive();
+			resultado = lista;
 		}
 		else if (categoria.equals("autor")){
 			//quitar true para sql
-			List<AutorBean> autor = new DaoAutor(con).findByNombreYApellido(busqueda, true); //mysql
-			
-			for (AutorBean autorBean : autor) {
-				for (LibroBean libro : daoL.findByAutor(autorBean)) {
-					if (!lista.contains(libro)){
-					lista.add(libro);
+			for (LibroBean libroBean : lista) {
+				for (AutorBean autor : libroBean.getAutores()) {
+					if((autor.getNombre()+" "+autor.getApellido())
+						.toLowerCase()
+						.contains(busqueda)){
+						
+						resultado.add(libroBean);
 					}
 				}
 			}
 			
 		} else if(categoria.equals("editorial")){
-			List<EditorialBean> editorial = new DaoEditorial(con).findByNombre(busqueda);
-			
-			for (EditorialBean bean : editorial) {
-				for (LibroBean libro : daoL.findByEditorial(bean)) {
-					if (!lista.contains(libro)){
-					lista.add(libro);
-					}
+			for (LibroBean libroBean : lista) {
+				if (libroBean.getEditorial().getNombre()
+					.toLowerCase()
+					.contains(busqueda)){
+					
+					resultado.add(libroBean);
 				}
 			}
+			
+			
 		} else if(categoria.equals("titulo")){
-			lista = daoL.findByTitulo(busqueda);
+			for (LibroBean libroBean : lista) {
+				if (libroBean.getNombre()
+					.toLowerCase()
+					.contains(busqueda)){
+					resultado.add(libroBean);
+				}
+			}
 			
 		} else if(categoria.equals("area")){
-			List<AreaBean> area = new DaoArea(con).findByNombre(busqueda);
-			
-			for (AreaBean bean : area) {
-				for (LibroBean libro : daoL.findByArea(bean)) {
-					if (!lista.contains(libro)){
-					lista.add(libro);
-					}
+			for (LibroBean libroBean : lista) {
+				if (libroBean.getArea().getNombre()
+					.toLowerCase()
+					.contains(busqueda)){
+					resultado.add(libroBean);
 				}
 			}
 		}
+			
 		
-		//llenar beans de libro
-		for (LibroBean libroBean : lista) {
-			libroBean.setArea( new DaoArea(con).get(libroBean.getArea().getArea_id()));
-			libroBean.setEditorial(new DaoEditorial(con).get(libroBean.getEditorial().getEditorial_id()));
-			libroBean.setEjemplares(daoL.countEjemplares(libroBean));
-			libroBean.setAutores(new DaoAutor(con).findByLibro(libroBean));
-		}
-		
-		}catch(Exception e ){}		
-		
-		request.setAttribute("lista", lista);
+		request.setAttribute("lista", resultado);
 		request.setAttribute("busqueda", busqueda);
 		
 		this.getServletConfig().getServletContext().

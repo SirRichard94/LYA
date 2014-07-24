@@ -19,18 +19,18 @@ import utez.app.model.*;
  */
 public class BibliotecaLYA implements Biblioteca{
 	private Connection conexion;
-	private boolean mysql;
+	private final boolean mysql;
 	
 	private static final int MAX_PRESTAMOS = 3;
 	private static final int MIN_EJEMPLARES_LIBRO = 4;
 	
-	private DaoArea areaDao;
-	private DaoAutor autorDao;
-	private DaoEditorial editorialDao;
-	private DaoEjemplar ejemplarDao;
-	private DaoLibro libroDao;
-	private DaoPrestamo prestamoDao;
-	private DaoUsuario usuarioDao;
+	private final DaoArea areaDao;
+	private final DaoAutor autorDao;
+	private final DaoEditorial editorialDao;
+	private final DaoEjemplar ejemplarDao;
+	private final DaoLibro libroDao;
+	private final DaoPrestamo prestamoDao;
+	private final DaoUsuario usuarioDao;
 	
 	public BibliotecaLYA(boolean mysql) {
 		this.mysql = mysql;
@@ -43,6 +43,10 @@ public class BibliotecaLYA implements Biblioteca{
 		libroDao = new DaoLibro(conexion);
 		prestamoDao = new DaoPrestamo(conexion);
 		usuarioDao = new DaoUsuario(conexion);
+	}
+	
+	public Connection getConnection(){
+		return conexion;
 	}
 	
 	@Override
