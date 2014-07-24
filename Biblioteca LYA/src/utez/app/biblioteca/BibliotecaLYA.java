@@ -7,14 +7,11 @@
 package utez.app.biblioteca;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
-import utez.app.model.AreaBean;
-import utez.app.model.AutorBean;
-import utez.app.model.EditorialBean;
-import utez.app.model.EjemplarBean;
-import utez.app.model.LibroBean;
-import utez.app.model.PrestamoBean;
-import utez.app.model.UsuarioBean;
+import utez.app.daos.*;
+import utez.app.model.*;
+
 
 /**
  *
@@ -24,153 +21,189 @@ public class BibliotecaLYA implements Biblioteca{
 	private Connection conexion;
 	private boolean mysql;
 	
-	public BibliotecaLYA(boolean mysql){
+	private static final int MAX_PRESTAMOS = 3;
+	private static final int MIN_EJEMPLARES_LIBRO = 4;
+	
+	private DaoArea areaDao;
+	private DaoAutor autorDao;
+	private DaoEditorial editorialDao;
+	private DaoEjemplar ejemplarDao;
+	private DaoLibro libroDao;
+	private DaoPrestamo prestamoDao;
+	private DaoUsuario usuarioDao;
+	
+	public BibliotecaLYA(boolean mysql) {
 		this.mysql = mysql;
 		conexion = DbConnection.getConnection(mysql);
+	
+		areaDao = new DaoArea(conexion);
+		autorDao = new DaoAutor(conexion);
+		editorialDao = new DaoEditorial(conexion);
+		ejemplarDao = new DaoEjemplar(conexion);
+		libroDao = new DaoLibro(conexion);
+		prestamoDao = new DaoPrestamo(conexion);
+		usuarioDao = new DaoUsuario(conexion);
 	}
-	
-	
 	
 	@Override
 	public boolean agregarLibro(LibroBean libro) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return libroDao.add(libro);
 	}
 
 	@Override
 	public boolean agregarEditorial(EditorialBean editorial) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return editorialDao.add(editorial);
 	}
 
 	@Override
 	public boolean agregarAutor(AutorBean autor) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return autorDao.add(autor);
 	}
 
 	@Override
 	public boolean agregarArea(AreaBean area) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return areaDao.add(area);
 	}
 
 	@Override
 	public boolean agregarUsuario(UsuarioBean usuario) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return usuarioDao.add(usuario);
 	}
 
 	@Override
 	public List<LibroBean> listarLibros() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return libroDao.getActive();
 	}
 
 	@Override
 	public List<EditorialBean> listarEditoriales() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return libroDao.getActive();
 	}
 
 	@Override
 	public List<AutorBean> listarAutores() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return autorDao.getActive();
 	}
 
 	@Override
 	public List<AreaBean> listarAreas() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return areaDao.getActive();
 	}
 
 	@Override
 	public List<UsuarioBean> listarUsuarios() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return usuarioDao.getActive();
 	}
 
 	@Override
 	public List<PrestamoBean> listarPrestamos(UsuarioBean usuario) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return prestamoDao.findByUsuario(usuario);
 	}
 
 	@Override
 	public List<PrestamoBean> listarPrestamos() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return prestamoDao.getAll();
 	}
 
 	@Override
 	public boolean actualizarLibro(LibroBean libro) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return libroDao.update(libro);
 	}
 
 	@Override
 	public boolean actualizarEditorial(EditorialBean editorial) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return editorialDao.update(editorial);
 	}
 
 	@Override
 	public boolean actualizarAutor(AutorBean autor) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return autorDao.update(autor);
 	}
 
 	@Override
 	public boolean actualizarArea(AreaBean area) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return areaDao.update(area);
 	}
 
 	@Override
 	public boolean actualizarUsuario(UsuarioBean usuario) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return usuarioDao.update(usuario);
 	}
-
+	
 	@Override
 	public boolean bajaLibro(LibroBean libro) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		libro.setAlta(false);
+		return libroDao.update(libro);
 	}
 
 	@Override
 	public boolean bajaEditorial(EditorialBean editorial) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		editorial.setAlta(false);
+		return editorialDao.update(editorial);
 	}
 
 	@Override
 	public boolean bajaAutor(AutorBean autor) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		autor.setAlta(false);
+		return autorDao.update(autor);
 	}
 
 	@Override
 	public boolean bajaArea(AreaBean area) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		area.setAlta(false);
+		return areaDao.update(area);
 	}
 
 	@Override
 	public boolean bajaUsuario(UsuarioBean usuario) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		usuario.setAlta(false);
+		return usuarioDao.update(usuario);
 	}
 
 	@Override
-	public boolean insertarEjemplares(LibroBean libro) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	public boolean insertarEjemplar(EjemplarBean ejemplar) {
+		return ejemplarDao.add(ejemplar);
+	}
+
+
+	@Override
+	public boolean hacerPrestamo(UsuarioBean usuario, LibroBean libro) {
+		if (usuarioDao.countPrestamos(usuario) >= MAX_PRESTAMOS
+			|| usuario.getDeuda() > 0
+			|| libroDao.countEjemplaresDisponibles(libro) <= MIN_EJEMPLARES_LIBRO){
+			return false;
+		}
+		PrestamoBean prestamo = new PrestamoBean();
+		prestamo.setEjemplar(ejemplarDao.getDisponibleByLibro(libro));
+		prestamo.setUsuario(usuario);
+		return prestamoDao.add(prestamo);
 	}
 
 	@Override
-	public boolean quitarEjemplares(LibroBean libro, int num) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
-
-	@Override
-	public boolean hacerPrestamo(UsuarioBean usuario) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
-
-	@Override
-	public boolean quitarPrestamo(UsuarioBean usuario, EjemplarBean ejemplar) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	public boolean quitarPrestamo(UsuarioBean usuario, PrestamoBean prestamo) {
+		if (usuario.getDeuda() == 0){
+			return prestamoDao.delete(prestamo);
+		}
+		else return false;
 	}
 
 	@Override
 	public boolean autenticar(String correo, String pass) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return usuarioDao.autenticar(correo, pass);
 	}
 
 	@Override
 	public boolean pago(UsuarioBean usuario, double monto) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		double deuda = usuario.getDeuda() - monto;;
+		deuda = deuda < 0? 0 : deuda;
+		usuario.setDeuda(deuda);
+		
+		return usuarioDao.update(usuario);
 	}
 
-	
+	@Override
+	public boolean quitarEjemplar(LibroBean libro) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
 	
 }

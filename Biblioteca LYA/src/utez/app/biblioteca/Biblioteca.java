@@ -48,12 +48,12 @@ public interface Biblioteca {
 	public boolean bajaUsuario(UsuarioBean usuario);
 	
 	//ejemplares
-	public boolean insertarEjemplares(LibroBean libro);
-	public boolean quitarEjemplares(LibroBean libro, int num);
+	public boolean insertarEjemplar(EjemplarBean ejemplar);
+	public boolean quitarEjemplar(LibroBean libro);
 	
 	//prestamos
-	public boolean hacerPrestamo(UsuarioBean usuario);
-	public boolean quitarPrestamo(UsuarioBean usuario, EjemplarBean ejemplar);
+	public boolean hacerPrestamo(UsuarioBean usuario, LibroBean libro);
+	public boolean quitarPrestamo(UsuarioBean usuario, PrestamoBean prestamo);
 	
 	//usuario
 	public boolean autenticar(String correo, String pass);
