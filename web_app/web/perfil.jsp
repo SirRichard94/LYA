@@ -67,6 +67,7 @@ if (usuario == null){
 					<table class="table table-bordered">
 						<thead>
 						<th>Libro</th>
+						<th>Fecha de salida</th>
 						<th>Fecha de entrega</th>
 						</thead>
 						<tbody>
@@ -80,6 +81,9 @@ if (usuario == null){
 									getLibro().getNombre()%> 
 								</td>
 								
+								<td>
+								<%=prestamo.getFecha_salida()%>
+								</td>
 								<td>
 								<%=prestamo.getFecha_entrega()%>
 								</td>

@@ -76,6 +76,10 @@
         <servlet-name>ServletOptionListAutor</servlet-name>
         <servlet-class>utez.app.web.autor.ServletOptionListAutor</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TablaPrestamo</servlet-name>
+        <servlet-class>utez.app.web.prestamo.ServletTablaPrestamo</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -151,6 +155,10 @@
     <servlet-mapping>
         <servlet-name>ServletOptionListAutor</servlet-name>
         <url-pattern>/ServletOptionListAutor</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TablaPrestamo</servlet-name>
+        <url-pattern>/TablaPrestamo</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
