@@ -55,7 +55,8 @@ public class DaoPrestamo extends AbstractDao<PrestamoBean>{
 	public List<PrestamoBean> getAll() {
 		List<PrestamoBean> list = new ArrayList<>();
 		
-		String query ="SELECT * FROM PRESTAMO;";
+		String query ="SELECT * FROM PRESTAMO"
+			+ " ORDER BY fecha_salida ASC;";
 		try {
 			ResultSet result = executeQuery(query);
 			passResultSet(result, list);

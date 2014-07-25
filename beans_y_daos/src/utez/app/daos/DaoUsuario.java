@@ -39,7 +39,8 @@ public class DaoUsuario extends AbstractDao<UsuarioBean>{
 	 */
 	@Override
 	public List<UsuarioBean> getAll() {
-		String query = "SELECT * FROM USUARIO;";
+		String query = "SELECT * FROM USUARIO"
+			+ "  ORDER BY nombre ASC;";
 		
 		List<UsuarioBean> list = new ArrayList<>();
 		try {
@@ -58,7 +59,8 @@ public class DaoUsuario extends AbstractDao<UsuarioBean>{
 	 * @return Usuarios con alta = true
 	 */
 	public List<UsuarioBean> getActive() {
-		String query = "SELECT * FROM USUARIO WHERE alta = 'true';" ;
+		String query = "SELECT * FROM USUARIO WHERE alta = 'true'"
+			+ " ORDER BY nombre ASC;" ;
 		List<UsuarioBean> list = new ArrayList<>();
 		try {
 			PreparedStatement sql = con.prepareStatement(query);

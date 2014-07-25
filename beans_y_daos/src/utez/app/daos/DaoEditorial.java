@@ -34,7 +34,8 @@ public class DaoEditorial extends AbstractDao<EditorialBean>{
 	@Override
 	public List<EditorialBean> getAll() {
 		List<EditorialBean> list = new ArrayList<>();
-		String query ="SELECT * FROM "+TABLA+";";
+		String query ="SELECT * FROM "+TABLA+""
+			+ " ORDER BY nombre ASC;";
 		try {
 			ResultSet result = executeQuery(query);
 			list = passResultSet(result, list);
@@ -50,7 +51,8 @@ public class DaoEditorial extends AbstractDao<EditorialBean>{
 	public List<EditorialBean> getActive() {
 		List<EditorialBean> list = new ArrayList<>();
 		
-		String query ="SELECT * FROM "+TABLA+" where alta = 'true';";
+		String query ="SELECT * FROM "+TABLA+" where alta = 'true'"
+			+ " ORDER BY nombre ASC;";
 		try {
 			
 			ResultSet result = executeQuery(query);

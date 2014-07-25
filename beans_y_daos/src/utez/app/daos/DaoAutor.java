@@ -33,7 +33,8 @@ public class DaoAutor extends AbstractDao<AutorBean>{
 	@Override
 	public List<AutorBean> getAll() {
 		List<AutorBean> list = new ArrayList<>();
-		String query ="SELECT * FROM "+TABLA+";";
+		String query ="SELECT * FROM "+TABLA+" "
+			+ "ORDER BY nombre, apellido ASC;";
 		try {
 			ResultSet result = executeQuery(query);
 			list = passResultSet(result, list);
@@ -47,7 +48,8 @@ public class DaoAutor extends AbstractDao<AutorBean>{
 
 	public List<AutorBean> getActive() {
 		List<AutorBean> list = new ArrayList<>();
-		String query ="SELECT * FROM "+TABLA+" where alta = 'true';";
+		String query ="SELECT * FROM "+TABLA+" where alta = 'true'"
+			+ " ORDER BY nombre, apellido ASC;";
 		try {
 			
 			ResultSet result = executeQuery(query);
@@ -177,7 +179,8 @@ public class DaoAutor extends AbstractDao<AutorBean>{
 
 	public List<AutorBean> findByNombre(String nombre){
 		List<AutorBean> list = new ArrayList<>();
-		String query = ( "SELECT * FROM "+TABLA+" WHERE nombre LIKE ? and alta = 'true';");
+		String query = ( "SELECT * FROM "+TABLA+" WHERE nombre LIKE ? and alta = 'true'"
+			+ " ORDER BY nombre, apellido ASC;");
 		try {
 			
 			PreparedStatement ps = con.prepareStatement(query);
@@ -197,7 +200,8 @@ public class DaoAutor extends AbstractDao<AutorBean>{
 	
 	public List<AutorBean> findByApellido(String apellido){
 		List<AutorBean> list = new ArrayList<>();
-		String query = ( "SELECT * FROM "+TABLA+" WHERE apellido LIKE ?;");
+		String query = ( "SELECT * FROM "+TABLA+" WHERE apellido LIKE ?"
+			+ "ORDER BY nombre, apellido ASC;");
 		try {
 			
 			PreparedStatement ps = con.prepareStatement(query);
@@ -228,10 +232,12 @@ public class DaoAutor extends AbstractDao<AutorBean>{
 	public List<AutorBean> findByNombreYApellido(String busqueda, boolean mysql){
 		List<AutorBean> list = new ArrayList<>();
 		
-		String query = "SELECT * FROM "+TABLA+" WHERE (nombre +' '+ apellido) LIKE ?;";
+		String query = "SELECT * FROM "+TABLA+" WHERE (nombre +' '+ apellido) LIKE ?";
 		if (mysql){
-		 query = ( "SELECT * FROM "+TABLA+" WHERE CONCAT(nombre,' ',apellido) LIKE ?;");
+		 query = ( "SELECT * FROM "+TABLA+" WHERE CONCAT(nombre,' ',apellido) LIKE ?");
 		}
+		
+		query += " ORDER BY nombre, apellido ASC;";
 		try {
 			
 			PreparedStatement ps = con.prepareStatement(query);
@@ -255,7 +261,8 @@ public class DaoAutor extends AbstractDao<AutorBean>{
 		String query = "SELECT * FROM AUTOR"
 				+ " WHERE "+PK+" IN ("
 				+ " SELECT "+PK+" FROM AUTOR_DE"
-				+ " WHERE libro_id = ? );";
+				+ " WHERE libro_id = ? )"
+			+ " ORDER BY nombre, apellido ASC;";
 		
 		try {
 			PreparedStatement ps = con.prepareStatement(query);

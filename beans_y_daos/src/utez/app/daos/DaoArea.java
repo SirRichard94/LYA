@@ -36,7 +36,8 @@ public class DaoArea extends AbstractDao<AreaBean>{
 	@Override
 	public List<AreaBean> getAll() {
 		List<AreaBean> list = new ArrayList<>();
-		String query ="SELECT * FROM AREA;";
+		String query ="SELECT * FROM AREA"
+			+ "  ORDER BY nombre ASC;";
 		try {
 			ResultSet result = executeQuery(query);
 			list = passResultSet(result, list);
@@ -54,7 +55,8 @@ public class DaoArea extends AbstractDao<AreaBean>{
 	 */
 	public List<AreaBean> getActive() {
 		List<AreaBean> list = new ArrayList<>();
-		String query ="SELECT * FROM AREA where alta = 'true';";
+		String query ="SELECT * FROM AREA where alta = 'true'"
+			+ " ORDER BY nombre ASC;";
 		try {
 			
 			ResultSet result = executeQuery(query);
