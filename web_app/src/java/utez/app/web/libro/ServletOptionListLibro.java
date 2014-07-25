@@ -4,27 +4,24 @@
  * and open the template in the editor.
  */
 
-package utez.app.web.area;
+package utez.app.web.libro;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.rmi.ServerException;
 import java.sql.Connection;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import utez.app.daos.DaoArea;
-import utez.app.daos.DaoEditorial;
-import utez.app.model.AreaBean;
-import utez.app.model.EditorialBean;
+import utez.app.daos.*;
+import utez.app.model.*;
 import utez.app.web.eq4.util.DbConnection;
 
 /**
  *
  * @author ricardo
  */
-public class ServletAgregarArea extends HttpServlet {
+public class ServletOptionListLibro extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and
@@ -37,41 +34,17 @@ public class ServletAgregarArea extends HttpServlet {
 	 */
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
-		response.setContentType("text/html");
-		
-//		try{
-//		
-//		HttpSession sesion = request.getSession();
-//		if ((Boolean)sesion.getAttribute("admin") == false || (Boolean) sesion.getAttribute("admin") == null){
-//			throw new ServerException("Acceso denegado");
-//		}
-//		}catch (NullPointerException ex){
-//			throw new ServerException("Acceso denegado");
-//		}
-		Connection con = DbConnection.getConnection();
-		if (con == null){
-			throw new ServerException("No hay coneccion con la BD");
-		}
-		
-		
-		String nombre = request.getParameter("n");
-		
-		AreaBean nuevaArea = new AreaBean();
-		nuevaArea.setNombre(nombre);
-		
-		
-		String mensaje;
-		if (new DaoArea(con).add(nuevaArea)){
-			
-			mensaje = "<div class=\"alert alert-info\"> "
-				+nuevaArea.getNombre()+" agregada con exito</div>";
-		} else{
-			
-			mensaje = "<div class=\"alert alert-danger\"> Error al agregar area</div>";
-		}
-		
+		response.setContentType("text/html;charset=UTF-8");
 		try (PrintWriter out = response.getWriter()) {
-			out.print(mensaje);
+			/* TODO output your page here. You may use following sample code. */
+			Connection con = new DbConnection().getConnection();
+			
+			DaoLibro dao = new DaoLibro(con);
+			
+			for (LibroBean bean: dao.getActive()){
+			out.println("<option value="+bean.getLibro_id()+ "> "
+				+bean.getNombre()+"</option>");
+			}
 		}
 	}
 

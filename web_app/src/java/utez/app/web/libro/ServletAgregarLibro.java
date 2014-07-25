@@ -4,27 +4,27 @@
  * and open the template in the editor.
  */
 
-package utez.app.web.area;
+package utez.app.web.libro;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.rmi.ServerException;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import utez.app.daos.DaoArea;
-import utez.app.daos.DaoEditorial;
-import utez.app.model.AreaBean;
-import utez.app.model.EditorialBean;
+import utez.app.daos.*;
+import utez.app.model.*;
 import utez.app.web.eq4.util.DbConnection;
 
 /**
  *
  * @author ricardo
  */
-public class ServletAgregarArea extends HttpServlet {
+public class ServletAgregarLibro extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and
@@ -37,37 +37,47 @@ public class ServletAgregarArea extends HttpServlet {
 	 */
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
-		response.setContentType("text/html");
-		
-//		try{
-//		
-//		HttpSession sesion = request.getSession();
-//		if ((Boolean)sesion.getAttribute("admin") == false || (Boolean) sesion.getAttribute("admin") == null){
-//			throw new ServerException("Acceso denegado");
-//		}
-//		}catch (NullPointerException ex){
-//			throw new ServerException("Acceso denegado");
-//		}
+		response.setContentType("text/html;charset=UTF-8");
 		Connection con = DbConnection.getConnection();
 		if (con == null){
 			throw new ServerException("No hay coneccion con la BD");
 		}
 		
 		
-		String nombre = request.getParameter("n");
+		String nombre = request.getParameter("nombre");
+		long isbn = Long.parseLong(request.getParameter("isbn"));
+		int paginas = Integer.parseInt(request.getParameter("pags"));
+		int area_id = Integer.parseInt(request.getParameter("area"));
+		int editorial_id = Integer.parseInt(request.getParameter("editorial"));
+		String[] stringAutores_id = request.getParameterValues("autores");
 		
-		AreaBean nuevaArea = new AreaBean();
-		nuevaArea.setNombre(nombre);
+		AreaBean area = new DaoArea(con).get(area_id);
+		EditorialBean editorial = new DaoEditorial(con).get(editorial_id);
+		List<AutorBean> autores = new ArrayList<AutorBean>();
+		for (String stringAutorId : stringAutores_id) {
+			autores.add(
+				new DaoAutor(con).get(
+					Integer.parseInt(stringAutorId))
+			);
+		}
+		
+		LibroBean nuevoBean = new LibroBean();
+		nuevoBean.setNombre(nombre);
+		nuevoBean.setIsbn(isbn);
+		nuevoBean.setPaginas(paginas);
+		nuevoBean.setArea(area);
+		nuevoBean.setEditorial(editorial);
+		nuevoBean.setAutores(autores);
 		
 		
 		String mensaje;
-		if (new DaoArea(con).add(nuevaArea)){
+		if (new DaoLibro(con).add(nuevoBean)){
 			
 			mensaje = "<div class=\"alert alert-info\"> "
-				+nuevaArea.getNombre()+" agregada con exito</div>";
+				+nuevoBean.getNombre()+" agregado con exito</div>";
 		} else{
 			
-			mensaje = "<div class=\"alert alert-danger\"> Error al agregar area</div>";
+			mensaje = "<div class=\"alert alert-danger\"> Error al agregar libro</div>";
 		}
 		
 		try (PrintWriter out = response.getWriter()) {

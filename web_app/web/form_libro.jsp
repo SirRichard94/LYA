@@ -15,7 +15,7 @@
 	<div id="libro-tab" class="tab-pane active" >
 		
 		<%-- FORM LIBRO--%>
-		<form class="form-horizontal" action="#InsertarLibro" method="get">
+		<form class="form-horizontal" action="#InsertarLibro" method="get" id="agregar-libro">
 	<fieldset>
 	<legend>Agregar Libro</legend>
 	<div class="form-group">
@@ -56,7 +56,7 @@
 	
 	
 	<div class="form-group">
-		<button class="btn btn-primary pull-right" >Crear</button>
+		<button  type="submit" class="btn btn-primary pull-right" >Crear</button>
 	</div>
 	</fieldset>
 </form>
@@ -103,6 +103,22 @@
 			
 			return false;
 		});
+		
+		//agregar Libro
+		
+		$("#agregar-libro").submit(function (){	
+			alert("Libro");
+			
+			$.get(
+				'AgregarLibro', 
+				$("#agregar-libro").serialize(), function (data){
+					 $( "#alert-form-libro" ).html( data );
+				});
+			
+			$(this).find("input[type=text], textarea, input[type=number]").val("");
+			
+			return false;
+		});
 	});
 </script>
 
@@ -114,16 +130,12 @@
 		function(data){
 			$("#area-select").html(data);
 		});
-	});
-	//editorial
-	$(document).ready(function (){
+	// editorial
 		$.get("ServletOptionListEditorial",
 		function(data){
 			$("#editorial-select").html(data);
 		});
-	});
-	
-	$(document).ready(function (){
+	//autor
 		$.get("ServletOptionListAutor",
 		function(data){
 			$("#autor-select").html(data);
