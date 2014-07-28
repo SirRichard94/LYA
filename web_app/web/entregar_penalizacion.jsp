@@ -31,7 +31,7 @@
 	    <div class="container">
 			<div class="row">
 				<div class="col-md-5 ">
-					<header><h1>Pagar Penalizacion</h1></header>
+					<header><h1>Pagar Penalización</h1></header>
 					<div class="jumbotron">
 	Libro: <%=prestamo.getEjemplar().getLibro().getNombre() %><br>
 	Ejemplar ID: <%=prestamo.getEjemplar().getEjemplar_id() %><br>

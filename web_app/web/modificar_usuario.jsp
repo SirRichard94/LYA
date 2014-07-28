@@ -88,13 +88,13 @@
 	<div class="form-group">
 		<label for="tel" class="col-md-3">Tel.</label>
 		<div class="col-md-9">
-		<input id="tel" type="text" class="form-control" placeholder="Telefono" name="tel" value="<%=objetivo.getTelefono()%>">
+		<input id="tel" type="text" class="form-control" placeholder="Teléfono" name="tel" value="<%=objetivo.getTelefono()%>">
 		</div>
 	</div>
 	<div class="form-group">
 		<label for="dir" class="col-md-3">Dirección</label>
 		<div class="col-md-9">
-		<textarea class="form-control" placeholder="direccion" name="dir" rows="3"  ><%=objetivo.getDireccion()%></textarea>
+		<textarea class="form-control" placeholder="Dirección" name="dir" rows="3"  ><%=objetivo.getDireccion()%></textarea>
 		</div>
 	</div>
 	

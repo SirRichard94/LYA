@@ -15,16 +15,16 @@
 		<input type="text" class="form-control" placeholder="Nombre" name="nombre" required=""> 
 	</div>
 	<div class="form-group">
-		<input type="email" class="form-control" placeholder="email" name="email" required="">
+		<input type="email" class="form-control" placeholder="Email" name="email" required="">
 	</div>
 	<div class="form-group">
-		<input type="password" class="form-control" placeholder="contaseña" name="pass" required=""> 
+		<input type="password" class="form-control" placeholder="Contaseña" name="pass" required=""> 
 	</div>
 	<div class="form-group">
-		<input type="text" class="form-control" placeholder="Telefono" name="tel">
+		<input type="text" class="form-control" placeholder="Teléfono" name="tel">
 	</div>
 	<div class="form-group">
-		<textarea class="form-control" placeholder="direccion" name="dir" rows="2" ></textarea>
+		<textarea class="form-control" placeholder="Direccion" name="dir" rows="2" ></textarea>
 	</div>
 	<div class="form-group">
 		<button class="btn btn-primary pull-right" >Crear</button>

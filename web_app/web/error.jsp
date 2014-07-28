@@ -25,7 +25,7 @@
 				<div class="row">
 					<div class="alert alert-danger">
 						<h1>ERROR <%=response.getStatus() %>: 
-							<small>Algo terrible ha pasado... <%=exception.getMessage()%></small> </h1>
+							<small>Algo terrible ha pasado...</small> </h1>
 						</div>
 					
 					<div class="col-md-6">
@@ -36,13 +36,13 @@
 						</p>
 						
 						<p>
-							Por otro lado, <strong>si eres un maestro</strong>: cierra los ojos, olvida que ésto paso, y escribe <strong>DE</strong> en la calificacion de los alumnos
+							Por otro lado, <strong>si eres un maestro</strong>: cierra los ojos, olvida que esto pasó, y escribe: '<strong>DE</strong>' en la calificacion de los alumnos
 						</p>
 						
 					</div>
 					<div class="col-md-6">
 						<p>
-							Si eres el encargado de esta página, Apura y lee esto, te podria ayudar a comprender que pasó!.
+Si eres el encargado de esta página, Apura y lee esto, te podria ayudar a comprender que pasó!.
 						</p>
 						<pre class="pre-scrollable">Error <%=response.getStatus() %>: <%=exception.getMessage() %>:<br><% exception.printStackTrace(); %></pre>
 					</div>

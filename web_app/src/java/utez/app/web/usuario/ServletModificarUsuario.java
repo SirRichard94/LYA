@@ -74,14 +74,12 @@ public class ServletModificarUsuario extends HttpServlet {
 			String pass = request.getParameter("pass");
 			String tel = request.getParameter("tel");
 			String direccion = request.getParameter("dir");
-			double deuda = Double.parseDouble(request.getParameter("deuda"));
 
 			usuario.setNombre(nombre);
 			usuario.setCorreo(email);
 			usuario.setPasswd(pass);
 			usuario.setTelefono(tel);
 			usuario.setDireccion(direccion);
-			usuario.setDeuda(deuda);
 
 			if (dao.update(usuario)) {
 				request.setAttribute("info", "Ha sido actualizado con exito");

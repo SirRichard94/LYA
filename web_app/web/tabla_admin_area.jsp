@@ -34,8 +34,8 @@ $(document).ready(function (){
             <thead>
               <tr>
 		 <th class="centered">Nombre</th>
-		 <th class="centered">Num. Libros</th>
-		 <th class="centered">Accciones</th>
+		 <th class="centered">Núm. Libros</th>
+		 <th class="centered">Acciones</th>
               </tr>
             </thead>
             <tbody>
@@ -50,10 +50,10 @@ $(document).ready(function (){
 				     <td class="centered">
 
 					     <a Href="ModificarArea?guardar=false&AMP;id=<%=id%>" 
-						title="modificar" >
+						title="Modificar" >
 						     <span class="glyphicon glyphicon-pencil"></span>
 					     </a>
-					     <a href="EliminarArea?id=<%=id%>" title="eliminar"
+					     <a href="EliminarArea?id=<%=id%>" title="Eliminar"
 						class="eliminar">
 						     <span class="glyphicon glyphicon-trash"></span>
 					     </a>

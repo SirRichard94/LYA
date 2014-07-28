@@ -11,7 +11,7 @@
 		<input type="text" class="form-control" placeholder="Nombre" name="nom" required=""> 
 	</div>
 	<div class="form-group">
-		<textarea class="form-control" placeholder="Direccion" name="dir" rows="4"></textarea>
+		<textarea class="form-control" placeholder="Dirección" name="dir" rows="4"></textarea>
 	</div>
 	<br>
 	<div class="form-group">

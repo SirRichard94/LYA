@@ -13,7 +13,7 @@
   <head>
 	  <%@include file="incl_headmeta.html" %>
 
-    <title>Catalogo de Libros</title>
+    <title>Catálogo de Libros</title>
 
     <script type="text/javascript">
 	    $(document).ready(function (){
@@ -58,12 +58,12 @@
 		    <div class="row">
 		    
 		    <div class="col-md-8">
-			    <h1>Resultados de la Busqueda '<%=busqueda%>' </h1>
+			    <h1>Resultados de la Búsqueda '<%=busqueda%>' </h1>
 			    
 			     <table class="table table-striped" id="tabla-libros">
             <thead>
               <tr>
-                 <th>Titulo</th>
+                 <th>Título</th>
 		 <th>ISBN</th>
 		 <th>Autores</th>
 		 <th>Area</th>

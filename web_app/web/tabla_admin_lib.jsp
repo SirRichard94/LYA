@@ -34,9 +34,9 @@ $(document).ready(function (){
 	<table class="table table-condensed table-bordered" id="tabla-libro">
             <thead>
               <tr>
-                 <th>Titulo</th>
+                 <th>Título</th>
 		 <th>ISBN</th>
-		 <th>Paginas</th>
+		 <th>Páginas</th>
 		 <th>Autores</th>
 		 <th>Editorial</th>
 		 <th>Area</th>
@@ -69,7 +69,7 @@ $(document).ready(function (){
 				    </td>
 			    </tr>
 		    <%}%>
-            </tbody>
+ Autor           </tbody>
           </table>
 
 	       <small>*Marcados en amarillo, libros con 4 o menos ejemplares en existencia</small>

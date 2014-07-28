@@ -25,7 +25,7 @@
 		<input type="number" class="form-control" placeholder="ISBN" name="isbn" required>
 	</div>
 	<div class="form-group">
-		<input type="number" class="form-control" placeholder="Num de Paginas" name="pags">
+		<input type="number" class="form-control" placeholder="Núm de Paginas" name="pags">
 	</div>
 	<div class="form-group">
 		<label class="col-md-4 control-label" for="editorial-select"><small>Editorial</small></label>
@@ -76,7 +76,7 @@
 		<input type="text" class="form-control" placeholder="Localización" name="l" required>
 	</div>
 	<div class="form-group">
-		<input type="number" class="form-control" placeholder="Num de Ejemplares" name="n">
+		<input type="number" class="form-control" placeholder="Núm de Ejemplares" name="n">
 	</div>
 	
 	<div class="form-group">

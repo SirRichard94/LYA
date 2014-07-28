@@ -5,7 +5,7 @@
 
 <form class="form-horizontal" id="form-prestamo">
 	<fieldset>
-	<legend>Agregar Prestamo</legend>
+	<legend>Agregar Préstamo</legend>
 	
 	<div class="form-group">
 		<label class="col-md-4 control-label" for="usuario-select">Usuario</label>

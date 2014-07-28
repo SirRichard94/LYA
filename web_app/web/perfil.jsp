@@ -11,7 +11,7 @@
   <head>
 	  <%@include file="incl_headmeta.html" %>
 
-    <title>Perfil </title>
+    <title>Biblioteca Lee y Aprende: Perfil</title>
 
 
   </head>

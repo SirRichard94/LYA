@@ -35,8 +35,8 @@ $(document).ready(function (){
               <tr>
 		 <th class="centered">Nombre</th>
 		 <th class="centered">Direccion</th>
-		 <th class="centered">Num. Libros</th>
-		 <th class="centered">Accciones</th>
+		 <th class="centered">Núm. Libros</th>
+		 <th class="centered">Acciones</th>
               </tr>
             </thead>
             <tbody>
@@ -50,12 +50,12 @@ $(document).ready(function (){
 				    <td class="centered">
 					    <a class ="mod-editorial"
 						href="ModificarEditorial?guardar=false&AMP;i=<%=id%>" 
-					       title="modificar">
+					       title="Modificar">
 						    <span class="glyphicon glyphicon-pencil"></span>
 					    </a>
 					    <a class ="elim-editorial"
 						    href="EliminarEditorial?i=<%=id%>" 
-					       title="eliminar">
+					       title="Eliminar">
 						    <span class="glyphicon glyphicon-trash"></span>
 					    </a>
 				    </td>
