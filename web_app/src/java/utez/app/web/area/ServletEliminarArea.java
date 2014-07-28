@@ -74,7 +74,7 @@ public class ServletEliminarArea extends HttpServlet {
 		
 		//this.getServletContext().getRequestDispatcher("/admin.jsp").forward(request, response);
 		
-		String pagina = response.encodeRedirectURL("admin.jsp");
+		String pagina = response.encodeRedirectURL("Admin?sec=area");
 		response.sendRedirect(pagina);
 	}
 

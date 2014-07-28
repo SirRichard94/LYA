@@ -4,20 +4,22 @@
  * and open the template in the editor.
  */
 
-package utez.app.web.editorial;
+package utez.app.web;
 
+import java.awt.SystemColor;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.rmi.ServerException;
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import utez.app.daos.DaoEditorial;
 import utez.app.daos.DaoUsuario;
-import utez.app.model.EditorialBean;
 import utez.app.model.UsuarioBean;
 import utez.app.web.eq4.util.DbConnection;
 
@@ -25,7 +27,7 @@ import utez.app.web.eq4.util.DbConnection;
  *
  * @author ricardo
  */
-public class ServletModificarEditorial extends HttpServlet {
+public class ServletAdmin extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and
@@ -38,58 +40,16 @@ public class ServletModificarEditorial extends HttpServlet {
 	 */
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
-		response.setContentType("charset=UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
+		String seccion = request.getParameter("sec");
 		
-		try{
-		
-		HttpSession sesion = request.getSession();
-		if ((Boolean)sesion.getAttribute("admin") == false || (Boolean) sesion.getAttribute("admin") == null){
-			throw new ServerException("Acceso denegado");
-		}
-		}catch (NullPointerException ex){
-			throw new ServerException("Acceso denegado");
+		if (seccion != null){
+		request.setAttribute("seccion", seccion);
 		}
 		
-		
-		Connection con = DbConnection.getConnection();
-		if (con == null){
-			throw new ServerException("No hay coneccion con la BD");
-		}
-		
-		///
-		DaoEditorial dao = new DaoEditorial(con);
-		
-		String redirect = "modificar_editorial.jsp";
-		String guardar = request.getParameter("guardar");
-		
-		int id = Integer.parseInt(request.getParameter("i"));
-		EditorialBean bean = dao.get(id);
-		
-		if (!guardar.equals("true")){
-			
-			request.setAttribute("objetivo", bean);
-			this.getServletContext().getRequestDispatcher("/"+redirect).forward(request, response);
-			//forward a modificar
-			
-		} else {
-			String nombre = request.getParameter("nombre");
-			String direccion = request.getParameter("dir");
-
-			bean.setNombre(nombre);
-			bean.setDireccion(direccion);
-
-			if (dao.update(bean)) {
-				request.setAttribute("info", "Ha sido actualizado con exito");
-
-			} else {
-				request.setAttribute("warning", "Error al actualizar Editorial");
-
-			}
-			
-			redirect = "Admin?sec=editorial";
-			String pagina = response.encodeRedirectURL(redirect);
-			response.sendRedirect(pagina);				//redirect a admin
-		}
+		this.getServletConfig().getServletContext().
+				getRequestDispatcher("/admin.jsp").
+				forward(request, response);
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -91,7 +91,7 @@ public class ServletModificarUsuario extends HttpServlet {
 
 			}
 			
-			redirect = "admin.jsp";
+			redirect = "Admin?sec=usuario";
 			String pagina = response.encodeRedirectURL(redirect);
 			response.sendRedirect(pagina);				//redirect a admin
 		}

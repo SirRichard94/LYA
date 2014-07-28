@@ -84,7 +84,7 @@ public class ServletModificarArea extends HttpServlet {
 
 			}
 			
-			redirect = "admin.jsp";
+			redirect = "Admin?sec=area";
 			String pagina = response.encodeRedirectURL(redirect);
 			response.sendRedirect(pagina);				//redirect a admin
 		}

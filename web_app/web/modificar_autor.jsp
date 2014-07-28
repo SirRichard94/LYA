@@ -88,7 +88,7 @@
 </div>
 	
 	<div class="form-group">
-		<a class="btn btn-warning" href="admin.jsp">Cancelar</a>
+		<a class="btn btn-warning" href="Admin?sec=autor">Cancelar</a>
 		<button type="submit" class="btn btn-success" >Guardar</button>
 	</div>
 	</fieldset>
