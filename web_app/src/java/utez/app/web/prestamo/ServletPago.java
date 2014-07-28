@@ -4,19 +4,19 @@
  * and open the template in the editor.
  */
 
-package utez.app.web.usuario;
+package utez.app.web.prestamo;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.jasper.tagplugins.jstl.core.ForEach;
+import utez.app.daos.DaoPrestamo;
 import utez.app.daos.DaoUsuario;
+import utez.app.model.PrestamoBean;
 import utez.app.model.UsuarioBean;
 import utez.app.web.eq4.util.DbConnection;
 
@@ -24,8 +24,7 @@ import utez.app.web.eq4.util.DbConnection;
  *
  * @author ricardo
  */
-@WebServlet(name = "ServletTablaUsuario", urlPatterns = {"/ServletTablaUsuario"})
-public class ServletTablaUsuario extends HttpServlet {
+public class ServletPago extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and
@@ -38,30 +37,28 @@ public class ServletTablaUsuario extends HttpServlet {
 	 */
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
+		response.setContentType("text/html;charset=UTF-8");
+		
+		int usuarioId = Integer.parseInt(request.getParameter("u"));
+		int prestamoId = Integer.parseInt(request.getParameter("p"));
 		
 		Connection con = DbConnection.getConnection();
-		DaoUsuario dao = new DaoUsuario(con);
-		List<UsuarioBean> lista = new ArrayList<>();
-		List<Integer> prestamos = new ArrayList<>();
+		DaoPrestamo daoP = new DaoPrestamo(con);
+		PrestamoBean prestamo = daoP.get(prestamoId);
+		DaoUsuario daoU = new DaoUsuario(con);
+		UsuarioBean usuario = daoU.get(usuarioId);
 		
+		daoP.delete(prestamo);
 		
-		for (UsuarioBean usuarioBean : dao.getActive()){
-			if (!usuarioBean.isEs_admi()){
-				lista.add(usuarioBean);
+		//sumar las penalizaciones que tenga el usuario
+			usuario.setDeuda(0);
+			for (PrestamoBean prestamoBean : daoP.findByUsuario(usuario)) {
+				usuario.setDeuda(
+					usuario.getDeuda() + daoP.penalizacion(prestamoBean, true) //mysql
+				);
 			}
-		}
-		
-		for (UsuarioBean usuario : lista) {
-			prestamos.add(dao.countPrestamos(usuario));
-		}
-		
-		request.setAttribute("lista", lista);
-		request.setAttribute("prestamos", prestamos);
-
-		this.getServletConfig().getServletContext().
-			getRequestDispatcher("/tabla_admin_usr.jsp").
-			forward(request, response);
-
+		daoU.update(usuario);
+		response.sendRedirect("admin_prestamos.jsp");
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

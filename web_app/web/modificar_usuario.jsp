@@ -97,12 +97,6 @@
 		<textarea class="form-control" placeholder="direccion" name="dir" rows="3"  ><%=objetivo.getDireccion()%></textarea>
 		</div>
 	</div>
-		<div class="form-group">
-		<label for="deuda" class="col-md-3">Deuda</label>
-		<div class="col-md-9">
-			<input id="deuda" type="number" class="form-control" placeholder="Deuda" name="deuda" value=0<%=objetivo.getDeuda()%> >
-		</div>
-	</div>
 	
 	</div>
 </div>

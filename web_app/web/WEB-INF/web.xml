@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
-    
-        
     <filter>
         <description>Force the request character encoding to UTF-8</description>
         <filter-name>CharacterEncodingFilter</filter-name>
@@ -12,8 +10,6 @@
         <url-pattern>/*</url-pattern>
         <dispatcher>REQUEST</dispatcher>
     </filter-mapping>
-
-    
     <servlet>
         <servlet-name>Login</servlet-name>
         <servlet-class>utez.app.web.ServletLogin</servlet-class>
@@ -102,6 +98,26 @@
         <servlet-name>ServletOptionListLibro</servlet-name>
         <servlet-class>utez.app.web.libro.ServletOptionListLibro</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletOptionListUsuario</servlet-name>
+        <servlet-class>utez.app.web.usuario.ServletOptionListUsuario</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletOptionListPrestamo</servlet-name>
+        <servlet-class>utez.app.web.prestamo.ServletOptionListPrestamo</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EntregarPrestamo</servlet-name>
+        <servlet-class>utez.app.web.prestamo.ServletEntregarPrestamo</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AgregarPrestamo</servlet-name>
+        <servlet-class>utez.app.web.prestamo.ServletAgregarPrestamo</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletPago</servlet-name>
+        <servlet-class>utez.app.web.prestamo.ServletPago</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -189,6 +205,26 @@
     <servlet-mapping>
         <servlet-name>ServletOptionListLibro</servlet-name>
         <url-pattern>/ServletOptionListLibro</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletOptionListUsuario</servlet-name>
+        <url-pattern>/ServletOptionListUsuario</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletOptionListPrestamo</servlet-name>
+        <url-pattern>/ServletOptionListPrestamo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EntregarPrestamo</servlet-name>
+        <url-pattern>/EntregarPrestamo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AgregarPrestamo</servlet-name>
+        <url-pattern>/AgregarPrestamo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletPago</servlet-name>
+        <url-pattern>/ServletPago</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

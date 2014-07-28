@@ -64,6 +64,7 @@
 		 <li class="navbar-text" ><p><%=usuario.getNombre() %></p></li>
 			<% if ( admin ){ %>
 		<li><a href="Admin">Administrador</a></li>
+		<li><a href="admin_prestamos.jsp">Prestamos</a></li>
 			<% } else { %>
 				
 		<li><a href="PerfilUsuario">Perfil</a></li>

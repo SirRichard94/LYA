@@ -4,19 +4,17 @@
  * and open the template in the editor.
  */
 
-package utez.app.web.usuario;
+package utez.app.web.prestamo;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import utez.app.daos.DaoUsuario;
+import utez.app.daos.DaoPrestamo;
+import utez.app.model.PrestamoBean;
 import utez.app.model.UsuarioBean;
 import utez.app.web.eq4.util.DbConnection;
 
@@ -24,8 +22,7 @@ import utez.app.web.eq4.util.DbConnection;
  *
  * @author ricardo
  */
-@WebServlet(name = "ServletTablaUsuario", urlPatterns = {"/ServletTablaUsuario"})
-public class ServletTablaUsuario extends HttpServlet {
+public class ServletEntregarPrestamo extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and
@@ -38,30 +35,28 @@ public class ServletTablaUsuario extends HttpServlet {
 	 */
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
+		response.setContentType("text/html;charset=UTF-8");
+		
+		Integer prestamoId = Integer.parseInt(request.getParameter("p_id"));
 		
 		Connection con = DbConnection.getConnection();
-		DaoUsuario dao = new DaoUsuario(con);
-		List<UsuarioBean> lista = new ArrayList<>();
-		List<Integer> prestamos = new ArrayList<>();
+		DaoPrestamo dao = new DaoPrestamo(con);
+		PrestamoBean prestamo = dao.get(prestamoId);
 		
 		
-		for (UsuarioBean usuarioBean : dao.getActive()){
-			if (!usuarioBean.isEs_admi()){
-				lista.add(usuarioBean);
-			}
+		if(prestamo.getUsuario().getDeuda() > 0){
+			request.setAttribute("prestamo", prestamo);
+			request.setAttribute("monto", dao.penalizacion(prestamo, true)); //mysql
+			
+			this.getServletConfig().getServletContext()
+				.getRequestDispatcher("/entregar_penalizacion.jsp")
+				.forward(request, response);
+		}else{
+			dao.delete(prestamo);
+			
+			response.sendRedirect("admin_prestamos.jsp");
 		}
 		
-		for (UsuarioBean usuario : lista) {
-			prestamos.add(dao.countPrestamos(usuario));
-		}
-		
-		request.setAttribute("lista", lista);
-		request.setAttribute("prestamos", prestamos);
-
-		this.getServletConfig().getServletContext().
-			getRequestDispatcher("/tabla_admin_usr.jsp").
-			forward(request, response);
-
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

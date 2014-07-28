@@ -47,7 +47,7 @@ if (usuario == null){
 				     
 				     %>
 				     
-				     Penalizaciones:  <b class="penalizacion "> <%=usuario.getDeuda()%></b>
+				     Penalizaciones:  <b class="penalizacion "> $<%=usuario.getDeuda()%></b>
 				     <script type="text/javascript">
 					     if ($(".penalizacion").html() > 0){
 						     $(".penalizacion").addClass("text-danger");

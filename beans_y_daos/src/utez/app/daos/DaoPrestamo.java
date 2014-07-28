@@ -121,7 +121,7 @@ public class DaoPrestamo extends AbstractDao<PrestamoBean>{
 
 	@Override
 	public boolean delete(PrestamoBean id) {
-		String query = "DELETE FROM PRESTAMO WHERE area_id = ?";
+		String query = "DELETE FROM PRESTAMO WHERE prestamo_id = ?";
 		
 		try{
 			PreparedStatement ps = con.prepareStatement(query);

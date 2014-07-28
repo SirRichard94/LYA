@@ -35,9 +35,10 @@ $(document).ready(function (){
               <tr>
                  <th>Usuario</th>
 		 <th>Libro</th>
-		 <th>Id Ejempar</th>
+		 <th>Id Ejemplar</th>
 		 <th>Fecha Salida</th>
 		 <th>Fecha Entrega</th>
+		 <th>Acción</th>
 		 
               </tr>
             </thead>
@@ -51,7 +52,8 @@ $(document).ready(function (){
 				    <td><%=row.getEjemplar().getEjemplar_id() %> </td>
 				    <td><%=row.getFecha_salida() %></td>
 				    <td><%=row.getFecha_entrega()%></td>
-				   
+				    <td><a href="EntregarPrestamo?p_id=<%=row.getPrestamo_id()%>">
+						    Entregar</a></td>
 			    </tr>
 		    <%}%>
             </tbody>
