@@ -41,7 +41,8 @@ public class ServletBusqueda extends HttpServlet {
 	 */
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("utf-8");
+		response.setCharacterEncoding("utf-8");
 		Connection con = DbConnection.getConnection();
 		if (con==null){
 		throw new ServletException("No hay conexion con la BD");

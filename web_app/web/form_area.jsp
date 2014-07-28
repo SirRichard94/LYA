@@ -1,9 +1,9 @@
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 
 <div id="alert-area"></div>
 
-<form class="form-horizontal" id="form-area" accept-charset="ISO-8859-1">
+<form class="form-horizontal" id="form-area" accept-charset="UTF-8">
 	<fieldset>
 	<legend>Agregar Area</legend>
 	<div class="form-group">
@@ -21,9 +21,6 @@
 	$(document).ready(function (){
 		$("#form-area").submit(function (){
 			var form = $(this);
-			$.ajaxSetup({
-				scriptCharset:"ISO-8859-1"
-			});
 			$.get("AgregarArea", form.serialize(),
 			function(data){
 				$("#alert-area").html(data);
