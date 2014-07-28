@@ -22,6 +22,7 @@ import utez.app.model.AreaBean;
 import utez.app.model.AutorBean;
 import utez.app.model.EditorialBean;
 import utez.app.model.LibroBean;
+import utez.app.utilidades.Biblioteca;
 import utez.app.web.eq4.util.DbConnection;
 
 /**
@@ -53,57 +54,22 @@ public class ServletBusqueda extends HttpServlet {
 		
 		String busqueda = request.getParameter("search");
 		String categoria = request.getParameter("categoria");
-		
+		Biblioteca biblioteca = new Biblioteca(true); //mysql
 		
 		
 		try{
-		if (busqueda == null || busqueda.equals("")){
-			lista = daoL.getActive();
-		}
-		else if (categoria.equals("autor")){
-			//quitar true para sql
-			List<AutorBean> autor = new DaoAutor(con).findByNombreYApellido(busqueda, true); //mysql
+			if (busqueda == null || busqueda.equals("")){
+				lista = daoL.getActive();
+			}else if (categoria.equals("autor")){
+				lista = biblioteca.busquedaLibroPorAutor(busqueda);
 			
-			for (AutorBean autorBean : autor) {
-				for (LibroBean libro : daoL.findByAutor(autorBean)) {
-					if (!lista.contains(libro)){
-					lista.add(libro);
-					}
-				}
+			}else if (categoria.equals("area")){
+				lista = biblioteca.busquedaLibroPorArea(busqueda);
+			}else if (categoria.equals("editorial")){
+				lista = biblioteca.busquedaLibroPorEditorial(busqueda);
+			}else{
+				lista = daoL.findByTitulo(busqueda);
 			}
-			
-		} else if(categoria.equals("editorial")){
-			List<EditorialBean> editorial = new DaoEditorial(con).findByNombre(busqueda);
-			
-			for (EditorialBean bean : editorial) {
-				for (LibroBean libro : daoL.findByEditorial(bean)) {
-					if (!lista.contains(libro)){
-					lista.add(libro);
-					}
-				}
-			}
-		} else if(categoria.equals("titulo")){
-			lista = daoL.findByTitulo(busqueda);
-			
-		} else if(categoria.equals("area")){
-			List<AreaBean> area = new DaoArea(con).findByNombre(busqueda);
-			
-			for (AreaBean bean : area) {
-				for (LibroBean libro : daoL.findByArea(bean)) {
-					if (!lista.contains(libro)){
-					lista.add(libro);
-					}
-				}
-			}
-		}
-		
-		//llenar beans de libro
-		for (LibroBean libroBean : lista) {
-			libroBean.setArea( new DaoArea(con).get(libroBean.getArea().getArea_id()));
-			libroBean.setEditorial(new DaoEditorial(con).get(libroBean.getEditorial().getEditorial_id()));
-			libroBean.setEjemplares(daoL.countEjemplares(libroBean));
-			libroBean.setAutores(new DaoAutor(con).findByLibro(libroBean));
-		}
 		
 		}catch(Exception e ){}		
 		

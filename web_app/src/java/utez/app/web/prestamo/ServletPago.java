@@ -18,6 +18,7 @@ import utez.app.daos.DaoPrestamo;
 import utez.app.daos.DaoUsuario;
 import utez.app.model.PrestamoBean;
 import utez.app.model.UsuarioBean;
+import utez.app.utilidades.Biblioteca;
 import utez.app.web.eq4.util.DbConnection;
 
 /**
@@ -50,14 +51,7 @@ public class ServletPago extends HttpServlet {
 		
 		daoP.delete(prestamo);
 		
-		//sumar las penalizaciones que tenga el usuario
-			usuario.setDeuda(0);
-			for (PrestamoBean prestamoBean : daoP.findByUsuario(usuario)) {
-				usuario.setDeuda(
-					usuario.getDeuda() + daoP.penalizacion(prestamoBean, true) //mysql
-				);
-			}
-		daoU.update(usuario);
+		new Biblioteca(true).actualizarPenalizaciones(usuario); //mysql
 		response.sendRedirect("admin_prestamos.jsp");
 	}
 
