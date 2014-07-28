@@ -4,12 +4,12 @@
  * and open the template in the editor.
  */
 
-package utez.app.biblioteca;
+package utez.app.utilidades;
 
 /**
  *
  * @author ricardo
  */
-public class Autores {
+public class Biblioteca {
 	
 }
