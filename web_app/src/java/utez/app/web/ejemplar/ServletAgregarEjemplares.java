@@ -39,30 +39,23 @@ public class ServletAgregarEjemplares extends HttpServlet {
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
-		
+
 		//PARAMTETROS i = isbn, l = localizacion, n = numero de ejemplares
-		long isbn = Long.parseLong(request.getParameter("i"));
+		int libro_id = Integer.parseInt(request.getParameter("libro"));
 		String localizacion = request.getParameter("l");
 		int num = Integer.parseInt(request.getParameter("n"));
-		
+
 		//Beans,Daos y conecciones
 		List<EjemplarBean> ejemplarList = new ArrayList();
 		Connection con = DbConnection.getConnection();
 		DaoEjemplar daoE = new DaoEjemplar(con);
 		DaoLibro daoL = new DaoLibro(con);
-		
+
 		//mensaje de informacion
-		
 		String mensaje = "";
-		
-		LibroBean libroBean = daoL.getByIsbn(isbn);
-		
-		if (libroBean == null || libroBean.getNombre() == null || libroBean.getNombre().equals("") ){
-			mensaje += "<div class=\"alert alert-warning\" > No existe libro con ISBN "
-				+ isbn +"</div>";
-		}
-		else {
-		
+
+		LibroBean libroBean = daoL.get(libro_id);
+
 		for (int i = 0; i < num; i++) {
 			EjemplarBean ejemplar = new EjemplarBean();
 			ejemplar.setLibro(libroBean);
@@ -70,26 +63,26 @@ public class ServletAgregarEjemplares extends HttpServlet {
 			ejemplar.setEjemplar_id(i);
 			ejemplarList.add(ejemplar);
 		}
-		
-			int cuenta = 0;
-			for (EjemplarBean ejemplarBean : ejemplarList) {
-				if (!daoE.add(ejemplarBean)) {
-					mensaje += "<div class=\"alert alert-warning\"> Error al agregar ejemplar "
-						+ ejemplarBean.getEjemplar_id() + "</div>";
-				} else {
-					cuenta++;
-				}
-			}
 
-			if (cuenta > 0) {
-				mensaje += "<div class=\"alert alert-info\"> Agregados " + cuenta + " ejemplares" + " de " + libroBean.getNombre()
+		int cuenta = 0;
+		for (EjemplarBean ejemplarBean : ejemplarList) {
+			if (!daoE.add(ejemplarBean)) {
+				mensaje += "<div class=\"alert alert-warning\">"
+					+ "Error al agregar ejemplar "
+					+ ejemplarBean.getEjemplar_id() 
 					+ "</div>";
+			} else {
+				cuenta++;
 			}
-//		else{
-//			mensaje += "<div class=\"alert alert-warning\"> no se agregaron ejemplares </div>";
-//		}
-
 		}
+
+		if (cuenta > 0) {
+			mensaje += "<div class=\"alert alert-info\"> Agregados " 
+				+ cuenta + " ejemplares" 
+				+ " de " + libroBean.getNombre()
+				+ "</div>";
+		}
+
 		try (PrintWriter out = response.getWriter()) {
 			out.print(mensaje);
 		}

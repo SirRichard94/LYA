@@ -70,7 +70,9 @@
 	<fieldset>
 	<legend>Agregar Ejemplares</legend>
 	<div class="form-group">
-		<input type="number" class="form-control" placeholder="Lbro ISBN" name="i" required=""> 
+		<select class="form-control" name="libro" id="libro-select">
+			
+		</select>
 	</div>
 	<div class="form-group">
 		<input type="text" class="form-control" placeholder="Localización" name="l" required>
@@ -139,6 +141,13 @@
 		$.get("ServletOptionListAutor",
 		function(data){
 			$("#autor-select").html(data);
+		});
+	
+	//listar libro
+
+		$.get("ServletOptionListLibro",
+		function(data){
+			$("#libro-select").html(data);
 		});
 	});
 </script>
