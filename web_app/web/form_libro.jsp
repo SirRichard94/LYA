@@ -13,6 +13,7 @@
 
 <div id="tab-libro-ejemplar-content" class="tab-content">
 	<div id="libro-tab" class="tab-pane active" >
+		<div id="extra"></div>
 		
 		<%-- FORM LIBRO--%>
 		<form class="form-horizontal" action="#InsertarLibro" method="get" id="agregar-libro">
@@ -34,6 +35,8 @@
 				<option value="1">Option one</option>
 				<option value="2">Option two</option>
 			</select>
+			<button id="new-editorial" type=button class="btn-sm btn btn-link">
+				Nueva Editorial</button>
 		</div>
 	</div>
 	<div class="form-group">
@@ -42,6 +45,8 @@
 			<select id="area-select" name="area" class="form-control">
 				
 			</select>
+			<button id="new-area" type=button class="btn-sm btn btn-link">
+				Nueva Area</button>
 		</div>
 	</div>
 	<div class="form-group">
@@ -51,6 +56,8 @@
 				<option value="1">Option one</option>
 				<option value="2">Option two</option>
 			</select>
+			<button id="new-autor" type=button class="btn-sm btn btn-link">
+				Nuevo Autor</button>
 		</div>
 	</div>
 	
@@ -59,7 +66,7 @@
 		<button  type="submit" class="btn btn-primary pull-right" >Crear</button>
 	</div>
 	</fieldset>
-</form>
+</form>	
 		</div> <!-- tab pane -->
 <div class="divider">
 </div>
@@ -89,32 +96,31 @@
 </div>
 </div> <!-- tab content -->
 
-
 <script type="text/javascript">
 	//agregar Ejemplar
 	$(document).ready(function (){
 		$("#agregar-ejemplar").submit(function (){
-						
+			var form = $(this);			
 			$.get(
 				'AgregarEjemplares', 
-				$("#agregar-ejemplar").serialize(), function (data){
+				form.serialize(), function (data){
 					 $( "#alert-form-libro" ).html( data );
+					 form.trigger("submited");
 				});
 			
 			$(this).find("input[type=text], textarea, input[type=number]").val("");
-			
 			return false;
 		});
 		
 		//agregar Libro
 		
 		$("#agregar-libro").submit(function (){	
-			alert("Libro");
-			
+			var form = $(this);
 			$.get(
 				'AgregarLibro', 
-				$("#agregar-libro").serialize(), function (data){
+				form.serialize(), function (data){
 					 $( "#alert-form-libro" ).html( data );
+					 form.trigger("submited");
 				});
 			
 			$(this).find("input[type=text], textarea, input[type=number]").val("");
@@ -126,28 +132,47 @@
 
 <script type="text/javascript">
 	//script insertar opciones
-	//area
-	$(document).ready(function (){
-		$.get("ServletOptionListArea",
-		function(data){
-			$("#area-select").html(data);
-		});
-	// editorial
-		$.get("ServletOptionListEditorial",
-		function(data){
-			$("#editorial-select").html(data);
-		});
-	//autor
-		$.get("ServletOptionListAutor",
-		function(data){
-			$("#autor-select").html(data);
-		});
+	function loadAreaSelect(){
+		$("#area-select").load("ServletOptionListArea");
+	}
+	function loadAutorSelect(){
+		$("#autor-select").load("ServletOptionListAutor");
+	}
+	function loadEditorialSelect(){
+		$("#editorial-select").load("ServletOptionListEditorial");
+	}
+	function loadLibroSelect(){
+		$("#libro-select").load("ServletOptionListLibro");
+	}
+	function loadAll(){
+		loadAreaSelect();
+		loadAutorSelect();
+		loadEditorialSelect();
+		loadLibroSelect();
+	}
 	
-	//listar libro
-
-		$.get("ServletOptionListLibro",
-		function(data){
-			$("#libro-select").html(data);
+	$(document).ready(function (){
+		//cargar los select
+		loadAll();
+		
+		//nuevos ingresos
+		$("#new-editorial").click(function(){
+			$("#extra").load("form_editorial.jsp");
 		});
+		$("#new-area").click(function(){
+			$("#extra").load("form_area.jsp");
+		});
+		$("#new-autor").click(function(){
+			$("#extra").load("form_autor.jsp");
+		});
+		
+		$("#extra").on("submited", function(e){
+			e.stopPropagation();
+			loadAll();
+			$("#extra form").hide();
+			//$("#extra").html('<div class="alert alert-info"> Formulario enviado </div>');
+			
+		});
+		
 	});
 </script>

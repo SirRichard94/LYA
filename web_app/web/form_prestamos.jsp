@@ -40,7 +40,7 @@
 			$.get("AgregarPrestamo", form.serialize(),
 			function(data){
 				$("#alert-prestamo").html(data);
-				
+				form.trigger("submited");
 			});
 			
 			return false;

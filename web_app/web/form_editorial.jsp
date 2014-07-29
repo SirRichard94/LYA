@@ -29,9 +29,10 @@
 			$.get("AgregarEditorial", form.serialize(),
 			function(data){
 				$("#alert-editorial").html(data);
-				
+				form.trigger("submited");
 			});
-			
+			$(this).find("input[type=text], textarea, input[type=number]").val("");
+
 			return false;
 		});
 	});

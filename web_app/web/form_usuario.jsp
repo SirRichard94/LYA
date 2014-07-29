@@ -36,12 +36,14 @@
 	
 	$(document).ready(function (){
 		$("#form-usuario").submit(function (){
-			
-			$.post("AgregarUsuario", $("#form-usuario").serialize(),
+			var form = $(this);
+			$.post("AgregarUsuario", form.serialize(),
 			function(data){
 				$("#alert-usuario").html(data);
+				form.trigger("submited");
 				
 			});
+			$(this).find("input[type=text], textarea, input[type=number]").val("");
 			
 			return false;
 		});

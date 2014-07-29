@@ -29,6 +29,8 @@
 				
 			});
 			
+			$(this).find("input[type=text], textarea, input[type=number]").val("");
+			$(this).trigger("submited");
 			return false;
 		});
 	});

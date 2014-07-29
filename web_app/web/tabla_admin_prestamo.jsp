@@ -11,7 +11,7 @@
 <script type="text/javascript">
 $(document).ready(function (){ 
 	$("#tabla-libro").dataTable({
-		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
 		"language": {
             "lengthMenu": "_MENU_ filas por página",
             "search": "Busqueda",
