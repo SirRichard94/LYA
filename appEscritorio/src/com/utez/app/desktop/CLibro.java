@@ -323,7 +323,7 @@ public class CLibro extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        DaoLibro daoLibro=new DaoLibro(conexion);
-        List <AutorBean> autorBean = (List <AutorBean>) listaAutor.get(listAutor.getSelectedIndex());
+        AutorBean autorBean= listaAutor.get(listAutor.getSelectedIndices()):
         EditorialBean editorialBean= listaEditorial.get(cmbEditorial.getSelectedIndex());
         consultaBean.setIsbn(Long.parseLong(txtIsbn.getText()));
         consultaBean.setPaginas(Integer.parseInt(txtPag.getText()));
