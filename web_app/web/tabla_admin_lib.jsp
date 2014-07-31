@@ -13,11 +13,11 @@ $(document).ready(function (){
 		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
 		"language": {
             "lengthMenu": "_MENU_ filas por página",
-            "search": "Busqueda",
+            "search": "Búsqueda",
             "zeroRecords": "No se encontro informacion",
             "info": "Mostrando página _PAGE_ de _PAGES_",
             "infoEmpty": "No hay informacion disponible",
-            "infoFiltered": "(filtrados de _MAX_ filas)"
+            "infoFiltered": "(Filtrados de _MAX_ filas)"
 		}
 	});
 	
@@ -65,7 +65,9 @@ $(document).ready(function (){
 				    <td><%=ejemplaresDisponibles.get(i) %> / <%=ejemplares.get(i) %></td>
 				    <td class="centered">
 					    <span class="glyphicon glyphicon-pencil"></span>
+					    <a href="EliminarLibro?id=<%=row.getLibro_id()%>">
 					    <span class="glyphicon glyphicon-trash"></span>
+					    </a>
 				    </td>
 			    </tr>
 		    <%}%>

@@ -118,6 +118,10 @@
         <servlet-name>ServletPago</servlet-name>
         <servlet-class>utez.app.web.prestamo.ServletPago</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EliminarLibro</servlet-name>
+        <servlet-class>utez.app.web.libro.ServletEliminarLibro</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -225,6 +229,10 @@
     <servlet-mapping>
         <servlet-name>ServletPago</servlet-name>
         <url-pattern>/ServletPago</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EliminarLibro</servlet-name>
+        <url-pattern>/EliminarLibro</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

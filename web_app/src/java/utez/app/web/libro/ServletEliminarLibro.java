@@ -10,21 +10,20 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.rmi.ServerException;
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import utez.app.daos.*;
-import utez.app.model.*;
+import javax.servlet.http.HttpSession;
+import utez.app.daos.DaoLibro;
+import utez.app.model.LibroBean;
 import utez.app.web.eq4.util.DbConnection;
 
 /**
  *
  * @author ricardo
  */
-public class ServletAgregarLibro extends HttpServlet {
+public class ServletEliminarLibro extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and
@@ -38,52 +37,44 @@ public class ServletAgregarLibro extends HttpServlet {
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
+		try{
+		
+		HttpSession sesion = request.getSession();
+		if ((Boolean)sesion.getAttribute("admin") == false || (Boolean) sesion.getAttribute("admin") == null){
+			throw new ServerException("Acceso denegado");
+		}
+		}catch (NullPointerException ex){
+			throw new ServerException("Acceso denegado");
+		}
+		
 		Connection con = DbConnection.getConnection();
 		if (con == null){
 			throw new ServerException("No hay coneccion con la BD");
 		}
 		
-		//
-		String nombre = request.getParameter("nombre");
-		long isbn = Long.parseLong(request.getParameter("isbn"));
-		int paginas = Integer.parseInt(request.getParameter("pags"));
-		int area_id = Integer.parseInt(request.getParameter("area"));
-		int editorial_id = Integer.parseInt(request.getParameter("editorial"));
-		String[] stringAutores_id = request.getParameterValues("autores");
+		int id = Integer.parseInt(request.getParameter("id"));
+		DaoLibro dao = new DaoLibro(con);
 		
-		AreaBean area = new DaoArea(con).get(area_id);
-		EditorialBean editorial = new DaoEditorial(con).get(editorial_id);
-		List<AutorBean> autores = new ArrayList<AutorBean>();
-		
-		for (String stringAutorId : stringAutores_id) {
-			autores.add(
-				new DaoAutor(con).get(
-					Integer.parseInt(stringAutorId))
-			);
-		}
-		
-		LibroBean nuevoBean = new LibroBean();
-		nuevoBean.setNombre(nombre);
-		nuevoBean.setIsbn(isbn);
-		nuevoBean.setPaginas(paginas);
-		nuevoBean.setArea(area);
-		nuevoBean.setEditorial(editorial);
-		nuevoBean.setAutores(autores);
+		LibroBean usuario = dao.get(id);
+		usuario.setAlta(false);
 		
 		
+		 
 		String mensaje;
-		if (new DaoLibro(con).add(nuevoBean)){
+		if (dao.update(usuario)){
+			request.setAttribute("info", "Ha sido eliminado con exito");
 			
-			mensaje = "<div class=\"alert alert-info\"> "
-				+nuevoBean.getNombre()+" agregado con exito</div>";
 		} else{
+			request.setAttribute("warning", "Error al eliminar libro");
 			
-			mensaje = "<div class=\"alert alert-danger\"> Error al agregar libro</div>";
 		}
 		
-		try (PrintWriter out = response.getWriter()) {
-			out.print(mensaje);
-		}
+		//this.getServletContext().getRequestDispatcher("/admin.jsp").forward(request, response);
+		
+		String pagina = response.encodeRedirectURL("Admin?sec=libro");
+		response.sendRedirect(pagina);
+
+
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
