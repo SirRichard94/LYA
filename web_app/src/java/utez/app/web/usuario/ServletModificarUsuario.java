@@ -4,22 +4,18 @@
  * and open the template in the editor.
  */
 
-package utez.app.web.agregar;
+package utez.app.web.usuario;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.rmi.ServerException;
 import java.sql.Connection;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import utez.app.daos.DaoAutor;
-import utez.app.daos.DaoEditorial;
+import javax.servlet.http.HttpSession;
 import utez.app.daos.DaoUsuario;
-import utez.app.model.AutorBean;
-import utez.app.model.EditorialBean;
 import utez.app.model.UsuarioBean;
 import utez.app.web.eq4.util.DbConnection;
 
@@ -27,8 +23,7 @@ import utez.app.web.eq4.util.DbConnection;
  *
  * @author ricardo
  */
-@WebServlet(name = "AgregarEditorial", urlPatterns = {"/AgregarEditorial"})
-public class ServletAgregarEditorial extends HttpServlet {
+public class ServletModificarUsuario extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and
@@ -41,42 +36,64 @@ public class ServletAgregarEditorial extends HttpServlet {
 	 */
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
-		response.setContentType("text/html;charset=UTF-8");
+		response.setContentType("charset=UTF-8");
 		
-//		try{
-//		
-//		HttpSession sesion = request.getSession();
-//		if ((Boolean)sesion.getAttribute("admin") == false || (Boolean) sesion.getAttribute("admin") == null){
-//			throw new ServerException("Acceso denegado");
-//		}
-//		}catch (NullPointerException ex){
-//			throw new ServerException("Acceso denegado");
-//		}
+		try{
+		
+		HttpSession sesion = request.getSession();
+		if ((Boolean)sesion.getAttribute("admin") == false || (Boolean) sesion.getAttribute("admin") == null){
+			throw new ServerException("Acceso denegado");
+		}
+		}catch (NullPointerException ex){
+			throw new ServerException("Acceso denegado");
+		}
+		
+		
 		Connection con = DbConnection.getConnection();
 		if (con == null){
 			throw new ServerException("No hay coneccion con la BD");
 		}
 		
+		DaoUsuario dao = new DaoUsuario(con);
 		
-		String nombre = request.getParameter("nom");
-		String dir = request.getParameter("dir");
+		String redirect = "modificar_usuario.jsp";
+		String guardar = request.getParameter("guardar");
 		
-		EditorialBean nuevaEditorial = new EditorialBean();
-		nuevaEditorial.setNombre(nombre);
-		nuevaEditorial.setDireccion(dir);
+		int usuario_id = Integer.parseInt(request.getParameter("u"));
+		UsuarioBean usuario = dao.get(usuario_id);
 		
-		String mensaje;
-		if (new DaoEditorial(con).add(nuevaEditorial)){
+		if (!guardar.equals("true")){
 			
-			mensaje = "<div class=\"alert alert-info\"> "
-				+nuevaEditorial.getNombre()+" agregada con exito</div>";
-		} else{
+			request.setAttribute("objetivo", usuario);
+			this.getServletContext().getRequestDispatcher("/"+redirect).forward(request, response);
+			//forward a modificar
 			
-			mensaje = "<div class=\"alert alert-danger\"> Error al agregar editorial</div>";
-		}
-		
-		try (PrintWriter out = response.getWriter()) {
-			out.print(mensaje);
+		} else {
+			String nombre = request.getParameter("nombre");
+			String email = request.getParameter("email");
+			String pass = request.getParameter("pass");
+			String tel = request.getParameter("tel");
+			String direccion = request.getParameter("dir");
+			double deuda = Double.parseDouble(request.getParameter("deuda"));
+
+			usuario.setNombre(nombre);
+			usuario.setCorreo(email);
+			usuario.setPasswd(pass);
+			usuario.setTelefono(tel);
+			usuario.setDireccion(direccion);
+			usuario.setDeuda(deuda);
+
+			if (dao.update(usuario)) {
+				request.setAttribute("info", "Ha sido actualizado con exito");
+
+			} else {
+				request.setAttribute("warning", "Error al actualizar usuario");
+
+			}
+			
+			redirect = "Admin?sec=usuario";
+			String pagina = response.encodeRedirectURL(redirect);
+			response.sendRedirect(pagina);				//redirect a admin
 		}
 	}
 

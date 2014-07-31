@@ -1,4 +1,3 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%-- 
     Document   : index
     Created on : 03-jul-2014, 16:43:43
@@ -7,9 +6,9 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
   <head>
-    <%@include file="incl_headmeta.html" %>
+	  <%@include file="incl_headmeta.html" %>
     <title>Biblioteca Lee y Aprende </title>
   </head>
 
@@ -17,23 +16,35 @@
 
     <!-- Static navbar -->
     <%@include file="incl_navbar.jsp" %>
+    
+     <%
+	try{
+		if (!(Boolean) session.getAttribute("admin")){
+			request.setAttribute("warning", "sesion expirada");
+			getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+		}
+	}catch (NullPointerException e){
+		throw new ServletException("Acceso denegado");
+	}
+    %>
 
 	<!-- +++++ Welcome Section +++++ -->
 	<div id="ww">
 	    <div class="container">
-		   
-		    
 			<div class="row">
+				<div class="col-md-7 ">
+                                   
+					<div id="tabla-prestamos">
+						Tabla de prestamos
+					</div>
+					
+				</div>
+				
 				<div class="col-md-5 ">
                                    
-				   <img src="assets/img/logo1.jpg" alt="Logo" class="img-responsive hidden-xs hidden-sm" >
-				
-				</div><!-- /col-lg-8 -->
-				<div class="col-md-7">
-					<!-- Buusqueda -->
-					<h1>Biblioteca Lee Y Aprende</h1> 
-					<%@include file="incl_busqueda.jsp" %>
-					
+					<div id="form-prestamos">
+						<%@include file="form_prestamos.jsp" %>
+					</div>
 					
 				</div>
 			</div><!-- /row -->
@@ -56,6 +67,16 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+	    $(document).ready(function (){
+		    
+		$.get("TablaPrestamo", function (responseText){
+			$("#tabla-prestamos").html(responseText);
+		});
+		$("#agregar").load("form_usuario.jsp");
+		
+	    });
+    </script>
     
   </body>
 </html >

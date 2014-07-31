@@ -1,9 +1,9 @@
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 
 <div id="alert-area"></div>
 
-<form class="form-horizontal" id="form-area">
+<form class="form-horizontal" id="form-area" accept-charset="UTF-8">
 	<fieldset>
 	<legend>Agregar Area</legend>
 	<div class="form-group">
@@ -26,7 +26,6 @@
 				$("#alert-area").html(data);
 				
 			});
-			
 			return false;
 		});
 	});

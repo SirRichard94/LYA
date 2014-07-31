@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package utez.app.web.agregar;
+package utez.app.web.editorial;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,9 +15,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import utez.app.daos.DaoAutor;
+import utez.app.daos.DaoEditorial;
+import utez.app.daos.DaoEjemplar;
 import utez.app.daos.DaoUsuario;
-import utez.app.model.AutorBean;
+import utez.app.model.EditorialBean;
+import utez.app.model.EjemplarBean;
 import utez.app.model.UsuarioBean;
 import utez.app.web.eq4.util.DbConnection;
 
@@ -25,7 +27,7 @@ import utez.app.web.eq4.util.DbConnection;
  *
  * @author ricardo
  */
-public class ServletAgregarAutor extends HttpServlet {
+public class ServletEliminarEditorial extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and
@@ -39,42 +41,43 @@ public class ServletAgregarAutor extends HttpServlet {
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
+		try{
 		
-//		try{
-//		
-//		HttpSession sesion = request.getSession();
-//		if ((Boolean)sesion.getAttribute("admin") == false || (Boolean) sesion.getAttribute("admin") == null){
-//			throw new ServerException("Acceso denegado");
-//		}
-//		}catch (NullPointerException ex){
-//			throw new ServerException("Acceso denegado");
-//		}
+		HttpSession sesion = request.getSession();
+		if ((Boolean)sesion.getAttribute("admin") == false || (Boolean) sesion.getAttribute("admin") == null){
+			throw new ServerException("Acceso denegado");
+		}
+		}catch (NullPointerException ex){
+			throw new ServerException("Acceso denegado");
+		}
+		
 		Connection con = DbConnection.getConnection();
 		if (con == null){
 			throw new ServerException("No hay coneccion con la BD");
 		}
 		
+		// Eliminar logica
+		int id = Integer.parseInt(request.getParameter("i"));
+		DaoEditorial dao = new DaoEditorial(con);
 		
-		String nombre = request.getParameter("n");
-		String apellido = request.getParameter("a");
+		EditorialBean bean = dao.get(id);
+		bean.setAlta(false);
 		
-		AutorBean autor = new AutorBean();
-		autor.setNombre(nombre);
-		autor.setApellido(apellido);
-		
+		//
+		 
 		String mensaje;
-		if (new DaoAutor(con).add(autor)){
-			//request.setAttribute("info", "Usuario agregado con exito");
-			mensaje = "<div class=\"alert alert-info\"> "
-				+autor.getNombre()+" "+autor.getApellido()+" agregado con exito</div>";
+		if (dao.update(bean)){
+			request.setAttribute("info", "Ha sido eliminada con exito");
+			
 		} else{
-			//request.setAttribute("warning", "Error al agregar usuario");
-			mensaje = "<div class=\"alert alert-danger\"> Error al agregar Autor</div>";
+			request.setAttribute("warning", "Error al eliminar Editorial");
+			
 		}
 		
-		try (PrintWriter out = response.getWriter()) {
-			out.print(mensaje);
-		}
+		//this.getServletContext().getRequestDispatcher("/admin.jsp").forward(request, response);
+		
+		String pagina = response.encodeRedirectURL("Admin?sec=editorial");
+		response.sendRedirect(pagina);
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

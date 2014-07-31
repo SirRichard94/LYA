@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package utez.app.web.agregar;
+package utez.app.web.editorial;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,17 +14,18 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import utez.app.daos.DaoArea;
+import javax.servlet.http.HttpSession;
 import utez.app.daos.DaoEditorial;
-import utez.app.model.AreaBean;
+import utez.app.daos.DaoUsuario;
 import utez.app.model.EditorialBean;
+import utez.app.model.UsuarioBean;
 import utez.app.web.eq4.util.DbConnection;
 
 /**
  *
  * @author ricardo
  */
-public class ServletAgregarArea extends HttpServlet {
+public class ServletModificarEditorial extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and
@@ -37,41 +38,57 @@ public class ServletAgregarArea extends HttpServlet {
 	 */
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
-		response.setContentType("text/html;charset=UTF-8");
+		response.setContentType("charset=UTF-8");
 		
-//		try{
-//		
-//		HttpSession sesion = request.getSession();
-//		if ((Boolean)sesion.getAttribute("admin") == false || (Boolean) sesion.getAttribute("admin") == null){
-//			throw new ServerException("Acceso denegado");
-//		}
-//		}catch (NullPointerException ex){
-//			throw new ServerException("Acceso denegado");
-//		}
+		try{
+		
+		HttpSession sesion = request.getSession();
+		if ((Boolean)sesion.getAttribute("admin") == false || (Boolean) sesion.getAttribute("admin") == null){
+			throw new ServerException("Acceso denegado");
+		}
+		}catch (NullPointerException ex){
+			throw new ServerException("Acceso denegado");
+		}
+		
+		
 		Connection con = DbConnection.getConnection();
 		if (con == null){
 			throw new ServerException("No hay coneccion con la BD");
 		}
 		
+		///
+		DaoEditorial dao = new DaoEditorial(con);
 		
-		String nombre = request.getParameter("n");
+		String redirect = "modificar_editorial.jsp";
+		String guardar = request.getParameter("guardar");
 		
-		AreaBean nuevaArea = new AreaBean();
-		nuevaArea.setNombre(nombre);
+		int id = Integer.parseInt(request.getParameter("i"));
+		EditorialBean bean = dao.get(id);
 		
-		
-		String mensaje;
-		if (new DaoArea(con).add(nuevaArea)){
+		if (!guardar.equals("true")){
 			
-			mensaje = "<div class=\"alert alert-info\"> "
-				+nuevaArea.getNombre()+" agregada con exito</div>";
-		} else{
+			request.setAttribute("objetivo", bean);
+			this.getServletContext().getRequestDispatcher("/"+redirect).forward(request, response);
+			//forward a modificar
 			
-			mensaje = "<div class=\"alert alert-danger\"> Error al agregar area</div>";
-		}
-		
-		try (PrintWriter out = response.getWriter()) {
-			out.print(mensaje);
+		} else {
+			String nombre = request.getParameter("nombre");
+			String direccion = request.getParameter("dir");
+
+			bean.setNombre(nombre);
+			bean.setDireccion(direccion);
+
+			if (dao.update(bean)) {
+				request.setAttribute("info", "Ha sido actualizado con exito");
+
+			} else {
+				request.setAttribute("warning", "Error al actualizar Editorial");
+
+			}
+			
+			redirect = "Admin?sec=editorial";
+			String pagina = response.encodeRedirectURL(redirect);
+			response.sendRedirect(pagina);				//redirect a admin
 		}
 	}
 

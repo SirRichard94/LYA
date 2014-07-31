@@ -4,9 +4,10 @@
  * and open the template in the editor.
  */
 
-package utez.app.web;
+package utez.app.web.ejemplar;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,13 +15,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import utez.app.daos.DaoArea;
-import utez.app.daos.DaoAutor;
-import utez.app.daos.DaoEditorial;
+import utez.app.daos.DaoEjemplar;
 import utez.app.daos.DaoLibro;
-import utez.app.model.AreaBean;
-import utez.app.model.AutorBean;
-import utez.app.model.EditorialBean;
+import utez.app.model.EjemplarBean;
 import utez.app.model.LibroBean;
 import utez.app.web.eq4.util.DbConnection;
 
@@ -28,7 +25,7 @@ import utez.app.web.eq4.util.DbConnection;
  *
  * @author ricardo
  */
-public class ServletBusqueda extends HttpServlet {
+public class ServletAgregarEjemplares extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and
@@ -41,82 +38,61 @@ public class ServletBusqueda extends HttpServlet {
 	 */
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-		response.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=UTF-8");
+		
+		//PARAMTETROS i = isbn, l = localizacion, n = numero de ejemplares
+		long isbn = Long.parseLong(request.getParameter("i"));
+		String localizacion = request.getParameter("l");
+		int num = Integer.parseInt(request.getParameter("n"));
+		
+		//Beans,Daos y conecciones
+		List<EjemplarBean> ejemplarList = new ArrayList();
 		Connection con = DbConnection.getConnection();
-		if (con==null){
-		throw new ServletException("No hay conexion con la BD");
-		}
-		
+		DaoEjemplar daoE = new DaoEjemplar(con);
 		DaoLibro daoL = new DaoLibro(con);
-		List<LibroBean> lista = new ArrayList<>();
 		
-		String busqueda = request.getParameter("search");
-		String categoria = request.getParameter("categoria");
+		//mensaje de informacion
 		
+		String mensaje = "";
 		
+		LibroBean libroBean = daoL.getByIsbn(isbn);
 		
-		try{
-		if (busqueda == null || busqueda.equals("")){
-			lista = daoL.getActive();
+		if (libroBean == null || libroBean.getNombre() == null || libroBean.getNombre().equals("") ){
+			mensaje += "<div class=\"alert alert-warning\" > No existe libro con ISBN "
+				+ isbn +"</div>";
 		}
-		else if (categoria.equals("autor")){
-			//quitar true para sql
-			List<AutorBean> autor = new DaoAutor(con).findByNombreYApellido(busqueda, true); //mysql
-			
-			for (AutorBean autorBean : autor) {
-				for (LibroBean libro : daoL.findByAutor(autorBean)) {
-					if (!lista.contains(libro)){
-					lista.add(libro);
-					}
-				}
-			}
-			
-		} else if(categoria.equals("editorial")){
-			List<EditorialBean> editorial = new DaoEditorial(con).findByNombre(busqueda);
-			
-			for (EditorialBean bean : editorial) {
-				for (LibroBean libro : daoL.findByEditorial(bean)) {
-					if (!lista.contains(libro)){
-					lista.add(libro);
-					}
-				}
-			}
-		} else if(categoria.equals("titulo")){
-			lista = daoL.findByTitulo(busqueda);
-			
-		} else if(categoria.equals("area")){
-			List<AreaBean> area = new DaoArea(con).findByNombre(busqueda);
-			
-			for (AreaBean bean : area) {
-				for (LibroBean libro : daoL.findByArea(bean)) {
-					if (!lista.contains(libro)){
-					lista.add(libro);
-					}
-				}
-			}
+		else {
+		
+		for (int i = 0; i < num; i++) {
+			EjemplarBean ejemplar = new EjemplarBean();
+			ejemplar.setLibro(libroBean);
+			ejemplar.setLocalizacion(localizacion);
+			ejemplar.setEjemplar_id(i);
+			ejemplarList.add(ejemplar);
 		}
 		
-		//llenar beans de libro
-		for (LibroBean libroBean : lista) {
-			libroBean.setArea( new DaoArea(con).get(libroBean.getArea().getArea_id()));
-			libroBean.setEditorial(new DaoEditorial(con).get(libroBean.getEditorial().getEditorial_id()));
-			libroBean.setEjemplares(daoL.countEjemplares(libroBean));
-			libroBean.setAutores(new DaoAutor(con).findByLibro(libroBean));
+			int cuenta = 0;
+			for (EjemplarBean ejemplarBean : ejemplarList) {
+				if (!daoE.add(ejemplarBean)) {
+					mensaje += "<div class=\"alert alert-warning\"> Error al agregar ejemplar "
+						+ ejemplarBean.getEjemplar_id() + "</div>";
+				} else {
+					cuenta++;
+				}
+			}
+
+			if (cuenta > 0) {
+				mensaje += "<div class=\"alert alert-info\"> Agregados " + cuenta + " ejemplares" + " de " + libroBean.getNombre()
+					+ "</div>";
+			}
+//		else{
+//			mensaje += "<div class=\"alert alert-warning\"> no se agregaron ejemplares </div>";
+//		}
+
 		}
-		
-		}catch(Exception e ){}		
-		
-		request.setAttribute("lista", lista);
-		request.setAttribute("busqueda", busqueda);
-		
-		this.getServletConfig().getServletContext().
-                getRequestDispatcher("/tabla_libros.jsp").
-                forward(request, response);
-	
-        
-	
-		
+		try (PrintWriter out = response.getWriter()) {
+			out.print(mensaje);
+		}
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

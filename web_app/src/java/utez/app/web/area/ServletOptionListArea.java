@@ -4,31 +4,24 @@
  * and open the template in the editor.
  */
 
-package utez.app.web.tables;
+package utez.app.web.area;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import utez.app.daos.DaoArea;
-import utez.app.daos.DaoEditorial;
-import utez.app.daos.DaoLibro;
 import utez.app.model.AreaBean;
-import utez.app.model.EditorialBean;
 import utez.app.web.eq4.util.DbConnection;
 
 /**
  *
  * @author ricardo
  */
-@WebServlet(name = "ServletTablaArea", urlPatterns = {"/ServletTablaArea"})
-public class ServletTablaArea extends HttpServlet {
+public class ServletOptionListArea extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and
@@ -42,27 +35,18 @@ public class ServletTablaArea extends HttpServlet {
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
-		
-		Connection con = DbConnection.getConnection();
-		DaoArea dao = new DaoArea(con);
-		
-		List<AreaBean> lista ;
-
-		lista = dao.getActive();
-		List<Integer> listaLibros = new ArrayList();
-		
-		for (AreaBean area : lista) {
-			listaLibros.add(
-				new DaoLibro(con).countByArea(area)
-			);
+		try (PrintWriter out = response.getWriter()) {
+			/* TODO output your page here. You may use following sample code. */
+			Connection con = new DbConnection().getConnection();
+			
+			DaoArea dao = new DaoArea(con);
+			
+			for (AreaBean bean: dao.getActive()){
+			out.println("<option value="+bean.getArea_id()+">"
+				+ bean.getNombre()
+				+ "</option>");
+			}
 		}
-		
-		request.setAttribute("lista", lista);
-		request.setAttribute("listaLibros", listaLibros);
-
-		this.getServletConfig().getServletContext().
-			getRequestDispatcher("/tabla_admin_area.jsp").
-			forward(request, response);
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

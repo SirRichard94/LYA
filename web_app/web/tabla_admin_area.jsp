@@ -40,15 +40,36 @@ $(document).ready(function (){
             </thead>
             <tbody>
 		    
-               <% for(int i = 0; i< lista.size(); i++){ %>
+               <% for(int i = 0; i< lista.size(); i++){ 
+		       int id = lista.get(i).getArea_id();
+	       %>
 			    <tr>
 				    <td><%=lista.get(i).getNombre()%></td>
 				    <td class="centered"><%=listaLibros.get(i)%></td>
-				    <td class="centered">
-					    <span class="glyphicon glyphicon-pencil"></span>
-					    <span class="glyphicon glyphicon-trash"></span>
-				    </td>
+				<%-- accciones --%>
+				     <td class="centered">
+
+					     <a Href="ModificarArea?guardar=false&AMP;id=<%=id%>" 
+						title="modificar" >
+						     <span class="glyphicon glyphicon-pencil"></span>
+					     </a>
+					     <a href="EliminarArea?id=<%=id%>" title="eliminar"
+						class="eliminar">
+						     <span class="glyphicon glyphicon-trash"></span>
+					     </a>
+
+				     </td>
 			    </tr>
 		<% } %>
             </tbody>
           </table>
+
+	    <script type="text/javascript">
+		    $(document).ready(function (){
+			    $(".eliminar").click(function(){
+				if(!confirm("En verdad desea eliminarla?")){
+					return false;
+				}
+			    });
+		    });
+	    </script>

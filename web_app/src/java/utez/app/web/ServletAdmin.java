@@ -4,29 +4,30 @@
  * and open the template in the editor.
  */
 
-package utez.app.web.tables;
+package utez.app.web;
 
+import java.awt.SystemColor;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.rmi.ServerException;
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import utez.app.daos.DaoAutor;
-import utez.app.daos.DaoEditorial;
-import utez.app.daos.DaoLibro;
-import utez.app.model.AutorBean;
-import utez.app.model.EditorialBean;
+import javax.servlet.http.HttpSession;
+import utez.app.daos.DaoUsuario;
+import utez.app.model.UsuarioBean;
 import utez.app.web.eq4.util.DbConnection;
 
 /**
  *
  * @author ricardo
  */
-public class ServletTablaEditorial extends HttpServlet {
+public class ServletAdmin extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and
@@ -40,27 +41,15 @@ public class ServletTablaEditorial extends HttpServlet {
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
+		String seccion = request.getParameter("sec");
 		
-		Connection con = DbConnection.getConnection();
-		DaoEditorial dao = new DaoEditorial(con);
-		
-		List<EditorialBean> lista ;
-
-		lista = dao.getActive();
-		List<Integer> listaLibros = new ArrayList();
-		
-		for (EditorialBean editorial : lista) {
-			listaLibros.add(
-				new DaoLibro(con).countByEditorial(editorial)
-			);
+		if (seccion != null){
+		request.setAttribute("seccion", seccion);
 		}
 		
-		request.setAttribute("lista", lista);
-		request.setAttribute("listaLibros", listaLibros);
-
 		this.getServletConfig().getServletContext().
-			getRequestDispatcher("/tabla_admin_editorial.jsp").
-			forward(request, response);
+				getRequestDispatcher("/admin.jsp").
+				forward(request, response);
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

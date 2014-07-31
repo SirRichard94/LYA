@@ -4,26 +4,26 @@
  * and open the template in the editor.
  */
 
-package utez.app.web.modificar;
+package utez.app.web.autor;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.rmi.ServerException;
 import java.sql.Connection;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import utez.app.daos.DaoUsuario;
-import utez.app.model.UsuarioBean;
+import utez.app.daos.DaoAutor;
+import utez.app.daos.DaoEditorial;
+import utez.app.model.AutorBean;
+import utez.app.model.EditorialBean;
 import utez.app.web.eq4.util.DbConnection;
 
 /**
  *
  * @author ricardo
  */
-public class ServletModificarUsuario extends HttpServlet {
+public class ServletOptionListAutor extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and
@@ -36,64 +36,18 @@ public class ServletModificarUsuario extends HttpServlet {
 	 */
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
-		response.setContentType("charset=UTF-8");
-		
-		try{
-		
-		HttpSession sesion = request.getSession();
-		if ((Boolean)sesion.getAttribute("admin") == false || (Boolean) sesion.getAttribute("admin") == null){
-			throw new ServerException("Acceso denegado");
-		}
-		}catch (NullPointerException ex){
-			throw new ServerException("Acceso denegado");
-		}
-		
-		
-		Connection con = DbConnection.getConnection();
-		if (con == null){
-			throw new ServerException("No hay coneccion con la BD");
-		}
-		
-		DaoUsuario dao = new DaoUsuario(con);
-		
-		String redirect = "modificar_usuario.jsp";
-		String guardar = request.getParameter("guardar");
-		
-		int usuario_id = Integer.parseInt(request.getParameter("u"));
-		UsuarioBean usuario = dao.get(usuario_id);
-		
-		if (!guardar.equals("true")){
+		response.setContentType("text/html;charset=UTF-8");
+		try (PrintWriter out = response.getWriter()) {
+			/* TODO output your page here. You may use following sample code. */
+			Connection con = new DbConnection().getConnection();
 			
-			request.setAttribute("objetivo", usuario);
-			this.getServletContext().getRequestDispatcher("/"+redirect).forward(request, response);
-			//forward a modificar
+			DaoAutor dao = new DaoAutor(con);
 			
-		} else {
-			String nombre = request.getParameter("nombre");
-			String email = request.getParameter("email");
-			String pass = request.getParameter("pass");
-			String tel = request.getParameter("tel");
-			String direccion = request.getParameter("dir");
-			double deuda = Double.parseDouble(request.getParameter("deuda"));
-
-			usuario.setNombre(nombre);
-			usuario.setCorreo(email);
-			usuario.setPasswd(pass);
-			usuario.setTelefono(tel);
-			usuario.setDireccion(direccion);
-			usuario.setDeuda(deuda);
-
-			if (dao.update(usuario)) {
-				request.setAttribute("info", "Ha sido actualizado con exito");
-
-			} else {
-				request.setAttribute("warning", "Error al actualizar usuario");
-
+			for (AutorBean bean: dao.getActive()){
+			out.println("<option value="+bean.getAutor_id()+">"
+				+ bean.getNombre() + " " + bean.getApellido()
+				+ "</option>");
 			}
-			
-			redirect = "admin.jsp";
-			String pagina = response.encodeRedirectURL(redirect);
-			response.sendRedirect(pagina);				//redirect a admin
 		}
 	}
 

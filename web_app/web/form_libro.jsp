@@ -13,7 +13,9 @@
 
 <div id="tab-libro-ejemplar-content" class="tab-content">
 	<div id="libro-tab" class="tab-pane active" >
-<form class="form-horizontal">
+		
+		<%-- FORM LIBRO--%>
+		<form class="form-horizontal" action="#InsertarLibro" method="get" id="agregar-libro">
 	<fieldset>
 	<legend>Agregar Libro</legend>
 	<div class="form-group">
@@ -26,27 +28,26 @@
 		<input type="number" class="form-control" placeholder="Num de Paginas" name="pags">
 	</div>
 	<div class="form-group">
-		<label class="col-md-4 control-label" for="editorial"><small>Editorial</small></label>
+		<label class="col-md-4 control-label" for="editorial-select"><small>Editorial</small></label>
 		<div class="col-md-8">
-			<select id="editorial" name="editorial" class="form-control">
+			<select id="editorial-select" name="editorial" class="form-control">
 				<option value="1">Option one</option>
 				<option value="2">Option two</option>
 			</select>
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-md-4 control-label" for="area"><small>Area</small></label>
+		<label class="col-md-4 control-label" for="area-select"><small>Area</small></label>
 		<div class="col-md-8">
-			<select id="area" name="area" class="form-control">
-				<option value="1">Option one</option>
-				<option value="2">Option two</option>
+			<select id="area-select" name="area" class="form-control">
+				
 			</select>
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-md-4 control-label" for="autores"><small>Autores</small></label>
+		<label class="col-md-4 control-label" for="autor-select"><small>Autores</small></label>
 		<div class="col-md-8">
-			<select multiple id="autores" name="autores" class="form-control">
+			<select multiple id="autor-select" name="autores" class="form-control">
 				<option value="1">Option one</option>
 				<option value="2">Option two</option>
 			</select>
@@ -55,7 +56,7 @@
 	
 	
 	<div class="form-group">
-		<button class="btn btn-primary pull-right" >Crear</button>
+		<button  type="submit" class="btn btn-primary pull-right" >Crear</button>
 	</div>
 	</fieldset>
 </form>
@@ -88,6 +89,7 @@
 
 
 <script type="text/javascript">
+	//agregar Ejemplar
 	$(document).ready(function (){
 		$("#agregar-ejemplar").submit(function (){
 						
@@ -100,6 +102,43 @@
 			$(this).find("input[type=text], textarea, input[type=number]").val("");
 			
 			return false;
+		});
+		
+		//agregar Libro
+		
+		$("#agregar-libro").submit(function (){	
+			alert("Libro");
+			
+			$.get(
+				'AgregarLibro', 
+				$("#agregar-libro").serialize(), function (data){
+					 $( "#alert-form-libro" ).html( data );
+				});
+			
+			$(this).find("input[type=text], textarea, input[type=number]").val("");
+			
+			return false;
+		});
+	});
+</script>
+
+<script type="text/javascript">
+	//script insertar opciones
+	//area
+	$(document).ready(function (){
+		$.get("ServletOptionListArea",
+		function(data){
+			$("#area-select").html(data);
+		});
+	// editorial
+		$.get("ServletOptionListEditorial",
+		function(data){
+			$("#editorial-select").html(data);
+		});
+	//autor
+		$.get("ServletOptionListAutor",
+		function(data){
+			$("#autor-select").html(data);
 		});
 	});
 </script>

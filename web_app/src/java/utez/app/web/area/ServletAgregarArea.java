@@ -4,28 +4,27 @@
  * and open the template in the editor.
  */
 
-package utez.app.web.tables;
+package utez.app.web.area;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.rmi.ServerException;
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import utez.app.daos.DaoAutor;
-import utez.app.daos.DaoLibro;
+import utez.app.daos.DaoArea;
+import utez.app.daos.DaoEditorial;
+import utez.app.model.AreaBean;
+import utez.app.model.EditorialBean;
 import utez.app.web.eq4.util.DbConnection;
-import utez.app.model.AutorBean;
 
 /**
  *
  * @author ricardo
  */
-@WebServlet(name = "ServletTablaAutor", urlPatterns = {"/ServletTablaAutor"})
-public class ServletTablaAutor extends HttpServlet {
+public class ServletAgregarArea extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and
@@ -38,27 +37,42 @@ public class ServletTablaAutor extends HttpServlet {
 	 */
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
+		response.setContentType("text/html");
 		
+//		try{
+//		
+//		HttpSession sesion = request.getSession();
+//		if ((Boolean)sesion.getAttribute("admin") == false || (Boolean) sesion.getAttribute("admin") == null){
+//			throw new ServerException("Acceso denegado");
+//		}
+//		}catch (NullPointerException ex){
+//			throw new ServerException("Acceso denegado");
+//		}
 		Connection con = DbConnection.getConnection();
-		DaoAutor dao = new DaoAutor(con);
-		List<AutorBean> lista ;
-
-		lista = dao.getActive();
-		List<Integer> listaLibros = new ArrayList();
-		
-		for (AutorBean autorBean : lista) {
-			listaLibros.add(
-				dao.countLibros(autorBean)
-			);
+		if (con == null){
+			throw new ServerException("No hay coneccion con la BD");
 		}
 		
-		request.setAttribute("lista", lista);
-		request.setAttribute("listaLibros", listaLibros);
-
-		this.getServletConfig().getServletContext().
-			getRequestDispatcher("/tabla_admin_autor.jsp").
-			forward(request, response);
-
+		
+		String nombre = request.getParameter("n");
+		
+		AreaBean nuevaArea = new AreaBean();
+		nuevaArea.setNombre(nombre);
+		
+		
+		String mensaje;
+		if (new DaoArea(con).add(nuevaArea)){
+			
+			mensaje = "<div class=\"alert alert-info\"> "
+				+nuevaArea.getNombre()+" agregada con exito</div>";
+		} else{
+			
+			mensaje = "<div class=\"alert alert-danger\"> Error al agregar area</div>";
+		}
+		
+		try (PrintWriter out = response.getWriter()) {
+			out.print(mensaje);
+		}
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

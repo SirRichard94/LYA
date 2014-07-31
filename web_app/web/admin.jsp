@@ -26,6 +26,12 @@
 	}catch (NullPointerException e){
 		throw new ServletException("Acceso denegado");
 	}
+	String seccion;
+	if(request.getAttribute("seccion") != null){
+		seccion = (String) request.getAttribute("seccion");
+	}else{
+		seccion = "usuario";
+	}
     %>
     
 
@@ -44,23 +50,61 @@
 		    <div class="col-md-9" >	
 			    <ul class="nav nav-pills" id="selectPill">
 				    <li id="selectUsr">
-					    <a href="#usuario"> 
+					    <a href="#"> 
 						    Usuario 
 					    </a>
 				    </li>
 				    <li id ="selectLib">
-					 <a href="#libro"> Libro </a>   
+					 <a href="#"> Libro </a>   
 				    </li>
 				    <li id="selectAutor">
-					 <a href="#autor"> Autor </a>   
+					 <a href="#"> Autor </a>   
 				    </li>
 				    <li id="selectEdito">
-					 <a href="#editorial"> Editorial </a>   
+					 <a href="#"> Editorial </a>   
 				    </li>
 				    <li id="selectArea">
-					 <a href="#area"> Area </a>
+					 <a href="#"> Area </a>
 				    </li>
 			    </ul>
+			    <script type="text/javascript">
+				   //default
+				   <% 
+					String tab = null;
+					String servlet = null;
+					String form = null;					
+					if(seccion.equals("usuario")){
+						tab = "#selectUsr";
+						servlet = "ServletTablaUsuario";
+						form = "form_usuario.jsp";
+					}else if(seccion.equals("libro")){
+						tab = "#selectLib";
+						servlet = "ServletTablaLibro";
+						form = "form_libro.jsp";
+					}else if(seccion.equals("autor")){
+						tab = "#selectAutor";
+						servlet = "ServletTablaAutor";
+						form = "form_autor.jsp";
+					}else if(seccion.equals("editorial")){
+						tab = "#selectEdito";
+						servlet = "ServletTablaEditorial";
+						form = "form_editorial.jsp";
+					}else{
+						tab = "#selectArea";
+						servlet = "ServletTablaArea";
+						form = "form_area.jsp";
+					}
+				   %>
+					   $(document).ready(function(){
+				$("<%=tab%>").addClass("active");
+				$.get("<%=servlet%>", function (responseText){
+					$("#tbl").html(responseText);
+				});
+				$.get("<%=form%>", function (data){
+					$("#agregar").html(data);
+				});
+			});
+			    </script>
 			    
 			    <br>
 			    <%--
@@ -82,7 +126,7 @@
 			    --%>
 			    <div id="tbl" style="overflow: auto; width: 100%">
 				    <!-- Tabla -->
-				    Elija una opcion
+				    Elija una opción
 			    </div>
 			    
 			    
@@ -92,7 +136,7 @@
 			    <!-- Agregar  -->
 			    <div class="well" >
 				    <div id="agregar">
-					    
+					   <!-- form -->
 				    </div>   
 			    </div>
 		    </div>
@@ -118,9 +162,10 @@
     <script src="assets/js/bootstrap.min.js"></script>
     
     <!-- my scripts -->
-    <script type="text/javascript">
-	    $(document).ready(function(){
+    <script type="text/javascript">	
+	    $(document).ready(function(){  
 
+		//seleccion
 		$("#selectPill li").click(function(){
 			$("ul li").removeClass("active");
 			$(this).addClass("active");

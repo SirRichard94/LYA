@@ -69,8 +69,15 @@ $(document).ready(function (){
 				    <td ><%=prestamos.get(i)%></td>
 				    <td>$<%=row.getDeuda()%></td>
 				    <td class="">
-<a href="ModificarUsuario?guardar=false&AMP;u=<%=id%>" title="modificar"><span class="glyphicon glyphicon-pencil"></span></a>
-	<a href="EliminarUsuario?u=<%=id%>" title="eliminar"><span class="glyphicon glyphicon-trash"></span></a>
+<a href="ModificarUsuario?guardar=false&AMP;u=<%=id%>" 
+   title="modificar">
+	<span class="glyphicon glyphicon-pencil"></span>
+</a>
+	<a class="eliminar"
+		href="EliminarUsuario?u=<%=id%>" 
+	   title="eliminar">
+		<span class="glyphicon glyphicon-trash"></span>
+	</a>
 					   
 				    </td>
 			    </tr>
@@ -80,3 +87,12 @@ $(document).ready(function (){
 	    
 	       <small>*Marcados en color rojo, los usuarios con deuda</small>
 	   
+<script type="text/javascript">
+		    $(document).ready(function (){
+			    $(".eliminar").click(function(){
+				if(!confirm("Seguro que desea eliminarlo?")){
+					return false;
+				}
+			    });
+		    });
+	    </script>

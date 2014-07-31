@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package utez.app.web.tables;
+package utez.app.web.editorial;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,20 +12,21 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import utez.app.daos.DaoUsuario;
-import utez.app.model.UsuarioBean;
+import utez.app.daos.DaoAutor;
+import utez.app.daos.DaoEditorial;
+import utez.app.daos.DaoLibro;
+import utez.app.model.AutorBean;
+import utez.app.model.EditorialBean;
 import utez.app.web.eq4.util.DbConnection;
 
 /**
  *
  * @author ricardo
  */
-@WebServlet(name = "ServletTablaUsuario", urlPatterns = {"/ServletTablaUsuario"})
-public class ServletTablaUsuario extends HttpServlet {
+public class ServletTablaEditorial extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and
@@ -38,26 +39,28 @@ public class ServletTablaUsuario extends HttpServlet {
 	 */
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
+		response.setContentType("text/html;charset=UTF-8");
 		
 		Connection con = DbConnection.getConnection();
-		DaoUsuario dao = new DaoUsuario(con);
-		List<UsuarioBean> lista = new ArrayList<>();
+		DaoEditorial dao = new DaoEditorial(con);
+		
+		List<EditorialBean> lista ;
 
 		lista = dao.getActive();
-		List<Integer> prestamos = new ArrayList<>();
+		List<Integer> listaLibros = new ArrayList();
 		
-		
-		for (UsuarioBean usuario : lista) {
-			prestamos.add(dao.countPrestamos(usuario));
+		for (EditorialBean editorial : lista) {
+			listaLibros.add(
+				new DaoLibro(con).countByEditorial(editorial)
+			);
 		}
 		
 		request.setAttribute("lista", lista);
-		request.setAttribute("prestamos", prestamos);
+		request.setAttribute("listaLibros", listaLibros);
 
 		this.getServletConfig().getServletContext().
-			getRequestDispatcher("/tabla_admin_usr.jsp").
+			getRequestDispatcher("/tabla_admin_editorial.jsp").
 			forward(request, response);
-
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    
+        
+    <filter>
+        <description>Force the request character encoding to UTF-8</description>
+        <filter-name>CharacterEncodingFilter</filter-name>
+        <filter-class>MyCharacterEncodingFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>CharacterEncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+
+    
     <servlet>
         <servlet-name>Login</servlet-name>
         <servlet-class>utez.app.web.ServletLogin</servlet-class>
@@ -18,19 +32,19 @@
     </servlet>
     <servlet>
         <servlet-name>ModificarUsuario</servlet-name>
-        <servlet-class>utez.app.web.modificar.ServletModificarUsuario</servlet-class>
+        <servlet-class>utez.app.web.usuario.ServletModificarUsuario</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AgregarEjemplares</servlet-name>
-        <servlet-class>utez.app.web.agregar.ServletAgregarEjemplares</servlet-class>
+        <servlet-class>utez.app.web.ejemplar.ServletAgregarEjemplares</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ServletTablaEditorial</servlet-name>
-        <servlet-class>utez.app.web.tables.ServletTablaEditorial</servlet-class>
+        <servlet-class>utez.app.web.editorial.ServletTablaEditorial</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AgregarAutor</servlet-name>
-        <servlet-class>utez.app.web.agregar.ServletAgregarAutor</servlet-class>
+        <servlet-class>utez.app.web.autor.ServletAgregarAutor</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>PerfilUsuario</servlet-name>
@@ -38,7 +52,55 @@
     </servlet>
     <servlet>
         <servlet-name>AgregarArea</servlet-name>
-        <servlet-class>utez.app.web.agregar.ServletAgregarArea</servlet-class>
+        <servlet-class>utez.app.web.area.ServletAgregarArea</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EliminarEditorial</servlet-name>
+        <servlet-class>utez.app.web.editorial.ServletEliminarEditorial</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ModificarEditorial</servlet-name>
+        <servlet-class>utez.app.web.editorial.ServletModificarEditorial</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EliminarAutor</servlet-name>
+        <servlet-class>utez.app.web.autor.ServletEliminarAutor</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ModificarAutor</servlet-name>
+        <servlet-class>utez.app.web.autor.ServletModificarAutor</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ModificarArea</servlet-name>
+        <servlet-class>utez.app.web.area.ServletModificarArea</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EliminarArea</servlet-name>
+        <servlet-class>utez.app.web.area.ServletEliminarArea</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletOptionListArea</servlet-name>
+        <servlet-class>utez.app.web.area.ServletOptionListArea</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletOptionListEditorial</servlet-name>
+        <servlet-class>utez.app.web.editorial.ServletOptionListEditorial</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletOptionListAutor</servlet-name>
+        <servlet-class>utez.app.web.autor.ServletOptionListAutor</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TablaPrestamo</servlet-name>
+        <servlet-class>utez.app.web.prestamo.ServletTablaPrestamo</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AgregarLibro</servlet-name>
+        <servlet-class>utez.app.web.libro.ServletAgregarLibro</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletOptionListLibro</servlet-name>
+        <servlet-class>utez.app.web.libro.ServletOptionListLibro</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
@@ -79,6 +141,54 @@
     <servlet-mapping>
         <servlet-name>AgregarArea</servlet-name>
         <url-pattern>/AgregarArea</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EliminarEditorial</servlet-name>
+        <url-pattern>/EliminarEditorial</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ModificarEditorial</servlet-name>
+        <url-pattern>/ModificarEditorial</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EliminarAutor</servlet-name>
+        <url-pattern>/EliminarAutor</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ModificarAutor</servlet-name>
+        <url-pattern>/ModificarAutor</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ModificarArea</servlet-name>
+        <url-pattern>/ModificarArea</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EliminarArea</servlet-name>
+        <url-pattern>/EliminarArea</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletOptionListArea</servlet-name>
+        <url-pattern>/ServletOptionListArea</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletOptionListEditorial</servlet-name>
+        <url-pattern>/ServletOptionListEditorial</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletOptionListAutor</servlet-name>
+        <url-pattern>/ServletOptionListAutor</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TablaPrestamo</servlet-name>
+        <url-pattern>/TablaPrestamo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AgregarLibro</servlet-name>
+        <url-pattern>/AgregarLibro</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletOptionListLibro</servlet-name>
+        <url-pattern>/ServletOptionListLibro</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

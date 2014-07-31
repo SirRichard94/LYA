@@ -63,9 +63,10 @@ public class DaoLibro extends AbstractDao<LibroBean>{
 	}
 
 	@Override
-	public List getAll() {
+	public List<LibroBean> getAll() {
 		List<LibroBean> list = new ArrayList<>();
-		String query ="SELECT * FROM "+TABLA+";";
+		String query ="SELECT * FROM "+TABLA+
+			" ORDER BY nombre ASC;";
 		try {
 			ResultSet result = executeQuery(query);
 			list = passResultSet(result, list);
@@ -77,9 +78,10 @@ public class DaoLibro extends AbstractDao<LibroBean>{
 		return list;
 	}
 
-	public List getActive() {
+	public List<LibroBean> getActive() {
 		List<LibroBean> list = new ArrayList<>();
-		String query ="SELECT * FROM "+TABLA+" where alta = 'true';";
+		String query ="SELECT * FROM "+TABLA+" where alta = 'true'"
+			+ " ORDER BY nombre ASC;";
 		try {
 			
 			ResultSet result = executeQuery(query);
@@ -197,14 +199,14 @@ public class DaoLibro extends AbstractDao<LibroBean>{
 			ps.close();
 			
 			//insertar autores
-			if (bean.getAutores() != null){
+			if (bean.getAutores() != null && bean.getAutores().size() > 0){
 				
 				for (AutorBean autor : bean.getAutores()){
 					query = "INSERT INTO AUTOR_DE (autor_id, libro_id)"
 						 + " VALUES (?, ?);";
 					 PreparedStatement statement = con.prepareStatement(query);
 					 statement.setInt(1, autor.getAutor_id());
-					 statement.setInt(2, bean.getLibro_id());
+					 statement.setInt(2, getByIsbn(bean.getIsbn()).getLibro_id());
 					 
 					if (statement.executeUpdate() != 1) {
 						return false;
@@ -275,7 +277,8 @@ public class DaoLibro extends AbstractDao<LibroBean>{
 	 */
 	public List<LibroBean> findByArea(AreaBean area){
 		List<LibroBean> list = new ArrayList<>();
-		String query = ("SELECT * FROM LIBRO WHERE area_id = ? and alta = 'true' ;");
+		String query = ("SELECT * FROM LIBRO WHERE area_id = ? and alta = 'true' "
+			+ " ORDER BY nombre ASC;");
 		
 		try {
 			PreparedStatement ps = con.prepareStatement(query);
