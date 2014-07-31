@@ -60,7 +60,7 @@ public class resultadoEditorial extends javax.swing.JFrame {
         if (busqueda.length() < 0) {
             actualizarTabla();
         } else {
-
+            
              modelo= new DefaultTableModel (new String[]{"Autor_id","Nombre","Apellido"},0);
             List<EditorialBean> lista =daoEditorial.getActive();
             for (EditorialBean bean : lista) {

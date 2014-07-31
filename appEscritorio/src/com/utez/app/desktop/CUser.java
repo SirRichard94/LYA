@@ -324,7 +324,7 @@ public class CUser extends javax.swing.JFrame {
          }
          
         usuarioBean=new UsuarioBean(0, nombre, direccion, tel, correo, 0, pass, rootPaneCheckingEnabled, esAdmin);
-        boolean ex= daoUsuario.add(usuarioBean);
+        boolean ex = daoUsuario.add(usuarioBean);
         JFrame frame = new JFrame("no image");
         ImageIcon image = new ImageIcon("C:\\Users\\Koffo\\Documents\\GitHub\\LYA\\appEscritorio\\imagenes\\circular icons\\yes.png");
         ImageIcon image1 = new ImageIcon("C:\\Users\\Koffo\\Documents\\GitHub\\LYA\\appEscritorio\\imagenes\\circular icons\\warning.png");

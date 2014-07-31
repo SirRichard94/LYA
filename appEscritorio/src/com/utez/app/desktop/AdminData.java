@@ -254,6 +254,11 @@ public class AdminData extends javax.swing.JFrame {
 
         jMenuItem22.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\eye.png")); // NOI18N
         jMenuItem22.setText("Consultar");
+        jMenuItem22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem22ActionPerformed(evt);
+            }
+        });
         jMenu6.add(jMenuItem22);
 
         jMenuItem23.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\clock.png")); // NOI18N
@@ -424,6 +429,7 @@ public class AdminData extends javax.swing.JFrame {
 
     private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
         // TODO add your handling code here:
+        new CAutor().setVisible(true);
     }//GEN-LAST:event_jMenuItem21ActionPerformed
 
     private void jMenuItem25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem25ActionPerformed
@@ -464,6 +470,11 @@ public class AdminData extends javax.swing.JFrame {
     private void jMenuItem31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem31ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem31ActionPerformed
+
+    private void jMenuItem22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem22ActionPerformed
+        // TODO add your handling code here:
+        new resultadoAutor().setVisible(true);
+    }//GEN-LAST:event_jMenuItem22ActionPerformed
 
     /**
      * @param args the command line arguments
