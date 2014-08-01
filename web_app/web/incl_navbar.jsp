@@ -42,6 +42,20 @@
 		session.setAttribute("login", false);
 		session.setAttribute("usuario", null);
 	  }
+	  
+	  if (login){
+		  response.setHeader("Cache-Control", "no-cache");
+
+//Forces caches to obtain a new copy of the page from the origin server
+		response.setHeader("Cache-Control", "no-store");
+
+//Directs caches not to store the page under any circumstance
+		response.setDateHeader("Expires", 0);
+
+//Causes the proxy cache to see the page as "stale"
+		response.setHeader("Pragma", "no-cache");
+//HTTP 1.0 backward enter code here
+	  }
 %>
 
 <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
@@ -71,7 +85,7 @@
 			<%  }
 		 }%>
 		
-		<li><a href="Busqueda">Búsqueda</a></li>
+		<li><a href="Busqueda">Catálogo</a></li>
 		
 		<% if (login){
 		 %>

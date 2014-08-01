@@ -11,13 +11,21 @@ $(document).ready(function (){
 	$("#tabla-autor").dataTable({
 		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
 		"language": {
-            "lengthMenu": "_MENU_ filas por página",
-            "search": "Busqueda",
-            "zeroRecords": "No se encontró informacion",
+            "lengthMenu": "_MENU_ Filas por página",
+            "search": "Filtro",
+            "zeroRecords": "No se encontro informacion",
             "info": "Mostrando página _PAGE_ de _PAGES_",
             "infoEmpty": "No hay informacion disponible",
-            "infoFiltered": "(Filtrados de _MAX_ filas)"
+            "infoFiltered": "(filtrados de _MAX_ filas)",
+	    "paginate": {
+			"first": "Primero",
+			"last": "Ultimo",
+			"next": "Siguiente",
+			"previous": "anterior"
+			
 		}
+		}
+		
 	});
 	
 });
@@ -34,7 +42,7 @@ $(document).ready(function (){
             <thead>
               <tr>
 		 <th class="centered">Nombre</th>
-		 <th class="centered">Direccion</th>
+		 <th class="centered">Dirección</th>
 		 <th class="centered">Núm. Libros</th>
 		 <th class="centered">Acciones</th>
               </tr>

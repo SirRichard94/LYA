@@ -20,13 +20,21 @@
 		$("#tabla-libros").dataTable({
 		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
 		"language": {
-            "lengthMenu": "_MENU_ filas por página",
+            "lengthMenu": "_MENU_ Filas por página",
             "search": "Filtro",
             "zeroRecords": "No se encontro informacion",
             "info": "Mostrando página _PAGE_ de _PAGES_",
             "infoEmpty": "No hay informacion disponible",
-            "infoFiltered": "(filtrados de _MAX_ filas)"
+            "infoFiltered": "(filtrados de _MAX_ filas)",
+	    "paginate": {
+			"first": "Primero",
+			"last": "Ultimo",
+			"next": "Siguiente",
+			"previous": "anterior"
+			
 		}
+		}
+		
 	});
 	    });
     </script>
@@ -58,7 +66,10 @@
 		    <div class="row">
 		    
 		    <div class="col-md-8">
-			    <h1>Resultados de la Búsqueda '<%=busqueda%>' </h1>
+			    <h1>Catálogo de libros
+				    <%=busqueda != ""
+					    ? ": resultados de '"+ busqueda +"'" 
+					    : ""%></h1>
 			    
 			     <table class="table table-striped" id="tabla-libros">
             <thead>
@@ -66,7 +77,7 @@
                  <th>Título</th>
 		 <th>ISBN</th>
 		 <th>Autores</th>
-		 <th>Area</th>
+		 <th>Área</th>
 		 <th>Editorial</th>
               </tr>
             </thead>

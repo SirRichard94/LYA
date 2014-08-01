@@ -65,13 +65,13 @@
 					 <a href="#"> Editorial </a>   
 				    </li>
 				    <li id="selectArea">
-					 <a href="#"> Area </a>
+					 <a href="#"> Área </a>
 				    </li>
 			    </ul>
 			   
 			    <br>
 			   
-			    <div id="tbl" style="overflow: auto; width: 100%">
+			    <div id="tbl" >
 				    <!-- Tabla -->
 				    Elija una opción
 			    </div>

@@ -60,7 +60,7 @@
 <form class="form-horizontal" action="ModificarArea" method="POST">
 	<fieldset>
 		
-	<legend>Modificar Area</legend>
+	<legend>Modificar Área</legend>
 	
 	<input type="hidden" name="guardar" value="true">
 	<input type="hidden" name="id" value="<%=objetivo.getArea_id()%>">

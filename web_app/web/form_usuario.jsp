@@ -24,7 +24,7 @@
 		<input type="text" class="form-control" placeholder="Teléfono" name="tel">
 	</div>
 	<div class="form-group">
-		<textarea class="form-control" placeholder="Direccion" name="dir" rows="2" ></textarea>
+		<textarea class="form-control" placeholder="Dirección" name="dir" rows="2" ></textarea>
 	</div>
 	<div class="form-group">
 		<button class="btn btn-primary pull-right" >Crear</button>

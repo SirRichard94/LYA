@@ -26,7 +26,7 @@
 			<div class="row">
 				<div class="col-md-5 ">
                                    
-				   <img src="assets/img/logo1.jpg" alt="Logo" class="img-responsive hidden-xs hidden-sm" >
+					<img src="assets/img/logo.png" alt="Logo" class="img-responsive hidden-xs hidden-sm" >
 				
 				</div><!-- /col-lg-8 -->
 				<div class="col-md-7">

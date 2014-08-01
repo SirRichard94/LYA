@@ -47,7 +47,7 @@
     </label> 
     <label class="radio-inline" for="categoria-3">
       <input name="categoria" id="categoria-3" value="area" type="radio">
-      Area
+      Área
     </label>
   </div>
 </div>

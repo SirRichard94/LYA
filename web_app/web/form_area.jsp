@@ -5,7 +5,7 @@
 
 <form class="form-horizontal" id="form-area" accept-charset="UTF-8" action="#">
 	<fieldset>
-	<legend>Agregar Area</legend>
+	<legend>Agregar Área</legend>
 	<div class="form-group">
 		<input type="text" class="form-control" placeholder="Nombre" name="n" required=""> 
 	</div>
