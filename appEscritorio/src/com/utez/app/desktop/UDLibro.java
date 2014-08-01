@@ -76,14 +76,14 @@ public class UDLibro extends javax.swing.JFrame {
     }
     
     private void llenarValores(){
-        modeloArea.addElement(consultaBean.getArea().getNombre());
-        modelo.addElement(consultaBean.getEditorial().getNombre());
+        modeloArea.setSelectedItem(consultaBean.getArea().getNombre());
+        modelo.setSelectedItem(consultaBean.getEditorial().getNombre());
         modeloAutor.addElement(consultaBean.getAutores());
         txtNombre.setText(consultaBean.getNombre());
         txtIsbn.setText (""+consultaBean.getIsbn());
          txtPag.setText(""+consultaBean.getPaginas());
-        cmbArea.setModel(modeloArea);
-        cmbEditorial.setModel(modelo);
+//        cmbArea.setModel(modeloArea);
+//        cmbEditorial.setModel(modelo);
        
     }
 
@@ -412,6 +412,9 @@ public class UDLibro extends javax.swing.JFrame {
         consultaBean.setNombre(txtNombre.getText());
         consultaBean.setIsbn(Long.parseLong(txtIsbn.getText()) );
         consultaBean.setPaginas(Integer.parseInt(txtPag.getText()));
+        consultaBean.setArea(areaBean);
+        consultaBean.setEditorial(editorialBean);
+        consultaBean.setAutores(autorBean);
         
          
        
