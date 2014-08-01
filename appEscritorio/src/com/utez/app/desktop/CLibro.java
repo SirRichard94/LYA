@@ -169,7 +169,7 @@ public class CLibro extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Nuevo Libro"));
 
-        jLabel1.setText("Nombre");
+        jLabel1.setText("Ttulo");
 
         jLabel2.setText("ISBN");
 
