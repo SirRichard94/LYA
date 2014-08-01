@@ -40,7 +40,7 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-md-4 control-label" for="area-select"><small>Area</small></label>
+		<label class="col-md-4 control-label" for="area-select"><small>Área</small></label>
 		<div class="col-md-8">
 			<select id="area-select" name="area" class="form-control">
 				

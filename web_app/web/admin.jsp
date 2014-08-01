@@ -65,7 +65,7 @@
 					 <a href="#"> Editorial </a>   
 				    </li>
 				    <li id="selectArea">
-					 <a href="#"> Area </a>
+					 <a href="#"> Área </a>
 				    </li>
 			    </ul>
 			   

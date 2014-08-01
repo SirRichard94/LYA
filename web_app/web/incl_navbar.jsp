@@ -71,7 +71,7 @@
 			<%  }
 		 }%>
 		
-		<li><a href="Busqueda">Búsqueda</a></li>
+		<li><a href="Busqueda">Catálogo</a></li>
 		
 		<% if (login){
 		 %>

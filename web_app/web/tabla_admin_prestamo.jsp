@@ -13,13 +13,21 @@ $(document).ready(function (){
 	$("#tabla-libro").dataTable({
 		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
 		"language": {
-            "lengthMenu": "_MENU_ filas por página",
-            "search": "Busqueda",
+            "lengthMenu": "_MENU_ Filas por página",
+            "search": "Filtro",
             "zeroRecords": "No se encontro informacion",
             "info": "Mostrando página _PAGE_ de _PAGES_",
             "infoEmpty": "No hay informacion disponible",
-            "infoFiltered": "(filtrados de _MAX_ filas)"
+            "infoFiltered": "(filtrados de _MAX_ filas)",
+	    "paginate": {
+			"first": "Primero",
+			"last": "Ultimo",
+			"next": "Siguiente",
+			"previous": "anterior"
+			
 		}
+		}
+		
 	});
 	
 });
@@ -46,14 +54,15 @@ $(document).ready(function (){
             <tbody>
                 <% for(int i = 0; i< lista.size(); i++){ %>
 		<% PrestamoBean row = lista.get(i); %>
-		<tr>
+		<tr class="<%=row.getUsuario().getDeuda() > 0 
+			? "danger" : "" %>">
 				    <td><%=row.getUsuario().getNombre()%></td>
 				    <td><%=row.getEjemplar().getLibro().getNombre()%> </td>
 				    <td><%=row.getEjemplar().getEjemplar_id() %> </td>
 				    <td><%=row.getFecha_salida() %></td>
 				    <td><%=row.getFecha_entrega()%></td>
 				    <td><a href="EntregarPrestamo?p_id=<%=row.getPrestamo_id()%>">
-						    Entregar</a></td>
+						    Entregado</a></td>
 			    </tr>
 		    <%}%>
             </tbody>

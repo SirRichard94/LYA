@@ -40,7 +40,7 @@
 	<%int u=prestamo.getUsuario().getUsuario_id();
 	int p=prestamo.getPrestamo_id();%>
 	<a href="ServletPago?u=<%=u%>&p=<%=p%>" id="btn-pagar"
-		   class="btn btn-success pull-right">Pagar
+		   class="btn btn-success pull-right">Pagado
 	</a>
 	<a href="admin_prestamos.jsp" 
 		   class="btn btn-warning pull-right">Cancelar

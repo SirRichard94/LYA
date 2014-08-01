@@ -33,11 +33,6 @@
 	    <div class="container">
 			<div class="row">
 				<div class="col-md-8 ">
-					<button type="button" class="btn btn-xs refresh-button"> 
-						<small>
-						<span class="glyphicon glyphicon-refresh"></span>
-						</small>
-					</button>
 					
 					<div id="tabla-prestamos">
 						Tabla de prestamos
@@ -78,12 +73,11 @@
 		$.get("TablaPrestamo", function (responseText){
 			$("#tabla-prestamos").html(responseText);
 		});
-		$("#agregar").load("form_usuario.jsp");
 		
-		$(".refresh-button").click(function (){
-			$.get("TablaPrestamo", function (responseText){
-			$("#tabla-prestamos").html(responseText);
-		});
+		$("form").on("submited", function (){
+			
+			$("#tabla-prestamos").load("TablaPrestamo");
+		
 		});
 		
 	    });

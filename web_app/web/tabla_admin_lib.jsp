@@ -12,13 +12,21 @@ $(document).ready(function (){
 	$("#tabla-libro").dataTable({
 		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
 		"language": {
-            "lengthMenu": "_MENU_ filas por página",
-            "search": "Búsqueda",
+            "lengthMenu": "_MENU_ Filas por página",
+            "search": "Filtro",
             "zeroRecords": "No se encontro informacion",
             "info": "Mostrando página _PAGE_ de _PAGES_",
             "infoEmpty": "No hay informacion disponible",
-            "infoFiltered": "(Filtrados de _MAX_ filas)"
+            "infoFiltered": "(filtrados de _MAX_ filas)",
+	    "paginate": {
+			"first": "Primero",
+			"last": "Ultimo",
+			"next": "Siguiente",
+			"previous": "anterior"
+			
 		}
+		}
+		
 	});
 	
 });
