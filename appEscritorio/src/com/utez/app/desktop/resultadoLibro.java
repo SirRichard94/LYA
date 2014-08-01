@@ -16,10 +16,8 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import utez.app.daos.DaoLibro;
-import utez.app.daos.DaoUsuario;
 import utez.app.model.AutorBean;
 import utez.app.model.LibroBean;
-import utez.app.model.UsuarioBean;
 
 /**
  *
@@ -40,17 +38,12 @@ public class resultadoLibro extends javax.swing.JFrame {
             Logger.getLogger(resultadoLibro.class.getName()).log(Level.SEVERE, null, ex);
         }
         daoLibro = new DaoLibro(coneccion);
-        
         actualizarTabla();
-
-        
-        
         initComponents();
     }
     
     private void actualizarTabla(){
         modelo= new DefaultTableModel (new String[]{"Libro_id","ISBN","Titulo","Area","Editorial","Autores"},0);
-        
         List<LibroBean> lista =daoLibro.getActive();
              for (LibroBean bean : lista) {
                  String autores = "";

@@ -8,13 +8,19 @@ package com.utez.app.desktop;
 import Utilerias.ConexionSQLServer;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import utez.app.daos.DaoArea;
 import utez.app.daos.DaoAutor;
+import utez.app.daos.DaoEditorial;
 import utez.app.daos.DaoLibro;
+import utez.app.model.AreaBean;
 import utez.app.model.AutorBean;
+import utez.app.model.EditorialBean;
 import utez.app.model.LibroBean;
 
 /**
@@ -29,12 +35,35 @@ public class UDLibro extends javax.swing.JFrame {
     private Connection conexion;
     private LibroBean libroBean;
     private LibroBean consultaBean;
+     private List<EditorialBean> listaEditorial;
+    private List<AutorBean> listaAutor;
+    private List<AreaBean> listaArea;
+    private DaoLibro daoLibro;
+    private DaoAutor daoAutor;
+    private DaoEditorial daoEditorial;
+    private DaoArea daoArea;
 
     public UDLibro() {
         try {
             conexion = ConexionSQLServer.getConnection();
         } catch (SQLException ex) {
             Logger.getLogger(UDLibro.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         daoLibro= new DaoLibro(conexion);
+        daoAutor=new DaoAutor(conexion);
+        daoArea=new DaoArea(conexion);
+        daoEditorial=new DaoEditorial(conexion);
+        listaArea=daoArea.getActive();
+        for(AreaBean areaBean : listaArea){
+            modeloArea.addElement(areaBean.getNombre());
+        }
+        listaEditorial = daoEditorial.getActive();
+        for (EditorialBean editorialBean : listaEditorial) {
+            modelo.addElement(editorialBean.getNombre());
+        }
+        listaAutor=daoAutor.getActive();
+        for (AutorBean autorBean : listaAutor){
+            modeloAutor.addElement(autorBean.getNombre());
         }
 
         initComponents();
@@ -48,10 +77,13 @@ public class UDLibro extends javax.swing.JFrame {
     
     private void llenarValores(){
         modeloArea.addElement(consultaBean.getArea().getNombre());
-         txtNombre.setText(consultaBean.getNombre());
-        
-        
+        modelo.addElement(consultaBean.getEditorial().getNombre());
+        modeloAutor.addElement(consultaBean.getAutores());
+        txtNombre.setText(consultaBean.getNombre());
+        txtIsbn.setText (""+consultaBean.getIsbn());
+         txtPag.setText(""+consultaBean.getPaginas());
         cmbArea.setModel(modeloArea);
+        cmbEditorial.setModel(modelo);
        
     }
 
@@ -371,19 +403,25 @@ public class UDLibro extends javax.swing.JFrame {
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         // TODO add your handling code here:
         DaoLibro daoLibro = new DaoLibro(conexion); 
+        List<AutorBean> autorBean = new ArrayList<>();
+        for (int i : listAutor.getSelectedIndices()){
+        autorBean.add(listaAutor.get(i));
+        }
+        EditorialBean editorialBean= listaEditorial.get(cmbEditorial.getSelectedIndex());
+         AreaBean areaBean= listaArea.get(cmbArea.getSelectedIndex());
         consultaBean.setNombre(txtNombre.getText());
         consultaBean.setIsbn(Long.parseLong(txtIsbn.getText()) );
         consultaBean.setPaginas(Integer.parseInt(txtPag.getText()));
-        cmbArea= consultaBean.getArea().getNombre();
-         System.out.println(consultaBean);
-       // usuarioBean = new UsuarioBean(consultaBean);
-        boolean ex = daoLibro.update(consultaBean);
-        if (ex) {
+        
+         
+       
+        boolean agregado = daoLibro.update(consultaBean);
+        if (agregado) {
             System.out.println("exito");
         } else {
             System.out.println("tonto");
         }
-        new resultadoAutor().setVisible(true);
+        new resultadoLibro().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnActualizarActionPerformed
 
