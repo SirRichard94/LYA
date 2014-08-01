@@ -126,7 +126,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnBusqueda">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Busqueda"/>
+        <Property name="text" type="java.lang.String" value="B&#xf9;squeda"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBusquedaActionPerformed"/>
@@ -214,7 +214,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="LYA"/>
+            <Property name="text" type="java.lang.String" value="LyA"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblSesion">
@@ -222,7 +222,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Inicar Sesion"/>
+            <Property name="text" type="java.lang.String" value="Inicar Sesi&#xf2;n"/>
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblSesionMouseClicked"/>
