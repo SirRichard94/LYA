@@ -169,7 +169,7 @@ public class Bienvenida1 extends javax.swing.JFrame {
                 resultados = daoLibro.findByAreaNombre(area);
              }
         }
-        new tablaLibros(resultados).setVisible(true);
+        new resultadoLibro(resultados).setVisible(true);
         //enviar a tablaLibros(resultados);
         // class tabla extends Jframe {  tabla(List resultados) }
         
