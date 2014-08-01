@@ -122,6 +122,10 @@
         <servlet-name>EliminarLibro</servlet-name>
         <servlet-class>utez.app.web.libro.ServletEliminarLibro</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletModificarLibro</servlet-name>
+        <servlet-class>utez.app.web.libro.ServletModificarLibro</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -233,6 +237,10 @@
     <servlet-mapping>
         <servlet-name>EliminarLibro</servlet-name>
         <url-pattern>/EliminarLibro</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletModificarLibro</servlet-name>
+        <url-pattern>/ModificarLibro</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
