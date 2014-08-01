@@ -9,14 +9,17 @@ package com.utez.app.desktop;
 import Utilerias.ConexionSQLServer;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import utez.app.daos.DaoArea;
 import utez.app.daos.DaoAutor;
 import utez.app.daos.DaoEditorial;
 import utez.app.daos.DaoLibro;
+import utez.app.model.AreaBean;
 import utez.app.model.AutorBean;
 import utez.app.model.EditorialBean;
 import utez.app.model.LibroBean;
@@ -29,13 +32,13 @@ public class CLibro extends javax.swing.JFrame {
     //private List<UsuarioBean> lista;
     //private DaoUsuario daoUsuario;
     private Connection conexion;
-    private LibroBean libroBean;
-    private LibroBean consultaBean;
     private List<EditorialBean> listaEditorial;
     private List<AutorBean> listaAutor;
+    private List<AreaBean> listaArea;
     private DaoLibro daoLibro;
     private DaoAutor daoAutor;
     private DaoEditorial daoEditorial;
+    private DaoArea daoArea;
     
     public CLibro() {
        
@@ -46,14 +49,19 @@ public class CLibro extends javax.swing.JFrame {
         }
          daoLibro= new DaoLibro(conexion);
         daoAutor=new DaoAutor(conexion);
+        daoArea=new DaoArea(conexion);
         daoEditorial=new DaoEditorial(conexion);
+        listaArea=daoArea.getActive();
+        for(AreaBean areaBean : listaArea){
+            modeloArea.addElement(areaBean.getNombre());
+        }
         listaEditorial = daoEditorial.getActive();
         for (EditorialBean editorialBean : listaEditorial) {
             modelo.addElement(editorialBean.getNombre());
         }
         listaAutor=daoAutor.getActive();
         for (AutorBean autorBean : listaAutor){
-            modeloAutor.addElement(autorBean.getNombre()+" "+autorBean.getApellido());
+            modeloAutor.addElement(autorBean.getNombre());
         }
         
         
@@ -89,8 +97,8 @@ public class CLibro extends javax.swing.JFrame {
         cmbEditorial = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         listAutor = new javax.swing.JList();
+        cmbArea = new javax.swing.JComboBox();
         jLabel10 = new javax.swing.JLabel();
-        txtEjemplares = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -161,7 +169,7 @@ public class CLibro extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Nuevo Libro"));
 
-        jLabel1.setText("Nombre");
+        jLabel1.setText("Ttulo");
 
         jLabel2.setText("ISBN");
 
@@ -190,7 +198,9 @@ public class CLibro extends javax.swing.JFrame {
         listAutor.setModel(modeloAutor);
         jScrollPane1.setViewportView(listAutor);
 
-        jLabel10.setText("Num Ejemplares.");
+        cmbArea.setModel(modeloArea);
+
+        jLabel10.setText("Area");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -199,41 +209,41 @@ public class CLibro extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtPag, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
-                            .addComponent(txtIsbn))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton2))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtPag, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
+                                    .addComponent(txtIsbn))))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(cmbEditorial, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jScrollPane1)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cmbEditorial, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtEjemplares, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(cmbArea, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -251,11 +261,11 @@ public class CLibro extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(txtPag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(txtEjemplares, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(cmbArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(cmbEditorial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -277,8 +287,8 @@ public class CLibro extends javax.swing.JFrame {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -322,17 +332,25 @@ public class CLibro extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1KeyPressed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       DaoLibro daoLibro=new DaoLibro(conexion);
-        List <AutorBean> autorBean = (List <AutorBean>) listaAutor.get(listAutor.getSelectedIndex());
+        DaoLibro daoLibro=new DaoLibro(conexion);
+        List<AutorBean> autorBean = new ArrayList<>();
+        for (int i : listAutor.getSelectedIndices()){
+        autorBean.add(listaAutor.get(i));
+        }
         EditorialBean editorialBean= listaEditorial.get(cmbEditorial.getSelectedIndex());
+         AreaBean areaBean= listaArea.get(cmbArea.getSelectedIndex());
+       
+        LibroBean consultaBean = new LibroBean();
+        consultaBean.setNombre(txtNombre.getText());
         consultaBean.setIsbn(Long.parseLong(txtIsbn.getText()));
         consultaBean.setPaginas(Integer.parseInt(txtPag.getText()));
-        consultaBean.setPaginas(Integer.parseInt(txtPag.getText()));
+        consultaBean.setArea(areaBean);
         consultaBean.setEditorial(editorialBean);
         consultaBean.setAutores(autorBean);
-        consultaBean.setEjemplares(Integer.parseInt(txtEjemplares.getText()));
-        boolean ex=daoLibro.add(consultaBean);
-        if(ex){
+        
+        
+        boolean agregado=daoLibro.add(consultaBean);
+        if(agregado){
             System.out.println("exito");
         }else{
             System.out.println("tonto");
@@ -378,6 +396,8 @@ public class CLibro extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox cmbArea;
+    private DefaultComboBoxModel modeloArea= new DefaultComboBoxModel();
     private javax.swing.JComboBox cmbEditorial;
     private DefaultComboBoxModel modelo= new DefaultComboBoxModel();
     private javax.swing.JButton jButton1;
@@ -396,7 +416,6 @@ public class CLibro extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList listAutor;
     private DefaultListModel modeloAutor = new DefaultListModel();
-    private javax.swing.JTextField txtEjemplares;
     private javax.swing.JTextField txtIsbn;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtPag;
