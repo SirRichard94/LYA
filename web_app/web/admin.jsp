@@ -48,82 +48,29 @@
 		    </div>
 			<div class="row">
 		    <div class="col-md-9" >	
+			    
 			    <ul class="nav nav-pills" id="selectPill">
-				    <li id="selectUsr">
+				    <li id="selectUsuario">
 					    <a href="#"> 
 						    Usuario 
 					    </a>
 				    </li>
-				    <li id ="selectLib">
+				    <li id ="selectLibro">
 					 <a href="#"> Libro </a>   
 				    </li>
 				    <li id="selectAutor">
 					 <a href="#"> Autor </a>   
 				    </li>
-				    <li id="selectEdito">
+				    <li id="selectEditorial">
 					 <a href="#"> Editorial </a>   
 				    </li>
 				    <li id="selectArea">
 					 <a href="#"> Area </a>
 				    </li>
 			    </ul>
-			    <script type="text/javascript">
-				   //default
-				   <% 
-					String tab = null;
-					String servlet = null;
-					String form = null;					
-					if(seccion.equals("usuario")){
-						tab = "#selectUsr";
-						servlet = "ServletTablaUsuario";
-						form = "form_usuario.jsp";
-					}else if(seccion.equals("libro")){
-						tab = "#selectLib";
-						servlet = "ServletTablaLibro";
-						form = "form_libro.jsp";
-					}else if(seccion.equals("autor")){
-						tab = "#selectAutor";
-						servlet = "ServletTablaAutor";
-						form = "form_autor.jsp";
-					}else if(seccion.equals("editorial")){
-						tab = "#selectEdito";
-						servlet = "ServletTablaEditorial";
-						form = "form_editorial.jsp";
-					}else{
-						tab = "#selectArea";
-						servlet = "ServletTablaArea";
-						form = "form_area.jsp";
-					}
-				   %>
-					   $(document).ready(function(){
-				$("<%=tab%>").addClass("active");
-				$.get("<%=servlet%>", function (responseText){
-					$("#tbl").html(responseText);
-				});
-				$.get("<%=form%>", function (data){
-					$("#agregar").html(data);
-				});
-			});
-			    </script>
-			    
+			   
 			    <br>
-			    <%--
-			    <form class="form-horizontal">
-				    <div class="col-md-6">
-				<div class="input-group">
-				    <input class="input-sm form-control" type="search"
-					   placeholder="Busqueda" />
-				    <span class="input-group-btn">
-				    <button type="submit" class="btn btn-success btn-sm" >
-				    Busqueda
-				    </button>
-				   </span>
-				</div>
-				    </div>
-			    </form>
-			    
-			    <br><br>
-			    --%>
+			   
 			    <div id="tbl" style="overflow: auto; width: 100%">
 				    <!-- Tabla -->
 				    Elija una opción
@@ -135,7 +82,7 @@
 		    <div class="col-md-3 pull-right">
 			    <!-- Agregar  -->
 			    <div class="well" >
-				    <div id="agregar">
+				    <div id="form">
 					   <!-- form -->
 				    </div>   
 			    </div>
@@ -162,54 +109,124 @@
     <script src="assets/js/bootstrap.min.js"></script>
     
     <!-- my scripts -->
-    <script type="text/javascript">	
+    <script type="text/javascript">
+	    
+	   
+	    LIBRO = 1;
+	    USUARIO = 2;
+	    AUTOR = 3;
+	    EDITORIAL = 4;
+	    AREA = 5;
+	    lastLoad = USUARIO;
+	     
+	    function loadLibro(){
+		$("#tbl").load("ServletTablaLibro");
+		$("#form").load("form_libro.jsp");
+		lastLoad = LIBRO;
+	    } 
+	    function loadUsuario(){
+		$("#tbl").load("ServletTablaUsuario");
+		$("#form").load("form_usuario.jsp");
+		lastLoad=USUARIO;
+	    } 
+	    function loadAutor(){
+		$("#tbl").load("ServletTablaAutor");
+		$("#form").load("form_autor.jsp");
+		lastLoad = AUTOR;
+	    } 
+	    function loadEditorial(){
+		$("#tbl").load("ServletTablaEditorial");
+		$("#form").load("form_editorial.jsp");
+		lastLoad=EDITORIAL;
+	    } 
+	    function loadArea(){
+		$("#tbl").load("ServletTablaArea");
+		$("#form").load("form_area.jsp");
+		lastLoad = AREA;
+	    }
+	    
+	    function reloadTable(){
+		    
+		    switch(lastLoad){
+			    case USUARIO:
+				    $("#tbl").load("ServletTablaUsuario");
+				    break;
+			    case LIBRO:
+				    $("#tbl").load("ServletTablaLibro");
+				    break;
+			    case EDITORIAL:
+				    $("#tbl").load("ServletTablaEditorial");
+				    break;
+			    case AREA:
+				    $("#tbl").load("ServletTablaArea");
+				    break;
+			    case AUTOR:
+				    $("#tbl").load("ServletTablaAutor");
+				    break;
+			
+		    }
+	    }
+	    
+	    
 	    $(document).ready(function(){  
-
+		    
+		
+	
 		//seleccion
 		$("#selectPill li").click(function(){
 			$("ul li").removeClass("active");
 			$(this).addClass("active");
 		});
+		
 		//LIBRO
-		$("#selectLib").click(function (){
-			$.get("ServletTablaLibro", function (responseText){
-				$("#tbl").html(responseText);
-			});
-		$("#agregar").load("form_libro.jsp");
+		$("#selectLibro").click(function (){
+			loadLibro();
 		});
 		//USUARIO
-		$("#selectUsr").click(function (){
-		$.get("ServletTablaUsuario", function (responseText){
-			$("#tbl").html(responseText);
-		});
-		$("#agregar").load("form_usuario.jsp");
+		$("#selectUsuario").click(function (){
+			loadUsuario();
 		});
 		//AUTOR
 		$("#selectAutor").click(function (){
-		$.get("ServletTablaAutor", function (responseText){
-			$("#tbl").html(responseText);
-		});
-		$("#agregar").load("form_autor.jsp");
+			loadAutor();
 		});
 		//EDITORIAL
-		$("#selectEdito").click(function (){
-			$.get("ServletTablaEditorial", function (responseText){
-				$("#tbl").html(responseText);
-			});
-			$("#agregar").load("form_editorial.jsp");
+		$("#selectEditorial").click(function (){
+			loadEditorial();
 		});
+		//AREA
 		$("#selectArea").click(function (){
-			$.get("ServletTablaArea", function (responseText){
-				$("#tbl").html(responseText);
-			});
-			$("#agregar").load("form_area.jsp");
+			loadArea();
+		});
+		
+		$("#form").on("submited", function (){
+			reloadTable();
 		});
 		
 		
+		//scriplet Java
+	    <%
+		//cargar default
+		    String js;
+		    if (seccion.equals("usuario")) {
+			    js="$('#selectUsuario').trigger('click');";
+				   
+		    } else if (seccion.equals("libro")) {
+				js="$('#selectLibro').trigger('click');";
+		    } else if (seccion.equals("autor")) {
+			   js="$('#selectAutor').trigger('click');";
+		    } else if (seccion.equals("editorial")) {
+			   js="$('#selectEditorial').trigger('click');";
+		    } else {
+			    js="$('#selectArea').trigger('click');";
+		    }
+		    out.print(js);
+	    %>
+			    
 	}); 
 	
     </script>
     
-    <script src="assets/js/keepAlive.js"></script>
+    <script src="assets/js/keepAlive.js" type="text/javascript"></script>
   </body>
 </html>

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package utez.app.web.usuario;
+package utez.app.web.prestamo;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,8 +14,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import utez.app.daos.DaoEjemplar;
+import utez.app.daos.DaoLibro;
+import utez.app.daos.DaoPrestamo;
 import utez.app.daos.DaoUsuario;
+import utez.app.model.LibroBean;
 import utez.app.model.UsuarioBean;
 import utez.app.web.eq4.util.DbConnection;
 
@@ -23,7 +26,8 @@ import utez.app.web.eq4.util.DbConnection;
  *
  * @author ricardo
  */
-public class ServletModificarUsuario extends HttpServlet {
+public class ServletAgregarPrestamo extends HttpServlet {
+	private UsuarioBean UsuarioBean;
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and
@@ -36,62 +40,51 @@ public class ServletModificarUsuario extends HttpServlet {
 	 */
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
-		response.setContentType("charset=UTF-8");
-		
-		try{
-		
-		HttpSession sesion = request.getSession();
-		if ((Boolean)sesion.getAttribute("admin") == false || (Boolean) sesion.getAttribute("admin") == null){
-			throw new ServerException("Acceso denegado");
-		}
-		}catch (NullPointerException ex){
-			throw new ServerException("Acceso denegado");
-		}
-		
+		response.setContentType("text/html;charset=UTF-8");
 		
 		Connection con = DbConnection.getConnection();
 		if (con == null){
 			throw new ServerException("No hay coneccion con la BD");
+		
+		}
+		String mensaje = null;
+		
+		try{
+		int idLibro = Integer.parseInt(request.getParameter("libro"));
+		int idUsuario = Integer.parseInt(request.getParameter("usuario"));
+		
+		DaoPrestamo daoP = new DaoPrestamo(con);
+		DaoUsuario daoU = new DaoUsuario(con);
+		DaoLibro daoL = new DaoLibro(con);
+		
+		UsuarioBean  usuario = daoU.get(idUsuario);
+		LibroBean libro = daoL.get(idLibro);
+		
+		if(usuario.getDeuda() > 0){
+			mensaje = "<div class=\" alert alert-warning\"> El usuario posee deuda</div>";
+		}else if(daoU.countPrestamos(usuario) >= 3){
+			mensaje = "<div class=\" alert alert-warning\"> El usuario tiene varios prestamos activos</div>";
+		}else if(daoL.countEjemplaresDisponibles(libro) <= 4){
+			mensaje = "<div class=\" alert alert-warning\"> Na hay ejemplares para prestar de "
+				+ libro.getNombre() +"</div>";
+		}else{
+			if(daoP.nuevoPrestamo(usuario, libro, 3, true)){ //mysql
+				mensaje = "<div class=\" alert alert-info\"> Prestamo agregado</div>";
+			}
+			else{
+				mensaje = "<div class=\" alert alert-warning\"> error al agregar prestamo</div>";
+			}
 		}
 		
-		DaoUsuario dao = new DaoUsuario(con);
+		}catch(Exception ex){
+			mensaje = "<div class=\" alert alert-danger\"> ERROR </div>";
+		}
 		
-		String redirect = "modificar_usuario.jsp";
-		String guardar = request.getParameter("guardar");
 		
-		int usuario_id = Integer.parseInt(request.getParameter("u"));
-		UsuarioBean usuario = dao.get(usuario_id);
 		
-		if (!guardar.equals("true")){
-			
-			request.setAttribute("objetivo", usuario);
-			this.getServletContext().getRequestDispatcher("/"+redirect).forward(request, response);
-			//forward a modificar
-			
-		} else {
-			String nombre = request.getParameter("nombre");
-			String email = request.getParameter("email");
-			String pass = request.getParameter("pass");
-			String tel = request.getParameter("tel");
-			String direccion = request.getParameter("dir");
-
-			usuario.setNombre(nombre);
-			usuario.setCorreo(email);
-			usuario.setPasswd(pass);
-			usuario.setTelefono(tel);
-			usuario.setDireccion(direccion);
-
-			if (dao.update(usuario)) {
-				request.setAttribute("info", "Ha sido actualizado con exito");
-
-			} else {
-				request.setAttribute("warning", "Error al actualizar usuario");
-
-			}
-			
-			redirect = "Admin?sec=usuario";
-			String pagina = response.encodeRedirectURL(redirect);
-			response.sendRedirect(pagina);				//redirect a admin
+		try (PrintWriter out = response.getWriter()) {
+			/* TODO output your page here. You may use following sample code. */
+			out.println(mensaje);
 		}
 	}
 

@@ -38,14 +38,18 @@ public class ServletTablaUsuario extends HttpServlet {
 	 */
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
-		
+	
 		Connection con = DbConnection.getConnection();
 		DaoUsuario dao = new DaoUsuario(con);
 		List<UsuarioBean> lista = new ArrayList<>();
-
-		lista = dao.getActive();
 		List<Integer> prestamos = new ArrayList<>();
 		
+		
+		for (UsuarioBean usuarioBean : dao.getActive()){
+			if (!usuarioBean.isEs_admi()){
+				lista.add(usuarioBean);
+			}
+		}
 		
 		for (UsuarioBean usuario : lista) {
 			prestamos.add(dao.countPrestamos(usuario));

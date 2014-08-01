@@ -11,7 +11,7 @@
 <script type="text/javascript">
 $(document).ready(function (){ 
 	$("#tabla-usuario").dataTable({
-		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todo"]],
+		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
 		"language": {
             "lengthMenu": "_MENU_ filas por página",
             "search": "Busqueda",
@@ -49,7 +49,7 @@ $(document).ready(function (){
               <tr>
                  <th>Nombre</th>
 		 <th>E-Mail</th>
-		 <th>Telefono</th>
+		 <th>Teléfono</th>
 		 <th>Direccion</th>
 		 <th>Prestamos</th>
 		 <th>Deuda</th>
@@ -85,7 +85,7 @@ $(document).ready(function (){
             </tbody>
           </table>
 	    
-	       <small>*Marcados en color rojo, los usuarios con deuda</small>
+	       <small>*Marcados en color rojo, los usuarios con penalización</small>
 	   
 <script type="text/javascript">
 		    $(document).ready(function (){

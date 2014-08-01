@@ -43,7 +43,7 @@ public class ServletAgregarLibro extends HttpServlet {
 			throw new ServerException("No hay coneccion con la BD");
 		}
 		
-		
+		//
 		String nombre = request.getParameter("nombre");
 		long isbn = Long.parseLong(request.getParameter("isbn"));
 		int paginas = Integer.parseInt(request.getParameter("pags"));
@@ -54,6 +54,7 @@ public class ServletAgregarLibro extends HttpServlet {
 		AreaBean area = new DaoArea(con).get(area_id);
 		EditorialBean editorial = new DaoEditorial(con).get(editorial_id);
 		List<AutorBean> autores = new ArrayList<AutorBean>();
+		
 		for (String stringAutorId : stringAutores_id) {
 			autores.add(
 				new DaoAutor(con).get(

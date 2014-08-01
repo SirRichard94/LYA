@@ -3,7 +3,7 @@
 
 <div id="alert-area"></div>
 
-<form class="form-horizontal" id="form-area" accept-charset="UTF-8">
+<form class="form-horizontal" id="form-area" accept-charset="UTF-8" action="#">
 	<fieldset>
 	<legend>Agregar Area</legend>
 	<div class="form-group">
@@ -24,8 +24,9 @@
 			$.get("AgregarArea", form.serialize(),
 			function(data){
 				$("#alert-area").html(data);
-				
+				form.trigger("submited");
 			});
+			$(this).find("input[type=text], textarea, input[type=number]").val("");
 			return false;
 		});
 	});

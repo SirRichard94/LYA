@@ -64,6 +64,7 @@
 		 <li class="navbar-text" ><p><%=usuario.getNombre() %></p></li>
 			<% if ( admin ){ %>
 		<li><a href="Admin">Administrador</a></li>
+		<li><a href="admin_prestamos.jsp">Préstamos</a></li>
 			<% } else { %>
 				
 		<li><a href="PerfilUsuario">Perfil</a></li>
@@ -74,9 +75,9 @@
 		
 		<% if (login){
 		 %>
-		<li><a id="logout" href="index.jsp">Cerrar Sesion</a></li>
+		<li><a id="logout" href="index.jsp">Cerrar Sesión</a></li>
 		  <% } else{ %>
-		<li><a  data-toggle="modal" data-target="#LoginMod" href="#login">inicio Sesion</a></li>
+		<li><a  data-toggle="modal" data-target="#LoginMod" href="#login">Inicar Sesión</a></li>
 		 <% } %>
 	    
 	    

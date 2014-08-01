@@ -4,18 +4,17 @@
  * and open the template in the editor.
  */
 
-package utez.app.web.usuario;
+package utez.app.web.prestamo;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.rmi.ServerException;
 import java.sql.Connection;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import utez.app.daos.DaoUsuario;
+import utez.app.daos.DaoPrestamo;
+import utez.app.model.PrestamoBean;
 import utez.app.model.UsuarioBean;
 import utez.app.web.eq4.util.DbConnection;
 
@@ -23,7 +22,7 @@ import utez.app.web.eq4.util.DbConnection;
  *
  * @author ricardo
  */
-public class ServletModificarUsuario extends HttpServlet {
+public class ServletEntregarPrestamo extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and
@@ -36,63 +35,28 @@ public class ServletModificarUsuario extends HttpServlet {
 	 */
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
-		response.setContentType("charset=UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
 		
-		try{
-		
-		HttpSession sesion = request.getSession();
-		if ((Boolean)sesion.getAttribute("admin") == false || (Boolean) sesion.getAttribute("admin") == null){
-			throw new ServerException("Acceso denegado");
-		}
-		}catch (NullPointerException ex){
-			throw new ServerException("Acceso denegado");
-		}
-		
+		Integer prestamoId = Integer.parseInt(request.getParameter("p_id"));
 		
 		Connection con = DbConnection.getConnection();
-		if (con == null){
-			throw new ServerException("No hay coneccion con la BD");
+		DaoPrestamo dao = new DaoPrestamo(con);
+		PrestamoBean prestamo = dao.get(prestamoId);
+		
+		
+		if(prestamo.getUsuario().getDeuda() > 0){
+			request.setAttribute("prestamo", prestamo);
+			request.setAttribute("monto", dao.penalizacion(prestamo, true)); //mysql
+			
+			this.getServletConfig().getServletContext()
+				.getRequestDispatcher("/entregar_penalizacion.jsp")
+				.forward(request, response);
+		}else{
+			dao.delete(prestamo);
+			
+			response.sendRedirect("admin_prestamos.jsp");
 		}
 		
-		DaoUsuario dao = new DaoUsuario(con);
-		
-		String redirect = "modificar_usuario.jsp";
-		String guardar = request.getParameter("guardar");
-		
-		int usuario_id = Integer.parseInt(request.getParameter("u"));
-		UsuarioBean usuario = dao.get(usuario_id);
-		
-		if (!guardar.equals("true")){
-			
-			request.setAttribute("objetivo", usuario);
-			this.getServletContext().getRequestDispatcher("/"+redirect).forward(request, response);
-			//forward a modificar
-			
-		} else {
-			String nombre = request.getParameter("nombre");
-			String email = request.getParameter("email");
-			String pass = request.getParameter("pass");
-			String tel = request.getParameter("tel");
-			String direccion = request.getParameter("dir");
-
-			usuario.setNombre(nombre);
-			usuario.setCorreo(email);
-			usuario.setPasswd(pass);
-			usuario.setTelefono(tel);
-			usuario.setDireccion(direccion);
-
-			if (dao.update(usuario)) {
-				request.setAttribute("info", "Ha sido actualizado con exito");
-
-			} else {
-				request.setAttribute("warning", "Error al actualizar usuario");
-
-			}
-			
-			redirect = "Admin?sec=usuario";
-			String pagina = response.encodeRedirectURL(redirect);
-			response.sendRedirect(pagina);				//redirect a admin
-		}
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

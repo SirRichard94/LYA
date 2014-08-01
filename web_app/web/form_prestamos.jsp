@@ -3,33 +3,31 @@
 
 <div id="alert-prestamo"></div>
 
-<form class="form-horizontal" id="form-area">
+<form class="form-horizontal" id="form-prestamo">
 	<fieldset>
-	<legend>Agregar Prestamo</legend>
+	<legend>Agregar Préstamo</legend>
 	
 	<div class="form-group">
-		<label class="col-md-4 control-label" for="usuario-select"><small>Usuario</small></label>
+		<label class="col-md-4 control-label" for="usuario-select">Usuario</label>
 		<div class="col-md-8">
 			<select id="usuario-select" name="usuario" class="form-control">
-				<option value="1">Option one</option>
-				<option value="2">Option two</option>
+				
 			</select>
 		</div>
 	</div>
 	
 	
 	<div class="form-group">
-		<label class="col-md-4 control-label" for="libro-select"><small>Libro</small></label>
+		<label class="col-md-4 control-label" for="libro-select">Libro</label>
 		<div class="col-md-8">
 			<select id="libro-select" name="libro" class="form-control">
-				<option value="1">Option one</option>
-				<option value="2">Option two</option>
+				
 			</select>
 		</div>
 	</div>
 	<br>
 	<div class="form-group">
-		<button class="btn btn-primary pull-right">Agregar</button>
+		<button type="submit" class="btn btn-primary pull-right">Agregar</button>
 	</div>
 	</fieldset>
 </form>
@@ -37,12 +35,12 @@
 <script type="text/javascript">
 	
 	$(document).ready(function (){
-		$("#form-area").submit(function (){
+		$("#form-prestamo").submit(function (){
 			var form = $(this);
-			$.get("CrearPrestamo", form.serialize(),
+			$.get("AgregarPrestamo", form.serialize(),
 			function(data){
 				$("#alert-prestamo").html(data);
-				
+				form.trigger("submited");
 			});
 			
 			return false;

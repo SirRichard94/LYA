@@ -10,16 +10,16 @@
 <fieldset>
 
 <!-- Form Name -->
-<legend>Busqueda</legend>
+<legend>Búsqueda</legend>
 
 <!-- Search input-->
 <div class="form-group" >
     <div class="col-md-10">
 	    <div class="input-group">
-    <input id="search" name="search" placeholder="busqueda de libro" class="form-control input-md" type="search">
+    <input id="search" name="search" placeholder="Búsqueda de libro" class="form-control input-md" type="search">
     <span class="input-group-btn">
     <button id="enviar" name="enviar" class="btn btn-success" data-toggle="tooltip" data-placement="right" title="Buscar libro">
-	    buscar
+	    Buscar
     </button>
     </span>
 	    </div>
@@ -35,7 +35,7 @@
   <div class="col-md-12"> 
     <label class="radio-inline" for="categoria-0">
       <input name="categoria" id="categoria-0" value="titulo" checked="checked" type="radio">
-      Titulo
+      Título
     </label> 
     <label class="radio-inline" for="categoria-1">
       <input name="categoria" id="categoria-1" value="autor" type="radio">
