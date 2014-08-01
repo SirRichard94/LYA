@@ -10,11 +10,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import utez.app.daos.DaoAutor;
-import utez.app.daos.DaoUsuario;
 import utez.app.model.AutorBean;
-import utez.app.model.UsuarioBean;
+import utez.app.model.LibroBean;
 
 /**
  *
@@ -26,8 +24,8 @@ public class UDLibro extends javax.swing.JFrame {
     //private DaoUsuario daoUsuario;
 
     private Connection conexion;
-    private AutorBean autorBean;
-    private AutorBean consultaBean;
+    private LibroBean libroBean;
+    private LibroBean consultaBean;
 
     public UDLibro() {
         try {
@@ -39,7 +37,7 @@ public class UDLibro extends javax.swing.JFrame {
         initComponents();
     }
     
-    public UDLibro(AutorBean consultaBean){
+    public UDLibro(LibroBean consultaBean){
         this();
         this.consultaBean = consultaBean;
         llenarValores();
@@ -93,7 +91,7 @@ public class UDLibro extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("LYA");
-        jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel4MouseClicked(evt);
@@ -102,7 +100,7 @@ public class UDLibro extends javax.swing.JFrame {
 
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Inicar Sesion");
-        jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel5MouseClicked(evt);
@@ -190,7 +188,7 @@ public class UDLibro extends javax.swing.JFrame {
         });
 
         jLabel11.setText("Olvidaste el nombre del autor?  Click aqui");
-        jLabel11.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel11.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabel11.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jLabel11KeyPressed(evt);
@@ -214,7 +212,7 @@ public class UDLibro extends javax.swing.JFrame {
                             .addComponent(txtDato))
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(btnBuscar)
@@ -344,8 +342,11 @@ public class UDLibro extends javax.swing.JFrame {
         // TODO add your handling code here:
         DaoAutor daoAutor = new DaoAutor(conexion);
         String nombre = txtDato.getText();
-        consultaBean= daoAutor.findByNombre(nombre);
+	
+        consultaBean= daoAutor.getByNombre(nombre);
+	if (consultaBean != null){
         llenarValores();
+	}
         
     }//GEN-LAST:event_btnBuscarActionPerformed
 
