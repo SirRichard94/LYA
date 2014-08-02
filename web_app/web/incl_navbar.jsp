@@ -58,7 +58,7 @@
 	  }
 %>
 
-<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+<nav class="navbar navbar-fixed-top navbar-inverse " role="navigation">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -75,7 +75,7 @@
 		  
 		 <% if (login){
 		 %>
-		 <li class="navbar-text" ><p><%=usuario.getNombre() %></p></li>
+		 <li ><p class="navbar-text"><%=usuario.getNombre() %></p></li>
 			<% if ( admin ){ %>
 		<li><a href="Admin">Administrador</a></li>
 		<li><a href="admin_prestamos.jsp">Préstamos</a></li>

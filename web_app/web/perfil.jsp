@@ -35,7 +35,7 @@ if (usuario == null){
 	    <div class="container">
 		    <% if (login){ %>
 			<div class="row">
-                             <div class="col-lg-8 col-lg-push-8">
+                             <div class="col-md-8 pull-right">
 				     
 				     <%
 			    List<PrestamoBean> list = new ArrayList();
@@ -49,15 +49,18 @@ if (usuario == null){
 				     
 				     Penalizaciones:  <b class="penalizacion "> $<%=usuario.getDeuda()%></b>
 				     <script type="text/javascript">
-					     if ($(".penalizacion").html() > 0){
+					     if ($(".penalizacion").html() !== ""){
 						     $(".penalizacion").addClass("text-danger");
 					     }
 				     </script>
-                                        </div>
-				<div class="col-lg-8 col-lg-offset-2 centered">
+				     
+				     
+                              </div>
+				<div class="col-md-10 centered">
                                     
                                         
-					<img src="assets/img/user.png" alt="Perfil">
+					<img src="assets/img/user.png" alt="Perfil"
+					     >
                                        
 					<h1>(<%=usuario.getNombre() %>)</h1>
                                         <p>(<%=usuario.getCorreo() %>)</p>  
