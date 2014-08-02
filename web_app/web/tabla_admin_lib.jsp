@@ -87,7 +87,7 @@ $(document).ready(function (){
 				    </td>
 			    </tr>
 		    <%}%>
- Autor           </tbody>
+            </tbody>
           </table>
 
 	       <small>*Marcados en amarillo, libros con 4 o menos ejemplares en existencia</small>

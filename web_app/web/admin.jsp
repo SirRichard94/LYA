@@ -6,7 +6,7 @@
   <head>
     
 	  <%@include file="incl_headmeta.html" %>
-
+	   
     <title> LYA Menu de Administrador </title>
     
     
@@ -37,39 +37,49 @@
 
 	<!-- +++++ Welcome Section +++++ -->
 	
-	<div id="ww" >
-		<div class="container">
-		    <div class="row">
-		    <div class="col-md-8 ">
-			    <div class="page-header">
-			    <h1>Administrador de LYA</h1>
-			    </div>
-		    </div>
-		    </div>
-			<div class="row">
-		    <div class="col-md-9" >	
-			    
-			    <ul class="nav nav-pills" id="selectPill">
-				    <li id="selectUsuario">
+	<div id="ww" style="padding-top: 10px;">
+		<div class="container-fluid" >
+		    <div class="row row-offcanvas row-offcanvas-left">
+			    <div class="col-md-2 sidebar">
+				    <ul class="nav nav-sidebar" id="nav-admin">
+					    <li id="selectUsuario"
+						class="categoria">
 					    <a href="#"> 
 						    Usuario 
 					    </a>
 				    </li>
-				    <li id ="selectLibro">
+				    <li id ="selectLibro"
+					class="categoria">
 					 <a href="#"> Libro </a>   
 				    </li>
-				    <li id="selectAutor">
+				    <li id="selectAutor"
+					class="categoria">
 					 <a href="#"> Autor </a>   
 				    </li>
-				    <li id="selectEditorial">
+				    <li id="selectEditorial"
+					class="categoria">
 					 <a href="#"> Editorial </a>   
 				    </li>
-				    <li id="selectArea">
+				    <li id="selectArea"
+					class="categoria">
 					 <a href="#"> Área </a>
 				    </li>
-			    </ul>
-			   
-			    <br>
+				    <li class="nav-divider"></li>
+				    
+				    <li>
+					    <div id="form"
+						 class="well">
+						    Formulario
+					    </div>
+				    </li>
+				    </ul>
+			    </div>
+
+
+		    <div class="col-md-10 col-md-offset-2 main" >	
+			    <div class="page-header">
+			    <h1>Administrador de LYA</h1>
+			    </div>
 			   
 			    <div id="tbl" >
 				    <!-- Tabla -->
@@ -79,14 +89,7 @@
 			    
 		    </div>  <!-- col -->
 		    
-		    <div class="col-md-3 pull-right">
-			    <!-- Agregar  -->
-			    <div class="well" >
-				    <div id="form">
-					   <!-- form -->
-				    </div>   
-			    </div>
-		    </div>
+		    
 		    
 		    
 		    </div> <!-- row -->
@@ -102,7 +105,10 @@
 
 	<!-- +++++ Footer Section +++++ -->
 	
+	<div class="col-md-offset-2">
 	<%@include file="incl_footer.jsp" %>
+	</div>
+	
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -120,26 +126,36 @@
 	    lastLoad = USUARIO;
 	     
 	    function loadLibro(){
+		$(".page-header").html(
+			"<h1>Administrador: Libro</h1>");
 		$("#tbl").load("ServletTablaLibro");
 		$("#form").load("form_libro.jsp");
 		lastLoad = LIBRO;
 	    } 
 	    function loadUsuario(){
+		    $(".page-header").html(
+			"<h1>Administrador: Usuario</h1>");
 		$("#tbl").load("ServletTablaUsuario");
 		$("#form").load("form_usuario.jsp");
 		lastLoad=USUARIO;
 	    } 
 	    function loadAutor(){
+		    $(".page-header").html(
+			"<h1>Administrador: Autor</h1>");
 		$("#tbl").load("ServletTablaAutor");
 		$("#form").load("form_autor.jsp");
 		lastLoad = AUTOR;
 	    } 
 	    function loadEditorial(){
+		    $(".page-header").html(
+			"<h1>Administrador: Editorial</h1>");
 		$("#tbl").load("ServletTablaEditorial");
 		$("#form").load("form_editorial.jsp");
 		lastLoad=EDITORIAL;
 	    } 
 	    function loadArea(){
+		    $(".page-header").html(
+			"<h1>Administrador: Área</h1>");
 		$("#tbl").load("ServletTablaArea");
 		$("#form").load("form_area.jsp");
 		lastLoad = AREA;
@@ -173,8 +189,8 @@
 		
 	
 		//seleccion
-		$("#selectPill li").click(function(){
-			$("ul li").removeClass("active");
+		$(".nav-sidebar li.categoria").click(function(){
+			$(".nav-sidebar > li.categoria").removeClass("active");
 			$(this).addClass("active");
 		});
 		
