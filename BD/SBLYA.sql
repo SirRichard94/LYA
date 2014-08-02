@@ -251,3 +251,12 @@ VALUES (1,3,5),
 	(4,6,10),
 	(7,10,20),
 	(11, null ,50);
+
+
+INSERT INTO PRESTAMO (usuario_id, ejemplar_id, fecha_salida, fecha_entrega)
+				 VALUES (2,2,
+				GETDATE(), DATEADD(day,3,GETDATE()) 
+				);
+
+
+select * from EJEMPLAR;

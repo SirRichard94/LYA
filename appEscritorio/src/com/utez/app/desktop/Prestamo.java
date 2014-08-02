@@ -291,8 +291,6 @@ public class Prestamo extends javax.swing.JFrame {
                 modeloUsuario.getIndexOf(
                         modeloUsuario.getSelectedItem()));
         
-        
-        
         if ( usuario.getDeuda() > 0){
             JOptionPane.showMessageDialog(rootPane, "No se pudo crear prestamo"
                     + "\n El Usuario Tiene Penalizacion");
