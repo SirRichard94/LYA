@@ -23,10 +23,10 @@
 		<input type="text" class="form-control" placeholder="Nombre" name="nombre" required=""> 
 	</div>
 	<div class="form-group">
-		<input type="number" class="form-control" placeholder="ISBN" name="isbn" required>
+		<input type="number" class="form-control" placeholder="ISBN" name="isbn" required max="9999999999999" min="0">
 	</div>
 	<div class="form-group">
-		<input type="number" class="form-control" placeholder="Núm de Paginas" name="pags">
+		<input type="number" class="form-control" placeholder="Núm de Paginas" name="pags" max="10000" min="1">
 	</div>
 	<div class="form-group">
 		<label class="col-md-4 control-label" for="editorial-select"><small>Editorial</small></label>
@@ -46,7 +46,7 @@
 				
 			</select>
 			<button id="new-area" type=button class="btn-sm btn btn-link">
-				Nueva Area</button>
+				Nueva Área</button>
 		</div>
 	</div>
 	<div class="form-group">
@@ -85,7 +85,7 @@
 		<input type="text" class="form-control" placeholder="Localización" name="l" required>
 	</div>
 	<div class="form-group">
-		<input type="number" class="form-control" placeholder="Núm de Ejemplares" name="n">
+		<input type="number" class="form-control" placeholder="Núm de Ejemplares" name="n" max="1000" min ="1">
 	</div>
 	
 	<div class="form-group">
@@ -174,5 +174,8 @@
 			
 		});
 		
+		$("#tab-libro-ejemplar").click(function (){
+			loadLibroSelect();
+		});
 	});
 </script>

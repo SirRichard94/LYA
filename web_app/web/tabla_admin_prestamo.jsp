@@ -67,3 +67,4 @@ $(document).ready(function (){
 		    <%}%>
             </tbody>
           </table>
+	    <small>*Marcados en rojo, usuarios atrasados</small>

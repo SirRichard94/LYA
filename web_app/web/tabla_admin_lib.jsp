@@ -1,3 +1,5 @@
+<%@page import="utez.app.utilidades.Biblioteca"%>
+<%@page import="utez.app.daos.DaoLibro"%>
 <%@page import="java.util.List"%>
 <%@page import="utez.app.web.eq4.util.DbConnection"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -44,11 +46,12 @@ $(document).ready(function (){
               <tr>
                  <th>Título</th>
 		 <th>ISBN</th>
-		 <th>Páginas</th>
+		 <th>Págs</th>
 		 <th>Autores</th>
 		 <th>Editorial</th>
-		 <th>Area</th>
-		 <th>Ejemplares</th>
+		 <th>Área</th>
+		 <th><small>Ejemplares</small></th>
+		 <th><small>Préstados</small></th>
 		 <th>Acciones</th>
               </tr>
             </thead>
@@ -70,7 +73,12 @@ $(document).ready(function (){
 				    
 				    <td><%=row.getEditorial().getNombre()%></td>
 				    <td><%=row.getArea().getNombre()%></td>
-				    <td><%=ejemplaresDisponibles.get(i) %> / <%=ejemplares.get(i) %></td>
+				    <td><%=ejemplares.get(i) %></td>
+				    <td>
+					    <%=new DaoLibro(new Biblioteca(true)
+					    .getConection()).countPrestamos(row)%>
+					    <%-- mysql, temporal --%>
+				    </td>
 				    <td class="centered">
 					    <span class="glyphicon glyphicon-pencil"></span>
 					    <a href="EliminarLibro?id=<%=row.getLibro_id()%>">
@@ -79,7 +87,7 @@ $(document).ready(function (){
 				    </td>
 			    </tr>
 		    <%}%>
- Autor           </tbody>
+            </tbody>
           </table>
 
 	       <small>*Marcados en amarillo, libros con 4 o menos ejemplares en existencia</small>

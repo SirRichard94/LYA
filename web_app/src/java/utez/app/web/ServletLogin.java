@@ -63,7 +63,7 @@ public class ServletLogin extends HttpServlet {
         sesion.setAttribute("login", existe);
         
 	
-	String mensaje = "<div class=\"alert alert-info\">  Sesion iniciada </div>";
+	String mensaje = "<div class=\"alert alert-info\">  Sesión iniciada </div>";
 	
         if(existe){
         UsuarioBean usuario = daoUs.findByCorreo(correo);
@@ -73,7 +73,7 @@ public class ServletLogin extends HttpServlet {
         sesion.setAttribute("usuario", usuario);
         }else{
         
-	mensaje = "<div class=\"alert alert-danger\">  Usuario o contraseña incorrectos </div>";
+	mensaje = "<div class=\"alert alert-danger\">  Usuario y/o contraseña incorrectos </div>";
 		
 	}
 	

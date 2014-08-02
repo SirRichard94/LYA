@@ -77,7 +77,7 @@
                  <th>Título</th>
 		 <th>ISBN</th>
 		 <th>Autores</th>
-		 <th>Area</th>
+		 <th>Área</th>
 		 <th>Editorial</th>
               </tr>
             </thead>

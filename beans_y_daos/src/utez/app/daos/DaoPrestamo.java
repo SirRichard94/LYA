@@ -236,6 +236,32 @@ public class DaoPrestamo extends AbstractDao<PrestamoBean>{
 		return penalizacion;
 	}
 	
+	public int diasDeRetraso(PrestamoBean prestamo, boolean mysql){
+		int dias = 0;
+		String datediff = "datediff(day, ?, GETDATE())";
+			if (mysql){
+				datediff = "datediff(CURDATE(), ?)";
+			}
+		String query = "SELECT "+datediff+" as dias;";
+		
+		try{
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setDate(1, prestamo.getFecha_entrega());
+			
+			ResultSet rs = ps.executeQuery();
+			
+			if (rs.next()){
+				dias = rs.getInt("dias");
+			}
+			
+			ps.close();
+		}catch (SQLException ex){
+			
+		}
+		
+		return dias;
+	}
+	
 	public double penalizacion(PrestamoBean prestamo, boolean mysql){
 		double penalizacion = 0;
 		
