@@ -217,11 +217,21 @@ public class AdminData extends javax.swing.JFrame {
         jMenu5.add(jMenuItem18);
 
         jMenuItem19.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\clock.png")); // NOI18N
-        jMenuItem19.setText("Actualizar");
+        jMenuItem19.setText("Modificar");
+        jMenuItem19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem19ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem19);
 
         jMenuItem20.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\delete.png")); // NOI18N
         jMenuItem20.setText("Eliminar");
+        jMenuItem20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem20ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem20);
 
         jMenuBar1.add(jMenu5);
@@ -247,11 +257,21 @@ public class AdminData extends javax.swing.JFrame {
         jMenu6.add(jMenuItem22);
 
         jMenuItem23.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\clock.png")); // NOI18N
-        jMenuItem23.setText("Actualizar");
+        jMenuItem23.setText("Modificar");
+        jMenuItem23.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem23ActionPerformed(evt);
+            }
+        });
         jMenu6.add(jMenuItem23);
 
         jMenuItem24.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\delete.png")); // NOI18N
         jMenuItem24.setText("Eliminar");
+        jMenuItem24.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem24ActionPerformed(evt);
+            }
+        });
         jMenu6.add(jMenuItem24);
 
         jMenuBar1.add(jMenu6);
@@ -277,11 +297,21 @@ public class AdminData extends javax.swing.JFrame {
         jMenu7.add(jMenuItem26);
 
         jMenuItem27.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\clock.png")); // NOI18N
-        jMenuItem27.setText("Actualizar");
+        jMenuItem27.setText("Modificar");
+        jMenuItem27.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem27ActionPerformed(evt);
+            }
+        });
         jMenu7.add(jMenuItem27);
 
         jMenuItem28.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\delete.png")); // NOI18N
         jMenuItem28.setText("Eliminar");
+        jMenuItem28.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem28ActionPerformed(evt);
+            }
+        });
         jMenu7.add(jMenuItem28);
 
         jMenuBar1.add(jMenu7);
@@ -307,7 +337,7 @@ public class AdminData extends javax.swing.JFrame {
         jMenu8.add(jMenuItem30);
 
         jMenuItem31.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\clock.png")); // NOI18N
-        jMenuItem31.setText("Actualizar");
+        jMenuItem31.setText("Modificar");
         jMenuItem31.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem31ActionPerformed(evt);
@@ -317,6 +347,11 @@ public class AdminData extends javax.swing.JFrame {
 
         jMenuItem32.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\delete.png")); // NOI18N
         jMenuItem32.setText("Eliminar");
+        jMenuItem32.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem32ActionPerformed(evt);
+            }
+        });
         jMenu8.add(jMenuItem32);
 
         jMenuBar1.add(jMenu8);
@@ -342,11 +377,21 @@ public class AdminData extends javax.swing.JFrame {
         jMenu9.add(jMenuItem34);
 
         jMenuItem35.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\clock.png")); // NOI18N
-        jMenuItem35.setText("Actualizar");
+        jMenuItem35.setText("Modificar");
+        jMenuItem35.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem35ActionPerformed(evt);
+            }
+        });
         jMenu9.add(jMenuItem35);
 
         jMenuItem36.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\delete.png")); // NOI18N
         jMenuItem36.setText("Eliminar");
+        jMenuItem36.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem36ActionPerformed(evt);
+            }
+        });
         jMenu9.add(jMenuItem36);
 
         jMenuBar1.add(jMenu9);
@@ -413,7 +458,7 @@ public class AdminData extends javax.swing.JFrame {
 
     private void jMenuItem25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem25ActionPerformed
         // TODO add your handling code here:
-        new CEditorial().setVisible(true);
+        new CLibro().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuItem25ActionPerformed
 
@@ -449,13 +494,13 @@ public class AdminData extends javax.swing.JFrame {
 
     private void jMenuItem26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem26ActionPerformed
         // TODO add your handling code here:
-        new resultadoEditorial().setVisible(true);
+        new resultadoLibro().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuItem26ActionPerformed
 
     private void jMenuItem31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem31ActionPerformed
         // TODO add your handling code here:
-        new resultadoArea().setVisible(true);
+        new resultadoEditorial().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuItem31ActionPerformed
 
@@ -464,6 +509,60 @@ public class AdminData extends javax.swing.JFrame {
         new resultadoAutor().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuItem22ActionPerformed
+
+    private void jMenuItem35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem35ActionPerformed
+        // TODO add your handling code here:
+        new resultadoArea().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem35ActionPerformed
+
+    private void jMenuItem36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem36ActionPerformed
+        // TODO add your handling code here:
+        new resultadoArea().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem36ActionPerformed
+
+    private void jMenuItem32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem32ActionPerformed
+        // TODO add your handling code here:
+        new resultadoEditorial().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem32ActionPerformed
+
+    private void jMenuItem27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem27ActionPerformed
+        // TODO add your handling code here:
+        new resultadoLibro().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem27ActionPerformed
+
+    private void jMenuItem28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem28ActionPerformed
+        // TODO add your handling code here:
+         new resultadoLibro().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem28ActionPerformed
+
+    private void jMenuItem23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem23ActionPerformed
+        // TODO add your handling code here:
+        new resultadoAutor().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem23ActionPerformed
+
+    private void jMenuItem24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem24ActionPerformed
+        // TODO add your handling code here:
+        new resultadoAutor().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem24ActionPerformed
+
+    private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
+        // TODO add your handling code here:
+        new resultadoUsuario().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem19ActionPerformed
+
+    private void jMenuItem20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem20ActionPerformed
+        // TODO add your handling code here:
+        new resultadoUsuario().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem20ActionPerformed
 
     /**
      * @param args the command line arguments
