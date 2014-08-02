@@ -281,6 +281,9 @@
               <Connection code="modeloArea" type="code"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmbAreaActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JComboBox()"/>
             <AuxValue name="JavaCodeGenerator_DeclarationPost" type="java.lang.String" value="private DefaultComboBoxModel modeloArea= new DefaultComboBoxModel();"/>

@@ -198,6 +198,11 @@ public class UDLibro extends javax.swing.JFrame {
         jLabel7.setText("Num. Pàginas.");
 
         cmbArea.setModel(modeloArea);
+        cmbArea.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbAreaActionPerformed(evt);
+            }
+        });
 
         cmbEditorial.setModel(modelo);
 
@@ -363,6 +368,10 @@ public class UDLibro extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void cmbAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbAreaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbAreaActionPerformed
 
     /**
      * @param args the command line arguments
