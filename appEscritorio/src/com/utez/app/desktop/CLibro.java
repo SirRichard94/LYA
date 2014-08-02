@@ -106,7 +106,7 @@ public class CLibro extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("LYA");
+        jLabel4.setText("LyA");
         jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -115,7 +115,7 @@ public class CLibro extends javax.swing.JFrame {
         });
 
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Inicar Sesion");
+        jLabel5.setText("Inicar Sesiòn");
         jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -169,11 +169,11 @@ public class CLibro extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Nuevo Libro"));
 
-        jLabel1.setText("Ttulo");
+        jLabel1.setText("Nombre");
 
         jLabel2.setText("ISBN");
 
-        jLabel7.setText("Num Paginas.");
+        jLabel7.setText("Num. Pàginas.");
 
         jLabel8.setText("Editorial");
 
@@ -200,7 +200,7 @@ public class CLibro extends javax.swing.JFrame {
 
         cmbArea.setModel(modeloArea);
 
-        jLabel10.setText("Area");
+        jLabel10.setText("Àrea");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -355,7 +355,7 @@ public class CLibro extends javax.swing.JFrame {
         }else{
             System.out.println("tonto");
         }
-            
+        new resultadoLibro().setVisible(true);
         
         
     }//GEN-LAST:event_jButton1ActionPerformed

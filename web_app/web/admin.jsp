@@ -60,8 +60,10 @@
 					class="categoria">
 					 <a href="#"> Editorial </a>   
 				    </li>
+
 				    <li id="selectArea"
 					class="categoria">
+
 					 <a href="#"> Área </a>
 				    </li>
 				    <li class="nav-divider"></li>

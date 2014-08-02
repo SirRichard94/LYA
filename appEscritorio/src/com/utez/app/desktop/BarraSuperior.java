@@ -46,10 +46,10 @@ public class BarraSuperior extends javax.swing.JPanel {
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("LYA");
+        jLabel4.setText("LyA");
 
         lblSesion.setForeground(new java.awt.Color(255, 255, 255));
-        lblSesion.setText("Inicar Sesion");
+        lblSesion.setText("Inicar Sesiòn");
         lblSesion.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblSesionMouseClicked(evt);

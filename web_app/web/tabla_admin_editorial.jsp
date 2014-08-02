@@ -8,7 +8,7 @@
 
 <script type="text/javascript">
 $(document).ready(function (){ 
-	$("#tabla-autor").dataTable({
+	$("#tabla-autor")..dataTable({
 		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
 		"language": {
             "lengthMenu": "_MENU_ Filas por página",

@@ -120,7 +120,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnLogin">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Login"/>
+            <Property name="text" type="java.lang.String" value="Iniciar"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLoginActionPerformed"/>
@@ -131,7 +131,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="36" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Inicio De Sesion"/>
+            <Property name="text" type="java.lang.String" value="Inicio De Sesi&#xf2;n"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnCancelar">
