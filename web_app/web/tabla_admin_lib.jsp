@@ -59,7 +59,7 @@ $(document).ready(function (){
             <tbody>
                 <% for(int i = 0; i< lista.size(); i++){ %>
 		<% LibroBean row = lista.get(i); %>
-		<tr class="<%=(ejemplaresDisponibles.get(i) <= 4) ? "warning": ""%>">
+		<tr class="<%=(ejemplaresDisponibles.get(i) <= 3) ? "warning": ""%>">
 				    <td><%=row.getNombre()%></td>
 				    <td><%=row.getIsbn()%></td>
 				    <td><%=row.getPaginas()%></td>
@@ -92,4 +92,4 @@ $(document).ready(function (){
             </tbody>
           </table>
 
-	       <small>*Marcados en amarillo, libros con 4 o menos ejemplares en existencia</small>
+	       <small>*Marcados en amarillo, libros sin ejemplares para prestamos</small>

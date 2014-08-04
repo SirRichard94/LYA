@@ -64,7 +64,7 @@ public class ServletAgregarPrestamo extends HttpServlet {
 			mensaje = "<div class=\" alert alert-warning\"> El usuario posee deuda</div>";
 		}else if(daoU.countPrestamos(usuario) >= 3){
 			mensaje = "<div class=\" alert alert-warning\"> El usuario tiene varios prestamos activos</div>";
-		}else if(daoL.countEjemplaresDisponibles(libro) <= 4){
+		}else if(daoL.countEjemplaresDisponibles(libro) <= 3){
 			mensaje = "<div class=\" alert alert-warning\"> Na hay ejemplares para prestar de "
 				+ libro.getNombre() +"</div>";
 		}else{

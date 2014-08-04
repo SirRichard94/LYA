@@ -195,14 +195,16 @@ public class DaoLibro extends AbstractDao<LibroBean>{
 			ps.setInt(4, bean.getEditorial().getEditorial_id());
 			ps.setInt(5, bean.getPaginas());
 			
-			if (ps.executeUpdate() != 1) {
+			if (ps.executeUpdate() < 1) {
 				ps.close();
 				return false;
 			}
 			ps.close();
 			
 			//insertar autores
-			bean = getByIsbn(bean.getIsbn());
+			bean.setLibro_id(
+				getByIsbn(bean.getIsbn())
+					.getLibro_id()); 
 			addAutores(bean);
 			
 			return true;
@@ -231,16 +233,16 @@ public class DaoLibro extends AbstractDao<LibroBean>{
 		
 		if (bean.getAutores() != null && bean.getAutores().size() > 0){
 			
-			deleteAutores(bean);
 				for (AutorBean autor : bean.getAutores()){
 					try {
 						String query = "INSERT INTO AUTOR_DE (autor_id, libro_id)"
 							+ " VALUES (?, ?);";
 						PreparedStatement statement = con.prepareStatement(query);
 						statement.setInt(1, autor.getAutor_id());
-						statement.setInt(2, getByIsbn(bean.getIsbn()).getLibro_id());
+						statement.setInt(2, bean.getLibro_id());
 						
-						if (statement.executeUpdate() != 1) {
+						if (statement.executeUpdate() < 1) {
+							statement.close();
 							return false;
 						}
 						statement.close();

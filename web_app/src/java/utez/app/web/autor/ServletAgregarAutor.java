@@ -68,8 +68,8 @@ public class ServletAgregarAutor extends HttpServlet {
 		if (new DaoAutor(con).add(autor)){
 			//request.setAttribute("info", "Usuario agregado con exito");
 			mensaje = "<div class=\"alert alert-info\"> "
-				+autor.getNombre()+" "+autor.getApellido()+" agregado con exito"
-				+ request.getContentType()+"</div>";
+				+autor.getNombre()+" "+autor.getApellido()+" agregado con éxito"
+				+ "</div>";
 		} else{
 			//request.setAttribute("warning", "Error al agregar usuario");
 			mensaje = "<div class=\"alert alert-danger\"> Error al agregar Autor</div>";
