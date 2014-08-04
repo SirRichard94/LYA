@@ -18,7 +18,7 @@ public class ConexionSQLServer {
     private static final String ipAddress = "localhost"; //nota: localhost= 127.0.0.1
     private static final String dbName = "SB_LYA";
     private static final String user = "sa";
-    private static final String password = "Elielo-03";
+    private static final String password = "root";
     private static final String service = "1433";
     
     
