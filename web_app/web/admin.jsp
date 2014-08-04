@@ -108,7 +108,7 @@
 
 	<!-- +++++ Footer Section +++++ -->
 	
-	<div class="col-md-offset-3">
+	<div class="col-md-offset-3 " >
 	<%@include file="incl_footer.jsp" %>
 	</div>
 	

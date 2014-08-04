@@ -32,16 +32,20 @@
 	<div id="ww">
 	    <div class="container-fluid">
 			<div class="row">
-			<div class="col-md-3">
+				
+			<div class="col-md-3 sidebar">
 				<div id="form-prestamos" class="well">
 						<%@include file="form_prestamos.jsp" %>
 					</div>	
 			</div>
 				
-				<div class="col-md-8">
+				<div class="col-md-8 col-md-offset-3">
+					<div class="page-header">
+						<h1>Préstamos</h1>
+					</div>
 					
 					<div id="tabla-prestamos">
-						Tabla de prestamos
+						Tabla de préstamos
 					</div>
 					
 				</div>
@@ -58,9 +62,9 @@
 	
 	
 	<!-- +++++ Footer Section +++++ -->
-	
+	<div class="col-md-offset-3">
 	<%@include file="incl_footer.jsp" %>
-	
+	</div>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->

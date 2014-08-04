@@ -51,7 +51,7 @@ $(document).ready(function (){
 		 <th>Editorial</th>
 		 <th>Área</th>
 		 <th><small>Ejemplares</small></th>
-		 <th><small>Préstados</small></th>
+		 <th><small>Prestados</small></th>
 		 <th>Acciones</th>
               </tr>
             </thead>
