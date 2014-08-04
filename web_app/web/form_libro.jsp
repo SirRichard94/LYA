@@ -52,7 +52,7 @@
 	<div class="form-group">
 		<label class="col-md-4 control-label" for="autor-select"><small>Autores</small></label>
 		<div class="col-md-8">
-			<select multiple id="autor-select" name="autores" class="form-control">
+			<select multiple id="autor-select" name="autores" class="form-control" required>
 				<option value="1">Option one</option>
 				<option value="2">Option two</option>
 			</select>

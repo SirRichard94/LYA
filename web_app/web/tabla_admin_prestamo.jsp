@@ -36,6 +36,7 @@ $(document).ready(function (){
 
 <% 
 	List<PrestamoBean> lista = (List) request.getAttribute("lista");
+	List<Integer> diasRetraso = (List) request.getAttribute("dias");
 %>
 
 	<table class="table table-condensed table-bordered" id="tabla-libro">
@@ -54,14 +55,14 @@ $(document).ready(function (){
             <tbody>
                 <% for(int i = 0; i< lista.size(); i++){ %>
 		<% PrestamoBean row = lista.get(i); %>
-		<tr class="<%=row.getUsuario().getDeuda() > 0 
+		<tr class="<%=diasRetraso.get(i) > 0 
 			? "danger" : "" %>">
 				    <td><%=row.getUsuario().getNombre()%></td>
 				    <td><%=row.getEjemplar().getLibro().getNombre()%> </td>
 				    <td><%=row.getEjemplar().getEjemplar_id() %> </td>
 				    <td><%=row.getFecha_salida() %></td>
 				    <td><%=row.getFecha_entrega()%></td>
-				    <td><a href="EntregarPrestamo?p_id=<%=row.getPrestamo_id()%>">
+				    <td><a href="EntregarPrestamo?p_id=<%=row.getPrestamo_id()%>"><span class="glyphicon glyphicon-book"></span>
 						    Entregado</a></td>
 			    </tr>
 		    <%}%>

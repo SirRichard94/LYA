@@ -37,6 +37,13 @@ public class ServletOptionListEditorial extends HttpServlet {
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
+		
+		String selected = request.getParameter("id");
+		int selectedId = -1;
+		if (selected != null && !selected.equals("")){
+			selectedId = Integer.parseInt(selected);
+		}
+		
 		try (PrintWriter out = response.getWriter()) {
 			/* TODO output your page here. You may use following sample code. */
 			Connection con = new DbConnection().getConnection();
@@ -44,7 +51,10 @@ public class ServletOptionListEditorial extends HttpServlet {
 			DaoEditorial dao = new DaoEditorial(con);
 			
 			for (EditorialBean bean: dao.getActive()){
-			out.println("<option value="+bean.getEditorial_id()+">"
+				int id = bean.getEditorial_id();
+			out.println("<option value='"+id+"'"
+				+ (selectedId == id ? " selected":"")
+				+">"
 				+ bean.getNombre()
 				+ "</option>");
 			}

@@ -37,6 +37,14 @@ public class ServletOptionListAutor extends HttpServlet {
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
+		
+		String selected = request.getParameter("id");
+		int selectedId = -1;
+		if (selected != null && !selected.equals("")){
+			selectedId = Integer.parseInt(selected);
+		}
+		
+		
 		try (PrintWriter out = response.getWriter()) {
 			/* TODO output your page here. You may use following sample code. */
 			Connection con = new DbConnection().getConnection();
@@ -44,7 +52,10 @@ public class ServletOptionListAutor extends HttpServlet {
 			DaoAutor dao = new DaoAutor(con);
 			
 			for (AutorBean bean: dao.getActive()){
-			out.println("<option value="+bean.getAutor_id()+">"
+				int id = bean.getAutor_id();
+			out.println("<option value='"+bean.getAutor_id()+"'"
+				+ (selectedId == id ? " selected":"")
+				+">"
 				+ bean.getNombre() + " " + bean.getApellido()
 				+ "</option>");
 			}

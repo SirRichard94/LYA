@@ -59,12 +59,12 @@ $(document).ready(function (){
 					    <a class ="mod-editorial"
 						href="ModificarEditorial?guardar=false&AMP;i=<%=id%>" 
 					       title="Modificar">
-						    <span class="glyphicon glyphicon-pencil"></span>
-					    </a>
+						    <span class="glyphicon glyphicon-pencil"></span>Modificar
+					    </a><br/>
 					    <a class ="elim-editorial"
 						    href="EliminarEditorial?i=<%=id%>" 
 					       title="Eliminar">
-						    <span class="glyphicon glyphicon-trash"></span>
+						    <span class="glyphicon glyphicon-trash"></span>Eliminar
 					    </a>
 				    </td>
 			    </tr>

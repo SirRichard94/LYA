@@ -44,7 +44,8 @@ public class ServletEntregarPrestamo extends HttpServlet {
 		PrestamoBean prestamo = dao.get(prestamoId);
 		
 		
-		if(prestamo.getUsuario().getDeuda() > 0){
+		if(dao.penalizacion(prestamo, true) > 0){ // mysql
+			request.setAttribute("dias", dao.diasDeRetraso(prestamo, true)); // mysql
 			request.setAttribute("prestamo", prestamo);
 			request.setAttribute("monto", dao.penalizacion(prestamo, true)); //mysql
 			

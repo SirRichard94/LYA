@@ -74,20 +74,23 @@ $(document).ready(function (){
 				    <td><%=row.getCorreo()%></td>
 				    <td><%=row.getTelefono()%></td>
 				    <td><%=row.getDireccion()%></td>
-				    <td ><%=prestamos.get(i)%></td>
+				    <td class="centered"><%=prestamos.get(i)%></td>
 				    <td>$<%=row.getDeuda()%></td>
-				    <td class="">
+				    <td>
 <a href="ModificarUsuario?guardar=false&AMP;u=<%=id%>" 
    title="modificar">
-	<span class="glyphicon glyphicon-pencil"></span>
-</a>
-	<a class="eliminar"
+	<span class="glyphicon glyphicon-pencil"></span>Modificar 
+</a> 
+   <br/>
+   <a class="eliminar"
 		href="EliminarUsuario?u=<%=id%>" 
 	   title="eliminar">
-		<span class="glyphicon glyphicon-trash"></span>
+		<span class="glyphicon glyphicon-trash"></span>Eliminar 
 	</a>
 					   
 				    </td>
+				    
+				    
 			    </tr>
 		    <%}%>
             </tbody>

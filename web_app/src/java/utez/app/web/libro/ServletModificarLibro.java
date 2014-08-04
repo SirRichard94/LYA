@@ -10,14 +10,20 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.rmi.ServerException;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import utez.app.daos.DaoArea;
 import utez.app.daos.DaoAutor;
+import utez.app.daos.DaoEditorial;
 import utez.app.daos.DaoLibro;
+import utez.app.model.AreaBean;
 import utez.app.model.AutorBean;
+import utez.app.model.EditorialBean;
 import utez.app.model.LibroBean;
 import utez.app.web.eq4.util.DbConnection;
 
@@ -72,10 +78,31 @@ public class ServletModificarLibro extends HttpServlet {
 			//forward a modificar
 			
 		} else {
-			String nombre = request.getParameter("nombre");
-			String apellido = request.getParameter("apellido");
-
-			bean.setNombre(nombre);
+		String nombre = request.getParameter("nombre");
+		long isbn = Long.parseLong(request.getParameter("isbn"));
+		int paginas = Integer.parseInt(request.getParameter("pags"));
+		int area_id = Integer.parseInt(request.getParameter("area"));
+		int editorial_id = Integer.parseInt(request.getParameter("editorial"));
+		String[] stringAutores_id = request.getParameterValues("autores");
+		
+		AreaBean area = new DaoArea(con).get(area_id);
+		EditorialBean editorial = new DaoEditorial(con).get(editorial_id);
+		List<AutorBean> autores = new ArrayList<>();
+		
+		for (String stringAutorId : stringAutores_id) {
+			autores.add(
+				new DaoAutor(con).get(
+					Integer.parseInt(stringAutorId))
+			);
+		}
+		
+		
+		bean.setNombre(nombre);
+		bean.setIsbn(isbn);
+		bean.setPaginas(paginas);
+		bean.setArea(area);
+		bean.setEditorial(editorial);
+		bean.setAutores(autores);
 			
 
 			if (dao.update(bean)) {
@@ -86,7 +113,7 @@ public class ServletModificarLibro extends HttpServlet {
 
 			}
 			
-			redirect = "Admin?sec=autor";
+			redirect = "Admin?sec=libro";
 			String pagina = response.encodeRedirectURL(redirect);
 			response.sendRedirect(pagina);				//redirect a admin
 		}

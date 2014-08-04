@@ -59,12 +59,12 @@ $(document).ready(function (){
 
 					     <a Href="ModificarArea?guardar=false&AMP;id=<%=id%>" 
 						title="Modificar" >
-						     <span class="glyphicon glyphicon-pencil"></span>
-					     </a>
+						     <span class="glyphicon glyphicon-pencil"></span>Modificar
+					     </a><br/>
 					     <a href="EliminarArea?id=<%=id%>" title="Eliminar"
 						class="eliminar">
-						     <span class="glyphicon glyphicon-trash"></span>
-					     </a>
+						     <span class="glyphicon glyphicon-trash"></span>Eliminar
+					     </a><br/>
 
 				     </td>
 			    </tr>

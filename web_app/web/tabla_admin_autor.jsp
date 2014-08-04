@@ -64,11 +64,11 @@ $(document).ready(function (){
 
 					     <a Href="ModificarAutor?guardar=false&AMP;id=<%=id%>" 
 						title="Modificar" >
-						     <span class="glyphicon glyphicon-pencil"></span>
-					     </a>
+						     <span class="glyphicon glyphicon-pencil"></span>Modificar
+					     </a><br/>
 					     <a href="EliminarAutor?id=<%=id%>" title="Eliminar"
 						class="eliminar">
-						     <span class="glyphicon glyphicon-trash"></span>
+						     <span class="glyphicon glyphicon-trash"></span>Eliminar
 					     </a>
 
 				     </td>

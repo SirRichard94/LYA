@@ -24,6 +24,8 @@
 	    response.sendRedirect("admin_prestamos.jsp");
     }
     Double monto = (Double) request.getAttribute("monto");
+    
+    Integer dias = (Integer) request.getAttribute("dias");
     %>
     
 	<!-- +++++ Welcome Section +++++ -->
@@ -35,6 +37,8 @@
 					<div class="jumbotron">
 	Libro: <%=prestamo.getEjemplar().getLibro().getNombre() %><br>
 	Ejemplar ID: <%=prestamo.getEjemplar().getEjemplar_id() %><br>
+	Dias de retraso: <%=dias%><br>
+	
 	Monto: <b class="text-danger">$<%=monto%></b>
 	
 	<%int u=prestamo.getUsuario().getUsuario_id();

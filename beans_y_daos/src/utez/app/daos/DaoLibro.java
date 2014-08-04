@@ -138,10 +138,13 @@ public class DaoLibro extends AbstractDao<LibroBean>{
 			ps.setString(6, bean.isAlta()+ "");
 			ps.setInt(7, bean.getLibro_id());
 			
-			if (ps.executeUpdate() ==1){
+			if (ps.executeUpdate() !=1){
 				ps.close();
-				return true;
+				return false;
 			}
+			
+			deleteAutores(bean);
+			addAutores(bean);
 			
 			ps.close();
 			
@@ -149,7 +152,7 @@ public class DaoLibro extends AbstractDao<LibroBean>{
 			Logger.getLogger(DaoLibro.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		
-		return false;
+		return true;
 	}
 
 	@Override
@@ -199,21 +202,8 @@ public class DaoLibro extends AbstractDao<LibroBean>{
 			ps.close();
 			
 			//insertar autores
-			if (bean.getAutores() != null && bean.getAutores().size() > 0){
-				
-				for (AutorBean autor : bean.getAutores()){
-					query = "INSERT INTO AUTOR_DE (autor_id, libro_id)"
-						 + " VALUES (?, ?);";
-					 PreparedStatement statement = con.prepareStatement(query);
-					 statement.setInt(1, autor.getAutor_id());
-					 statement.setInt(2, getByIsbn(bean.getIsbn()).getLibro_id());
-					 
-					if (statement.executeUpdate() != 1) {
-						return false;
-					}
-					statement.close();
-				}
-			}
+			bean = getByIsbn(bean.getIsbn());
+			addAutores(bean);
 			
 			return true;
 		} catch (SQLException ex) {
@@ -222,8 +212,49 @@ public class DaoLibro extends AbstractDao<LibroBean>{
 		
 		return false;
 	}
-
 	
+	
+	public boolean deleteAutores(LibroBean bean){
+		String query = "DELETE FROM AUTOR_DE WHERE libro_id = "+bean.getLibro_id()+";";
+		try {
+			
+			PreparedStatement ps = con.prepareStatement(query);
+			if (ps.executeUpdate() == 1) return true;
+			
+			
+		} catch (SQLException ex) {
+			Logger.getLogger(DaoLibro.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return false;
+	}
+	public boolean addAutores(LibroBean bean){
+		
+		if (bean.getAutores() != null && bean.getAutores().size() > 0){
+			
+			deleteAutores(bean);
+				for (AutorBean autor : bean.getAutores()){
+					try {
+						String query = "INSERT INTO AUTOR_DE (autor_id, libro_id)"
+							+ " VALUES (?, ?);";
+						PreparedStatement statement = con.prepareStatement(query);
+						statement.setInt(1, autor.getAutor_id());
+						statement.setInt(2, getByIsbn(bean.getIsbn()).getLibro_id());
+						
+						if (statement.executeUpdate() != 1) {
+							return false;
+						}
+						statement.close();
+						
+					} catch (SQLException ex) {
+						Logger.getLogger(DaoLibro.class.getName()).log(Level.SEVERE, null, ex);
+					}
+				}
+			}
+		
+		
+		
+		return true;
+	}
 	
 	
 	/**

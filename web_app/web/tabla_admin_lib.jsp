@@ -80,9 +80,11 @@ $(document).ready(function (){
 					    <%-- mysql, temporal --%>
 				    </td>
 				    <td class="centered">
-					    <span class="glyphicon glyphicon-pencil"></span>
+					    <a href='ModificarLibro?id=<%=row.getLibro_id()%>'>
+					    <span class="glyphicon glyphicon-pencil"></span>Modificar <br>
+					    </a>
 					    <a href="EliminarLibro?id=<%=row.getLibro_id()%>">
-					    <span class="glyphicon glyphicon-trash"></span>
+					    <span class="glyphicon glyphicon-trash"></span>Eliminar
 					    </a>
 				    </td>
 			    </tr>

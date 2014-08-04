@@ -22,7 +22,7 @@ public class PrestamoBean implements Serializable{
 	EjemplarBean ejemplar;
 	Date fecha_salida;
 	Date fecha_entrega;
-
+	
 	public PrestamoBean() {
 	}
 

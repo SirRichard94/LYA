@@ -30,9 +30,15 @@
 
 	<!-- +++++ Welcome Section +++++ -->
 	<div id="ww">
-	    <div class="container">
+	    <div class="container-fluid">
 			<div class="row">
-				<div class="col-md-8 ">
+			<div class="col-md-3">
+				<div id="form-prestamos" class="well">
+						<%@include file="form_prestamos.jsp" %>
+					</div>	
+			</div>
+				
+				<div class="col-md-8">
 					
 					<div id="tabla-prestamos">
 						Tabla de prestamos
@@ -40,13 +46,6 @@
 					
 				</div>
 				
-				<div class="col-md-4 ">
-                                   
-					<div id="form-prestamos">
-						<%@include file="form_prestamos.jsp" %>
-					</div>
-					
-				</div>
 			</div><!-- /row -->
 			
 	    </div> <!-- /container -->

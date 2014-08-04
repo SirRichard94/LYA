@@ -43,8 +43,14 @@ public class ServletTablaPrestamo extends HttpServlet {
 		Connection con = DbConnection.getConnection();
 		DaoPrestamo daoP = new DaoPrestamo(con);
 		List<PrestamoBean> lista = daoP.getAll();
+		List<Integer> diasRetraso = new ArrayList<>();
+		
+		for (PrestamoBean prestamo : lista) {
+			diasRetraso.add(daoP.diasDeRetraso(prestamo, true)); // mysql
+		}
 		
 		request.setAttribute("lista", lista);
+		request.setAttribute("dias", diasRetraso);
 
 		this.getServletConfig().getServletContext().
 			getRequestDispatcher("/tabla_admin_prestamo.jsp").

@@ -40,48 +40,49 @@
 	<div id="ww" style="padding-top: 10px;">
 		<div class="container-fluid" >
 		    <div class="row row-offcanvas row-offcanvas-left">
-			    <div class="col-md-2 sidebar">
-				    <ul class="nav nav-sidebar" id="nav-admin">
-					    <li id="selectUsuario"
-						class="categoria">
+			    <div class="col-md-3 sidebar">
+				   
+				    
+					    <div id="form"
+						 class="well">
+						    Formulario
+					    </div>
+				   
+			    </div>
+
+
+		    <div class="col-md-9 col-md-offset-3 main" >	
+			    <div class="page-header">
+			    <h1>Administrador de LYA</h1>
+			    </div>
+			    
+			    <ul class="nav nav-pills" id="nav-admin">
+				    <li id="selectUsuario"
+					class="categoria">
 					    <a href="#"> 
 						    Usuario 
 					    </a>
 				    </li>
 				    <li id ="selectLibro"
 					class="categoria">
-					 <a href="#"> Libro </a>   
+					    <a href="#"> Libro </a>   
 				    </li>
 				    <li id="selectAutor"
 					class="categoria">
-					 <a href="#"> Autor </a>   
+					    <a href="#"> Autor </a>   
 				    </li>
 				    <li id="selectEditorial"
 					class="categoria">
-					 <a href="#"> Editorial </a>   
+					    <a href="#"> Editorial </a>   
 				    </li>
 
 				    <li id="selectArea"
 					class="categoria">
 
-					 <a href="#"> Área </a>
+					    <a href="#"> Área </a>
 				    </li>
-				    <li class="nav-divider"></li>
-				    
-				    <li>
-					    <div id="form"
-						 class="well">
-						    Formulario
-					    </div>
-				    </li>
-				    </ul>
-			    </div>
-
-
-		    <div class="col-md-10 col-md-offset-2 main" >	
-			    <div class="page-header">
-			    <h1>Administrador de LYA</h1>
-			    </div>
+			    </ul>
+			    <br/>
 			   
 			    <div id="tbl" >
 				    <!-- Tabla -->
@@ -107,7 +108,7 @@
 
 	<!-- +++++ Footer Section +++++ -->
 	
-	<div class="col-md-offset-2">
+	<div class="col-md-offset-3">
 	<%@include file="incl_footer.jsp" %>
 	</div>
 	
@@ -191,8 +192,8 @@
 		
 	
 		//seleccion
-		$(".nav-sidebar li.categoria").click(function(){
-			$(".nav-sidebar > li.categoria").removeClass("active");
+		$(".nav li.categoria").click(function(){
+			$(".nav > li.categoria").removeClass("active");
 			$(this).addClass("active");
 		});
 		
