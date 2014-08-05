@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.utez.app.desktop;
 
 import Utilerias.ConexionSQLServer;
@@ -35,7 +31,7 @@ public class UDLibro extends javax.swing.JFrame {
     private Connection conexion;
     private LibroBean libroBean;
     private LibroBean consultaBean;
-     private List<EditorialBean> listaEditorial;
+    private List<EditorialBean> listaEditorial;
     private List<AutorBean> listaAutor;
     private List<AreaBean> listaArea;
     private DaoLibro daoLibro;
@@ -49,7 +45,7 @@ public class UDLibro extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(UDLibro.class.getName()).log(Level.SEVERE, null, ex);
         }
-         daoLibro= new DaoLibro(conexion);
+        daoLibro= new DaoLibro(conexion);
         daoAutor=new DaoAutor(conexion);
         daoArea=new DaoArea(conexion);
         daoEditorial=new DaoEditorial(conexion);
