@@ -24,6 +24,7 @@ import utez.app.model.UsuarioBean;
 public class AdminData extends javax.swing.JFrame {
  private Connection connection;
  private DaoUsuario daoUsuario;
+ private ControlSesion sesion;
  
     /**
      * Creates new form AdminData
@@ -36,7 +37,8 @@ public class AdminData extends javax.swing.JFrame {
          Logger.getLogger(AdminData.class.getName()).log(Level.SEVERE, null, ex);
      }
      
-     if(!ControlSesion.isAdmin()){
+     sesion = ControlSesion.getInstance();
+     if(!sesion.isAdmin()){
          //cerrar ventana
      }
     }
@@ -466,7 +468,7 @@ public class AdminData extends javax.swing.JFrame {
     private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
         // TODO add your handling code here:
         new CUser().setVisible(true);
-        this.dispose();
+        
     }//GEN-LAST:event_jMenuItem17ActionPerformed
 
     private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed

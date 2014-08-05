@@ -333,18 +333,20 @@ public class CUser extends javax.swing.JFrame {
         
         if(ex){
             registro.setText("Registro guardado ");
-            //jLabel6 imagelabel =jLabel6(image);
+           
            imagen.setIcon(image);
            
            if(esAdmin){
             daoUsuario.update(usuarioBean);
+            
             }
+           new resultadoUsuario().setVisible(true);
+        this.dispose();
         }else{
              registro.setText("Error al guardar");
              imagen.setIcon(image1);
         }
-        new resultadoUsuario().setVisible(true);
-        this.dispose();
+        
         
         
     }//GEN-LAST:event_btnCrearActionPerformed

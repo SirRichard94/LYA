@@ -348,7 +348,6 @@ public class CLibro extends javax.swing.JFrame {
         consultaBean.setEditorial(editorialBean);
         consultaBean.setAutores(autorBean);
         
-        
         boolean agregado=daoLibro.add(consultaBean);
         if(agregado){
             System.out.println("exito");

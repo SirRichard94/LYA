@@ -7,6 +7,7 @@
 package com.utez.app.desktop;
 
 import Utilerias.ConexionSQLServer;
+import com.utez.app.desktop.controlador.ControlSesion;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -64,7 +65,7 @@ public class resultadoUsuario extends javax.swing.JFrame {
         if (busqueda.length() < 0) {
             actualizarTabla();
         } else {
-
+            
             modelo = new DefaultTableModel(new String[]{"usuario_id", "nombre", "direccion", "telefono", "correo", "deuda", "passwd", "alta", "es_admi"}, 0);
 
             List<UsuarioBean> lista = daoUsuario.getActive();
@@ -96,7 +97,6 @@ public class resultadoUsuario extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblUsuarios = new javax.swing.JTable();
-        btnBusqueda = new javax.swing.JButton();
         txtDato = new javax.swing.JTextField();
         btnActualizar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
@@ -187,16 +187,12 @@ public class resultadoUsuario extends javax.swing.JFrame {
         tblUsuarios.setModel(modelo);
         jScrollPane2.setViewportView(tblUsuarios);
 
-        btnBusqueda.setText("Buscar");
-        btnBusqueda.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBusquedaActionPerformed(evt);
-            }
-        });
-
         txtDato.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtDatoKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtDatoKeyReleased(evt);
             }
         });
 
@@ -225,8 +221,6 @@ public class resultadoUsuario extends javax.swing.JFrame {
                     .addComponent(jScrollPane2)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(txtDato, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnBusqueda)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnActualizar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -243,8 +237,7 @@ public class resultadoUsuario extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtDato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnActualizar)
-                    .addComponent(btnEliminar)
-                    .addComponent(btnBusqueda))
+                    .addComponent(btnEliminar))
                 .addGap(45, 45, 45))
         );
 
@@ -261,11 +254,6 @@ public class resultadoUsuario extends javax.swing.JFrame {
         // TODO add your handling code here:
         new Login().setVisible(true);
     }//GEN-LAST:event_jLabel5KeyPressed
-
-    private void btnBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBusquedaActionPerformed
-        // TODO add your handling code here:
-        tablaBusqueda(txtDato.getText());
-    }//GEN-LAST:event_btnBusquedaActionPerformed
 
     private void txtDatoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDatoKeyPressed
         // TODO add your handling code here:
@@ -300,6 +288,12 @@ public class resultadoUsuario extends javax.swing.JFrame {
         actualizarTabla();
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void txtDatoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDatoKeyReleased
+        // TODO add your handling code here:
+        tablaBusqueda(txtDato.getText());
+
+    }//GEN-LAST:event_txtDatoKeyReleased
 
     /**
      * @param args the command line arguments
@@ -338,7 +332,6 @@ public class resultadoUsuario extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
-    private javax.swing.JButton btnBusqueda;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

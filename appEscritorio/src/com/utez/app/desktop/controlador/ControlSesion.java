@@ -18,9 +18,24 @@ import utez.app.model.UsuarioBean;
  * @author Koffo
  */
 public class ControlSesion {
-    private static UsuarioBean usuario;
+    static ControlSesion objeto;
     
-    public static boolean iniciarSesion(String correo, String pass){
+    
+    public static ControlSesion getInstance(){
+        if (objeto == null){
+            objeto = new ControlSesion();
+        }
+        return objeto;
+    }
+    
+    private ControlSesion(){
+        
+    }
+    
+    
+    private UsuarioBean usuario;
+    
+    public  boolean iniciarSesion(String correo, String pass){
        boolean aunt = false;
        try {
             DaoUsuario daoUsuario = new DaoUsuario(ConexionSQLServer.getConnection());
@@ -38,22 +53,22 @@ public class ControlSesion {
         return aunt;
     }
 
-    public static void logout(){
+    public void logout(){
         usuario = null;
     }
     
-    public static UsuarioBean getUsuario() {
+    public UsuarioBean getUsuario() {
         return usuario;
     }
     
-    public static boolean isAdmin(){
+    public boolean isAdmin(){
         try{
      return usuario.isEs_admi();
         }catch(NullPointerException e){
             return false;
         }
     }
-    public static boolean sesionIniciada(){
+    public boolean sesionIniciada(){
      return usuario != null;
     }
     

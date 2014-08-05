@@ -49,7 +49,7 @@ class DbConnection {
 		 final String ipAddress = "localhost"; //nota: localhost= 127.0.0.1
 		 final String dbName = "SB_LYA";
 		 final String user = "sa";
-		 final String password = "Elielo-03";
+		 final String password = "root";
 		 final String service = "1433";
 		
 		try {

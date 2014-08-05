@@ -172,10 +172,11 @@ public class Login extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
+        ControlSesion sesion = ControlSesion.getInstance();
         boolean aunt;
-         aunt=ControlSesion.iniciarSesion(txtCorreo.getText(), txtPass.getText());
+         aunt=sesion.iniciarSesion(txtCorreo.getText(), txtPass.getText());
         if (aunt){
-            if(ControlSesion.isAdmin()){
+            if(sesion.isAdmin()){
                 new AdminData().setVisible(true); 
             }
             else{

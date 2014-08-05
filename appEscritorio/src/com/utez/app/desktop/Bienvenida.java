@@ -26,6 +26,7 @@ import utez.app.model.LibroBean;
  */
 public class Bienvenida extends javax.swing.JFrame {
     private Connection conexion;
+    ControlSesion sesion;
 
     /**
      * Creates new form NewJFrame
@@ -39,10 +40,10 @@ public class Bienvenida extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(Bienvenida.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        if(ControlSesion.sesionIniciada()){
+        sesion = ControlSesion.getInstance();
+        if(sesion.sesionIniciada()){
             lblSesion.setText("Cerrar Sesion");
-            lblNombre.setText(ControlSesion.getUsuario().getNombre());
+            lblNombre.setText(sesion.getUsuario().getNombre());
         }else{
             lblSesion.setText("Iniciar Sesion");
             lblNombre.setVisible(false);
@@ -240,8 +241,8 @@ public class Bienvenida extends javax.swing.JFrame {
 
     private void lblSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSesionMouseClicked
         // TODO add your handling code here:
-        if(ControlSesion.sesionIniciada()){
-            ControlSesion.logout();
+        if(sesion.sesionIniciada()){
+            sesion.logout();
             new Bienvenida().setVisible(true);
             this.dispose();
         }else{
@@ -258,7 +259,7 @@ public class Bienvenida extends javax.swing.JFrame {
             resultados = daoLibro.getActive();
             
         }else{
-            if(jComboBox1.getSelectedIndex()==1){
+            if(jComboBox1.getSelectedIndex()<=1){
                 LibroBean libro=new LibroBean();
                 libro.setNombre(txtBusqueda.getText());
                 resultados= daoLibro.findByTitulo(libro.getNombre());
