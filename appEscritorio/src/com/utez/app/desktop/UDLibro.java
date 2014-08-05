@@ -190,7 +190,7 @@ public class UDLibro extends javax.swing.JFrame {
             }
         });
 
-        jLabel7.setText("Num. Pàginas.");
+        jLabel7.setText("Num. Pàginas:");
 
         cmbArea.setModel(modeloArea);
         cmbArea.addActionListener(new java.awt.event.ActionListener() {
@@ -201,11 +201,11 @@ public class UDLibro extends javax.swing.JFrame {
 
         cmbEditorial.setModel(modelo);
 
-        jLabel10.setText("Àrea");
+        jLabel10.setText("Àrea:");
 
-        jLabel8.setText("Editorial");
+        jLabel8.setText("Editorial:");
 
-        jLabel12.setText("Autor");
+        jLabel12.setText("Autor:");
 
         listAutor.setModel(modeloAutor);
         jScrollPane1.setViewportView(listAutor);
@@ -360,6 +360,8 @@ public class UDLibro extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        new AdminData().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void cmbAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbAreaActionPerformed

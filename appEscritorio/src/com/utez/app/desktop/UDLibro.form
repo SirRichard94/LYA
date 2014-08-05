@@ -272,7 +272,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel7">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Num. P&#xe0;ginas."/>
+            <Property name="text" type="java.lang.String" value="Num. P&#xe0;ginas:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="cmbArea">
@@ -302,17 +302,17 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel10">
           <Properties>
-            <Property name="text" type="java.lang.String" value="&#xc0;rea"/>
+            <Property name="text" type="java.lang.String" value="&#xc0;rea:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel8">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Editorial"/>
+            <Property name="text" type="java.lang.String" value="Editorial:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel12">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Autor"/>
+            <Property name="text" type="java.lang.String" value="Autor:"/>
           </Properties>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">

@@ -118,6 +118,7 @@ public class BarraSuperior extends javax.swing.JPanel {
     private void lblSesionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lblSesionKeyPressed
         // TODO add your handling code here:
         new Login().setVisible(true);
+        
     }//GEN-LAST:event_lblSesionKeyPressed
 
     private void lblNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNombreMouseClicked

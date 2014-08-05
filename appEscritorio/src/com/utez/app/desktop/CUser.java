@@ -262,6 +262,7 @@ public class CUser extends javax.swing.JFrame {
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
         // TODO add your handling code here:
         new Bienvenida().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
@@ -273,6 +274,7 @@ public class CUser extends javax.swing.JFrame {
     private void jLabel5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLabel5KeyPressed
         // TODO add your handling code here:
         new Login().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jLabel5KeyPressed
 
     private void txtCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCorreoActionPerformed
@@ -341,7 +343,8 @@ public class CUser extends javax.swing.JFrame {
              registro.setText("Error al guardar");
              imagen.setIcon(image1);
         }
-        
+        new resultadoUsuario().setVisible(true);
+        this.dispose();
         
         
     }//GEN-LAST:event_btnCrearActionPerformed
@@ -349,6 +352,7 @@ public class CUser extends javax.swing.JFrame {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
         new AdminData().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void jLabel4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLabel4KeyPressed

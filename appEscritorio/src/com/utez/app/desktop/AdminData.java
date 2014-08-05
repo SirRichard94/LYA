@@ -198,7 +198,6 @@ public class AdminData extends javax.swing.JFrame {
 
         jMenu5.setText("Usuario");
 
-        jMenuItem17.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\add.png")); // NOI18N
         jMenuItem17.setText("Agregar");
         jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -207,7 +206,6 @@ public class AdminData extends javax.swing.JFrame {
         });
         jMenu5.add(jMenuItem17);
 
-        jMenuItem18.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\eye.png")); // NOI18N
         jMenuItem18.setText("Consultar");
         jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -216,7 +214,6 @@ public class AdminData extends javax.swing.JFrame {
         });
         jMenu5.add(jMenuItem18);
 
-        jMenuItem19.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\clock.png")); // NOI18N
         jMenuItem19.setText("Modificar");
         jMenuItem19.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -225,7 +222,6 @@ public class AdminData extends javax.swing.JFrame {
         });
         jMenu5.add(jMenuItem19);
 
-        jMenuItem20.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\delete.png")); // NOI18N
         jMenuItem20.setText("Eliminar");
         jMenuItem20.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -238,7 +234,6 @@ public class AdminData extends javax.swing.JFrame {
 
         jMenu6.setText("Autor");
 
-        jMenuItem21.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\add.png")); // NOI18N
         jMenuItem21.setText("Agregar");
         jMenuItem21.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -247,7 +242,6 @@ public class AdminData extends javax.swing.JFrame {
         });
         jMenu6.add(jMenuItem21);
 
-        jMenuItem22.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\eye.png")); // NOI18N
         jMenuItem22.setText("Consultar");
         jMenuItem22.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -256,7 +250,6 @@ public class AdminData extends javax.swing.JFrame {
         });
         jMenu6.add(jMenuItem22);
 
-        jMenuItem23.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\clock.png")); // NOI18N
         jMenuItem23.setText("Modificar");
         jMenuItem23.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -265,7 +258,6 @@ public class AdminData extends javax.swing.JFrame {
         });
         jMenu6.add(jMenuItem23);
 
-        jMenuItem24.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\delete.png")); // NOI18N
         jMenuItem24.setText("Eliminar");
         jMenuItem24.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -278,7 +270,6 @@ public class AdminData extends javax.swing.JFrame {
 
         jMenu7.setText("Libro");
 
-        jMenuItem25.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\add.png")); // NOI18N
         jMenuItem25.setText("Agregar");
         jMenuItem25.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -287,7 +278,6 @@ public class AdminData extends javax.swing.JFrame {
         });
         jMenu7.add(jMenuItem25);
 
-        jMenuItem26.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\eye.png")); // NOI18N
         jMenuItem26.setText("Consultar");
         jMenuItem26.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -296,7 +286,6 @@ public class AdminData extends javax.swing.JFrame {
         });
         jMenu7.add(jMenuItem26);
 
-        jMenuItem27.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\clock.png")); // NOI18N
         jMenuItem27.setText("Modificar");
         jMenuItem27.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -305,7 +294,6 @@ public class AdminData extends javax.swing.JFrame {
         });
         jMenu7.add(jMenuItem27);
 
-        jMenuItem28.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\delete.png")); // NOI18N
         jMenuItem28.setText("Eliminar");
         jMenuItem28.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -318,7 +306,6 @@ public class AdminData extends javax.swing.JFrame {
 
         jMenu8.setText("Editorial");
 
-        jMenuItem29.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\add.png")); // NOI18N
         jMenuItem29.setText("Agregar");
         jMenuItem29.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -327,7 +314,6 @@ public class AdminData extends javax.swing.JFrame {
         });
         jMenu8.add(jMenuItem29);
 
-        jMenuItem30.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\eye.png")); // NOI18N
         jMenuItem30.setText("Consultar");
         jMenuItem30.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -336,7 +322,6 @@ public class AdminData extends javax.swing.JFrame {
         });
         jMenu8.add(jMenuItem30);
 
-        jMenuItem31.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\clock.png")); // NOI18N
         jMenuItem31.setText("Modificar");
         jMenuItem31.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -345,7 +330,6 @@ public class AdminData extends javax.swing.JFrame {
         });
         jMenu8.add(jMenuItem31);
 
-        jMenuItem32.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\delete.png")); // NOI18N
         jMenuItem32.setText("Eliminar");
         jMenuItem32.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -356,9 +340,8 @@ public class AdminData extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu8);
 
-        jMenu9.setText("Area");
+        jMenu9.setText("Área");
 
-        jMenuItem33.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\add.png")); // NOI18N
         jMenuItem33.setText("Agregar");
         jMenuItem33.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -367,7 +350,6 @@ public class AdminData extends javax.swing.JFrame {
         });
         jMenu9.add(jMenuItem33);
 
-        jMenuItem34.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\eye.png")); // NOI18N
         jMenuItem34.setText("Consultar");
         jMenuItem34.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -376,7 +358,6 @@ public class AdminData extends javax.swing.JFrame {
         });
         jMenu9.add(jMenuItem34);
 
-        jMenuItem35.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\clock.png")); // NOI18N
         jMenuItem35.setText("Modificar");
         jMenuItem35.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -385,7 +366,6 @@ public class AdminData extends javax.swing.JFrame {
         });
         jMenu9.add(jMenuItem35);
 
-        jMenuItem36.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\delete.png")); // NOI18N
         jMenuItem36.setText("Eliminar");
         jMenuItem36.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -427,6 +407,7 @@ public class AdminData extends javax.swing.JFrame {
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
         // TODO add your handling code here:
         new Bienvenida().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked

@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ComboBoxEditor;
+import javax.swing.JOptionPane;
 import utez.app.daos.DaoEditorial;
 import utez.app.daos.DaoUsuario;
 import utez.app.model.EditorialBean;
@@ -238,9 +239,12 @@ public class CEditorial extends javax.swing.JFrame {
         boolean ex= daoEditorial.add(editorialBean);
         if(ex){
             System.out.println("exito"); 
+            new resultadoEditorial().setVisible(true);
         }else{
             System.out.println("tonto");
+            JOptionPane.showMessageDialog(rootPane, "No se pudo Registrar la Editorial");
         }
+       
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

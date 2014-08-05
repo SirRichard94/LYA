@@ -135,7 +135,7 @@ public class UDAutor extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Actualizar Autor"));
 
-        jLabel1.setText("Nombre");
+        jLabel1.setText("Nombre:");
 
         jLabel2.setText("Apellido:");
 
@@ -152,8 +152,13 @@ public class UDAutor extends javax.swing.JFrame {
         });
 
         jButton2.setText("Cancelar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
-        jLabel9.setText("Nombre Autor");
+        jLabel9.setText("Nombre Autor:");
 
         txtDato.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -331,6 +336,12 @@ public class UDAutor extends javax.swing.JFrame {
         // TODO add your handling code here:
         new resultadoAutor().setVisible(true);
     }//GEN-LAST:event_jLabel11KeyPressed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        new AdminData().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
