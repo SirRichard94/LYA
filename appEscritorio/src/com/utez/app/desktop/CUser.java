@@ -35,7 +35,8 @@ public class CUser extends javax.swing.JFrame {
             Logger.getLogger(CUser.class.getName()).log(Level.SEVERE, null, ex);
         }
        
-        
+       this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+      
         initComponents();
     }
 
@@ -70,6 +71,14 @@ public class CUser extends javax.swing.JFrame {
         imagen = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel2.setBackground(new java.awt.Color(0, 0, 102));
 
@@ -353,7 +362,7 @@ public class CUser extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        new AdminData().setVisible(true);
+        //new AdminData().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
@@ -361,6 +370,16 @@ public class CUser extends javax.swing.JFrame {
         // TODO add your handling code here:
         new Bienvenida().setVisible(true);
     }//GEN-LAST:event_jLabel4KeyPressed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+     
+    }//GEN-LAST:event_formWindowClosed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+         this.dispose();
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

@@ -44,6 +44,11 @@ public class Bienvenida extends javax.swing.JFrame {
         if(sesion.sesionIniciada()){
             lblSesion.setText("Cerrar Sesion");
             lblNombre.setText(sesion.getUsuario().getNombre());
+            if (sesion.isAdmin()){
+                //lbl para regresar a admin data :D
+                
+            }
+            
         }else{
             lblSesion.setText("Iniciar Sesion");
             lblNombre.setVisible(false);
