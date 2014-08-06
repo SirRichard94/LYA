@@ -33,7 +33,7 @@ public class resultadoLibro extends javax.swing.JFrame {
      * Creates new form resultadosUsuario
      */
     public resultadoLibro() {
-        this(new ArrayList<LibroBean>());
+        this(null);
     }
     public resultadoLibro(List<LibroBean> result) {
         try {
@@ -42,7 +42,11 @@ public class resultadoLibro extends javax.swing.JFrame {
             Logger.getLogger(resultadoLibro.class.getName()).log(Level.SEVERE, null, ex);
         }
         daoLibro = new DaoLibro(coneccion);
-        actualizarTabla(result);
+        if (result == null){
+            actualizarTabla();
+        }else{
+            actualizarTabla(result);
+        }
         initComponents();
     }
 

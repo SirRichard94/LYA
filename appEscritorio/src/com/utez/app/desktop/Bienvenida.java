@@ -8,6 +8,7 @@ package com.utez.app.desktop;
 
 import Utilerias.ConexionSQLServer;
 import com.utez.app.desktop.controlador.ControlSesion;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -58,6 +59,32 @@ public class Bienvenida extends javax.swing.JFrame {
             lblNombre.setVisible(false);
         }
     }
+    public void busqueda(){
+         DaoLibro daoLibro=new DaoLibro(conexion);
+        List<LibroBean> resultados = new ArrayList<>();
+        if (txtBusqueda.getText().length()==0){
+            resultados = daoLibro.getActive();
+            
+        }else{
+            if(jComboBox1.getSelectedIndex()<=1){
+                LibroBean libro=new LibroBean();
+                libro.setNombre(txtBusqueda.getText());
+                resultados= daoLibro.findByTitulo(libro.getNombre());
+            }if(jComboBox1.getSelectedIndex()==2){
+                resultados = daoLibro.findByAutorNombre(txtBusqueda.getText());
+            } if(jComboBox1.getSelectedIndex()==3){
+              EditorialBean editorial = new EditorialBean();
+                editorial.setNombre(txtBusqueda.getText());
+                resultados = daoLibro.findByEditorialNombre(editorial);
+            }if(jComboBox1.getSelectedIndex()==4){
+             AreaBean area = new AreaBean();
+                area.setNombre(txtBusqueda.getText());
+                resultados = daoLibro.findByAreaNombre(area);
+             }
+        }
+        new resultadoLibro(resultados).setVisible(true);
+        this.dispose();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -101,6 +128,12 @@ public class Bienvenida extends javax.swing.JFrame {
         jMenuBar3.add(jMenu6);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        txtBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBusquedaKeyPressed(evt);
+            }
+        });
 
         btnBusqueda.setText("Bùsqueda");
         btnBusqueda.addActionListener(new java.awt.event.ActionListener() {
@@ -292,30 +325,7 @@ public class Bienvenida extends javax.swing.JFrame {
 
     private void btnBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBusquedaActionPerformed
         // TODO add your handling code here:
-        DaoLibro daoLibro=new DaoLibro(conexion);
-        List<LibroBean> resultados = new ArrayList<>();
-        if (txtBusqueda.getText().length()==0){
-            resultados = daoLibro.getActive();
-            
-        }else{
-            if(jComboBox1.getSelectedIndex()<=1){
-                LibroBean libro=new LibroBean();
-                libro.setNombre(txtBusqueda.getText());
-                resultados= daoLibro.findByTitulo(libro.getNombre());
-            }if(jComboBox1.getSelectedIndex()==2){
-                resultados = daoLibro.findByAutorNombre(txtBusqueda.getText());
-            } if(jComboBox1.getSelectedIndex()==3){
-              EditorialBean editorial = new EditorialBean();
-                editorial.setNombre(txtBusqueda.getText());
-                resultados = daoLibro.findByEditorialNombre(editorial);
-            }if(jComboBox1.getSelectedIndex()==4){
-             AreaBean area = new AreaBean();
-                area.setNombre(txtBusqueda.getText());
-                resultados = daoLibro.findByAreaNombre(area);
-             }
-        }
-        new resultadoLibro(resultados).setVisible(true);
-        this.dispose();
+       busqueda();
         //enviar a tablaLibros(resultados);
         // class tabla extends Jframe {  tabla(List resultados) }
         
@@ -352,6 +362,14 @@ public class Bienvenida extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_lblSesion1KeyPressed
+
+    private void txtBusquedaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode()== KeyEvent.VK_ENTER){
+        busqueda();
+    }
+        
+    }//GEN-LAST:event_txtBusquedaKeyPressed
 
     /**
      * @param args the command line arguments

@@ -64,7 +64,7 @@ public class CUser extends javax.swing.JFrame {
         txtPass = new javax.swing.JTextField();
         btnCrear = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox();
+        cmbTipoUser = new javax.swing.JComboBox();
         jLabel10 = new javax.swing.JLabel();
         registro = new javax.swing.JLabel();
         imagen = new javax.swing.JLabel();
@@ -116,7 +116,7 @@ public class CUser extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecciona...", "Admin", "User" }));
+        cmbTipoUser.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecciona...", "Admin", "User" }));
 
         jLabel10.setText("Tipo");
 
@@ -149,7 +149,7 @@ public class CUser extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(txtCorreo)
                                 .addComponent(txtTelefono)
-                                .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cmbTipoUser, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txtPass)
                                 .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(0, 31, Short.MAX_VALUE))
@@ -179,7 +179,7 @@ public class CUser extends javax.swing.JFrame {
                     .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbTipoUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -226,7 +226,7 @@ public class CUser extends javax.swing.JFrame {
          String tel=txtTelefono.getText();  
          String pass=txtPass.getText();
          ComboBoxEditor admin;
-        admin = jComboBox1.getEditor();
+        admin = cmbTipoUser.getEditor();
          if(admin.equals("Admin")){
             estado=true; 
          }else{
@@ -254,7 +254,7 @@ public class CUser extends javax.swing.JFrame {
          String tel=txtTelefono.getText();  
          String pass=txtPass.getText();
         
-         if(jComboBox1.getSelectedIndex()==1){
+         if(cmbTipoUser.getSelectedIndex()==1){
             esAdmin=true; 
          }else{
              esAdmin=false;
@@ -288,7 +288,7 @@ public class CUser extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        //new AdminData().setVisible(true);
+        new AdminData().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
@@ -340,8 +340,8 @@ public class CUser extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnCrear;
+    private javax.swing.JComboBox cmbTipoUser;
     private javax.swing.JLabel imagen;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
