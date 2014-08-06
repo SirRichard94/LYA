@@ -9,18 +9,11 @@ package com.utez.app.desktop;
 import Utilerias.ConexionSQLServer;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import utez.app.daos.DaoLibro;
 import utez.app.daos.DaoPrestamo;
-import utez.app.daos.DaoUsuario;
-import utez.app.model.LibroBean;
 import utez.app.model.PrestamoBean;
-import utez.app.model.UsuarioBean;
 import utez.app.utilidades.Biblioteca;
 
 /**
@@ -35,15 +28,14 @@ public class Entrega extends javax.swing.JFrame {
    DaoPrestamo daoPrestamo;
    boolean mysql;
    Biblioteca biblioteca;
-   
-    public Entrega() {
-        this(new PrestamoBean());
-    }
-    public Entrega(PrestamoBean prestamo) {
+   public Entrega(PrestamoBean prestamo) {
        mysql = false;
        this.prestamo = prestamo;
-        biblioteca = new Biblioteca(mysql);
-        conexion = biblioteca.getConection();
+       try {
+           conexion=ConexionSQLServer.getConnection();
+       } catch (SQLException ex) {
+           Logger.getLogger(Prestamo.class.getName()).log(Level.SEVERE, null, ex);
+       }
         daoPrestamo = new DaoPrestamo(conexion);
         biblioteca.actualizarPenalizaciones(prestamo.getUsuario());
         
@@ -56,6 +48,11 @@ public class Entrega extends javax.swing.JFrame {
           initComponents();   
         
     }
+   
+    public Entrega() {
+        this(new PrestamoBean());
+    }
+    
     
    
 

@@ -40,17 +40,19 @@ public class Bienvenida extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(Bienvenida.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         sesion = ControlSesion.getInstance();
         if(sesion.sesionIniciada()){
-            lblSesion.setText("Cerrar Sesion");
+            lblSesion1.setText("Cerrar Sesion");
             lblNombre.setText(sesion.getUsuario().getNombre());
             if (sesion.isAdmin()){
-                //lbl para regresar a admin data :D
-                
+                 lblAdminData.setVisible(true);
+                 lblSesion1.setVisible(true);
             }
             
         }else{
-            lblSesion.setText("Iniciar Sesion");
+            //lblAdminData.setText("Iniciar Sesion");
+            lblAdminData.setVisible(false);
             lblNombre.setVisible(false);
         }
     }
@@ -75,8 +77,9 @@ public class Bienvenida extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox();
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        lblSesion = new javax.swing.JLabel();
+        lblAdminData = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
+        lblSesion1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -112,16 +115,17 @@ public class Bienvenida extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("LyA");
 
-        lblSesion.setForeground(new java.awt.Color(255, 255, 255));
-        lblSesion.setText("Inicar Sesiòn");
-        lblSesion.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblAdminData.setForeground(new java.awt.Color(255, 255, 255));
+        lblAdminData.setText("Administracion de Datos");
+        lblAdminData.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblAdminData.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblSesionMouseClicked(evt);
+                lblAdminDataMouseClicked(evt);
             }
         });
-        lblSesion.addKeyListener(new java.awt.event.KeyAdapter() {
+        lblAdminData.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                lblSesionKeyPressed(evt);
+                lblAdminDataKeyPressed(evt);
             }
         });
 
@@ -138,29 +142,59 @@ public class Bienvenida extends javax.swing.JFrame {
             }
         });
 
+        lblSesion1.setForeground(new java.awt.Color(255, 255, 255));
+        lblSesion1.setText("Inicar Sesiòn");
+        lblSesion1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblSesion1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblSesion1MouseClicked(evt);
+            }
+        });
+        lblSesion1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                lblSesion1KeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(250, 250, 250))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblAdminData, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(61, 61, 61))))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addContainerGap(483, Short.MAX_VALUE)
+                    .addComponent(lblSesion1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(126, 126, 126)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(lblNombre)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblSesion)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(63, 63, 63)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addComponent(lblNombre)
+                        .addGap(21, 21, 21)
+                        .addComponent(lblAdminData)))
                 .addContainerGap(36, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(41, 41, 41)
+                    .addComponent(lblSesion1)
+                    .addContainerGap(100, Short.MAX_VALUE)))
         );
 
         jLabel2.setFont(new java.awt.Font("Narkisim", 1, 48)); // NOI18N
@@ -168,8 +202,6 @@ public class Bienvenida extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Narkisim", 1, 48)); // NOI18N
         jLabel3.setText("Aprende");
-
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Google Drive\\INTEGRADORA_\\logotipo de pag.png")); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -238,23 +270,22 @@ public class Bienvenida extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void lblSesionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lblSesionKeyPressed
+    private void lblAdminDataKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lblAdminDataKeyPressed
         // TODO add your handling code here:
-        new Login().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_lblSesionKeyPressed
+        
+    }//GEN-LAST:event_lblAdminDataKeyPressed
 
-    private void lblSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSesionMouseClicked
+    private void lblAdminDataMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAdminDataMouseClicked
         // TODO add your handling code here:
         if(sesion.sesionIniciada()){
             sesion.logout();
-            new Bienvenida().setVisible(true);
+            new AdminData().setVisible(true);
             this.dispose();
         }else{
         new Login().setVisible(true);
         this.dispose();
         }
-    }//GEN-LAST:event_lblSesionMouseClicked
+    }//GEN-LAST:event_lblAdminDataMouseClicked
 
     private void btnBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBusquedaActionPerformed
         // TODO add your handling code here:
@@ -294,6 +325,17 @@ public class Bienvenida extends javax.swing.JFrame {
     private void lblNombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lblNombreKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_lblNombreKeyPressed
+
+    private void lblSesion1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSesion1MouseClicked
+        // TODO add your handling code here:
+        new Login().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_lblSesion1MouseClicked
+
+    private void lblSesion1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lblSesion1KeyPressed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_lblSesion1KeyPressed
 
     /**
      * @param args the command line arguments
@@ -346,8 +388,9 @@ public class Bienvenida extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel lblAdminData;
     private javax.swing.JLabel lblNombre;
-    private javax.swing.JLabel lblSesion;
+    private javax.swing.JLabel lblSesion1;
     private javax.swing.JTextField txtBusqueda;
     // End of variables declaration//GEN-END:variables
 }
