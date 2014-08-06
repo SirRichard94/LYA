@@ -33,6 +33,7 @@ public class AdminData extends javax.swing.JFrame {
      try {
          connection=ConexionSQLServer.getConnection();
          initComponents();
+         this.setLocationRelativeTo(null);
      } catch (SQLException ex) {
          Logger.getLogger(AdminData.class.getName()).log(Level.SEVERE, null, ex);
      }
