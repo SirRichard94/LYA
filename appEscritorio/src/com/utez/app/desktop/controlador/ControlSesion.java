@@ -18,7 +18,7 @@ import utez.app.model.UsuarioBean;
  * @author Koffo
  */
 public class ControlSesion {
-    static ControlSesion objeto;
+    private static ControlSesion objeto;
     
     
     public static ControlSesion getInstance(){
@@ -42,7 +42,8 @@ public class ControlSesion {
             aunt=daoUsuario.autenticar(correo, pass);
             
             if (aunt){
-                usuario = daoUsuario.findByCorreo(correo);
+                UsuarioBean usuario = daoUsuario.findByCorreo(correo);
+                this.usuario = usuario;
             }else {
                 usuario = null;
             }
@@ -71,7 +72,7 @@ public class ControlSesion {
     public boolean sesionIniciada(){
      return usuario != null;
     }
-    
+
     
     
 }

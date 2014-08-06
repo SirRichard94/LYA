@@ -46,6 +46,7 @@ public class Entrega extends javax.swing.JFrame {
         lblLibro.setText(prestamo.getEjemplar().getLibro().getNombre());
      
           initComponents();   
+           this.setLocationRelativeTo(null);
         
     }
    

@@ -6,17 +6,60 @@
 
 package com.utez.app.desktop;
 
+import Utilerias.ConexionSQLServer;
+
+import com.utez.app.desktop.controlador.ControlSesion;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import utez.app.daos.DaoPrestamo;
+import utez.app.model.PrestamoBean;
+import utez.app.model.UsuarioBean;
 /**
  *
  * @author Koffo
  */
 public class ProfileUser extends javax.swing.JFrame {
-
+    ControlSesion sesion;
+    private java.sql.Connection conexion;
+    private DefaultTableModel modeloTabla;
     /**
      * Creates new form Admin
      */
     public ProfileUser() {
-        initComponents();
+        try {
+            conexion=ConexionSQLServer.getConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProfileUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
+        
+      
+        sesion = ControlSesion.getInstance();
+        if(!sesion.sesionIniciada()){
+            new Bienvenida().setVisible(true);
+            this.dispose();
+        }
+         
+            UsuarioBean usuario = sesion.getUsuario();
+            
+             modeloTabla= new DefaultTableModel (new String[]{"Nombre Libro","Fecha_Salida","Fecha_Entrega"},0);
+            List<PrestamoBean> lista = new DaoPrestamo(conexion).findByUsuario(usuario);
+            for (PrestamoBean bean : lista) {
+            Object [] arreglo= {bean.getEjemplar().getLibro().getNombre(),bean.getFecha_salida(),bean.getFecha_entrega()};
+            modeloTabla.addRow(arreglo);
+        }
+             try{tblPrestamosUser.setModel(modeloTabla);}catch(NullPointerException e){}
+            
+            initComponents();  
+            txtDeuda.setText("$"+usuario.getDeuda());
+             
+            this.setLocationRelativeTo(null);
+        
     }
 
     /**
@@ -33,7 +76,9 @@ public class ProfileUser extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtDeuda = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblPrestamosUser = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -76,27 +121,28 @@ public class ProfileUser extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(330, Short.MAX_VALUE)
+                .addGap(166, 166, 166)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel6)
-                .addGap(66, 66, 66))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel5)
+                        .addComponent(jLabel6)))
                 .addContainerGap(52, Short.MAX_VALUE))
         );
 
         jLabel1.setText("Penalizaciones:");
+
+        tblPrestamosUser.setModel(modeloTabla);
+        jScrollPane1.setViewportView(tblPrestamosUser);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -105,10 +151,13 @@ public class ProfileUser extends javax.swing.JFrame {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtDeuda, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -117,8 +166,10 @@ public class ProfileUser extends javax.swing.JFrame {
                 .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 199, Short.MAX_VALUE))
+                    .addComponent(txtDeuda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -184,6 +235,8 @@ public class ProfileUser extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblPrestamosUser;
+    private javax.swing.JTextField txtDeuda;
     // End of variables declaration//GEN-END:variables
 }

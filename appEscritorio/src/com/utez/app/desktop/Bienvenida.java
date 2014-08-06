@@ -47,9 +47,11 @@ public class Bienvenida extends javax.swing.JFrame {
             lblNombre.setText(sesion.getUsuario().getNombre());
             if (sesion.isAdmin()){
                  lblAdminData.setVisible(true);
-                 lblSesion1.setVisible(true);
+            }else {
+                lblAdminData.setVisible(false);
             }
-            
+             lblSesion1.setVisible(true);
+
         }else{
             //lblAdminData.setText("Iniciar Sesion");
             lblAdminData.setVisible(false);
@@ -131,6 +133,7 @@ public class Bienvenida extends javax.swing.JFrame {
 
         lblNombre.setForeground(new java.awt.Color(255, 255, 255));
         lblNombre.setText("Nombre");
+        lblNombre.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblNombre.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblNombreMouseClicked(evt);
@@ -320,6 +323,10 @@ public class Bienvenida extends javax.swing.JFrame {
 
     private void lblNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNombreMouseClicked
         // TODO add your handling code here:
+        if(!sesion.isAdmin() && sesion.sesionIniciada()){
+        new ProfileUser().setVisible(true);
+        this.dispose();
+    }
     }//GEN-LAST:event_lblNombreMouseClicked
 
     private void lblNombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lblNombreKeyPressed
@@ -328,12 +335,21 @@ public class Bienvenida extends javax.swing.JFrame {
 
     private void lblSesion1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSesion1MouseClicked
         // TODO add your handling code here:
+         if(!sesion.sesionIniciada()){
+            
         new Login().setVisible(true);
         this.dispose();
+         }else{
+            sesion.logout();
+            new Bienvenida().setVisible(true);
+            this.dispose();
+         }
     }//GEN-LAST:event_lblSesion1MouseClicked
 
     private void lblSesion1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lblSesion1KeyPressed
         // TODO add your handling code here:
+         
+        
         
     }//GEN-LAST:event_lblSesion1KeyPressed
 
