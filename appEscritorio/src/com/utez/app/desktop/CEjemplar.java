@@ -52,6 +52,14 @@ public class CEjemplar extends javax.swing.JFrame {
                 this.setLocationRelativeTo(null);
 
     }
+    public boolean comprobarTexto(String dato) {
+        boolean valido = false;
+        if (dato.length() > 0) {
+            valido = true;
+        }
+
+        return valido;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -74,7 +82,7 @@ public class CEjemplar extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Nueva Editorial"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Nueva Ejemplar"));
 
         jLabel2.setText("Localizacion");
 
@@ -127,10 +135,10 @@ public class CEjemplar extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtNumEjemplares, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -199,18 +207,20 @@ public class CEjemplar extends javax.swing.JFrame {
          consultaBean.setLocalizacion(txtLocalizacion.getText());
          consultaBean.setLibro(libro);
         int num = Integer.parseInt(txtNumEjemplares.getText());
-        
+
         for (int i = 0; i < num; i++){
              if(!daoEjemplar.add(consultaBean)){
-                 JOptionPane.showMessageDialog(rootPane, "Error");
+                 JOptionPane.showMessageDialog(rootPane, "Error al registrar");
                  return;
              }
         }
-         JOptionPane.showMessageDialog(rootPane, "Exito");
-       
+         JOptionPane.showMessageDialog(rootPane, "Registro Exitoso");
+         new AdminData().setVisible(true);
+         this.dispose();
+            
         
     }//GEN-LAST:event_btnCrearActionPerformed
-
+    
     private void txtLocalizacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLocalizacionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtLocalizacionActionPerformed

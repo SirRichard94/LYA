@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.utez.app.desktop;
 
 import Utilerias.ConexionSQLServer;
@@ -24,22 +23,32 @@ import utez.app.model.UsuarioBean;
  * @author Koffo
  */
 public class CEditorial extends javax.swing.JFrame {
+
     //private List<UsuarioBean> lista;
     //private DaoUsuario daoUsuario;
+
     private Connection conexion;
     private EditorialBean editorialBean;
-    
+
     public CEditorial() {
         try {
-            conexion=ConexionSQLServer.getConnection();
+            conexion = ConexionSQLServer.getConnection();
         } catch (SQLException ex) {
             Logger.getLogger(CEditorial.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
-        
-        initComponents();
-                this.setLocationRelativeTo(null);
 
+        initComponents();
+        this.setLocationRelativeTo(null);
+
+    }
+
+    public boolean comprobarTexto(String dato) {
+        boolean valido = false;
+        if (dato.length() > 0) {
+            valido = true;
+        }
+
+        return valido;
     }
 
     /**
@@ -156,94 +165,86 @@ public class CEditorial extends javax.swing.JFrame {
 
     private void btnCrearKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCrearKeyPressed
         // TODO add your handling code here:
-         DaoEditorial daoEditorial= new DaoEditorial(conexion);
-         boolean estado;
-         String nombre=txtNombre.getText();
-         String direccion=txtDireccion.getText();
-         
-        
-         
-        editorialBean=new EditorialBean(0, nombre, direccion, rootPaneCheckingEnabled);
-        boolean ex= daoEditorial.add(editorialBean);
-        if(ex){
-            System.out.println("exito"); 
-        }else{
-            System.out.println("tonto");
-        }
-         
-       
     }//GEN-LAST:event_btnCrearKeyPressed
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         // TODO add your handling code here:
-         DaoEditorial daoEditorial= new DaoEditorial(conexion);
-         boolean estado;
-         String nombre=txtNombre.getText();
-         String direccion=txtDireccion.getText();
-         
-        
-         
-        editorialBean=new EditorialBean(0, nombre, direccion, rootPaneCheckingEnabled);
-        boolean ex= daoEditorial.add(editorialBean);
-        if(ex){
-            System.out.println("exito"); 
-            new resultadoEditorial().setVisible(true);
+        DaoEditorial daoEditorial = new DaoEditorial(conexion);
+        boolean estado;
+        String nombre = txtNombre.getText();
+        String direccion = txtDireccion.getText();
+
+        editorialBean = new EditorialBean(0, nombre, direccion, rootPaneCheckingEnabled);
+        if(nombre.length()==0 && direccion.length()==0){
+        JOptionPane.showMessageDialog(rootPane, "Los campos estan Vacios");
         }else{
-            System.out.println("tonto");
-            JOptionPane.showMessageDialog(rootPane, "No se pudo Registrar la Editorial");
+        if (comprobarTexto(nombre) == false) {
+            JOptionPane.showMessageDialog(rootPane, "El campo Nombre esta Vacio");
+        } else {
+            if (comprobarTexto(direccion) == false) {
+                JOptionPane.showMessageDialog(rootPane, "El campo Direccion esta Vacio");
+            } else {
+                boolean ex = daoEditorial.add(editorialBean);
+                if (ex) {
+                       JOptionPane.showMessageDialog(rootPane, "Registro Exitoso");
+                    new resultadoEditorial().setVisible(true);
+                } else {
+
+                    JOptionPane.showMessageDialog(rootPane, "No se pudo Registrar la Editorial");
+                }
+            }
         }
-       
+    }     
+
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         // TODO add your handling code here:
-         char car = evt.getKeyChar();
-       if((car<'a' || car>'z') && (car<'A' || car>'Z')            
-        && car !='á' //Minúsculas            
-        && car !='é'           
-        && car !='í'           
-        && car !='ó'          
-        && car !='ú'  
-        && car !='Á' //Mayúsculas            
-        && car !='É'           
-        && car !='Í'           
-        && car !='Ó'
-        && car !='Ú'
-        && car !='ñ'
-        && car !='Ñ'    
-        && (car!=(char)KeyEvent.VK_SPACE))
-    {     
-    evt.consume();  
+        char car = evt.getKeyChar();
+        if ((car < 'a' || car > 'z') && (car < 'A' || car > 'Z')
+                && car != 'á' //Minúsculas            
+                && car != 'é'
+                && car != 'í'
+                && car != 'ó'
+                && car != 'ú'
+                && car != 'Á' //Mayúsculas            
+                && car != 'É'
+                && car != 'Í'
+                && car != 'Ó'
+                && car != 'Ú'
+                && car != 'ñ'
+                && car != 'Ñ'
+                && (car != (char) KeyEvent.VK_SPACE)) {
+            evt.consume();
 
-    }
+        }
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void txtDireccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDireccionKeyTyped
         // TODO add your handling code here:
-         char car = evt.getKeyChar();
-       if((car<'a' || car>'z') && (car<'A' || car>'Z')            
-        && car !='á' //Minúsculas            
-        && car !='é'           
-        && car !='í'           
-        && car !='ó'          
-        && car !='ú'  
-        && car !='Á' //Mayúsculas            
-        && car !='É'           
-        && car !='Í'           
-        && car !='Ó'
-        && car !='Ú'
-        && car !='ñ'
-        && car !='Ñ'    
-        && (car!=(char)KeyEvent.VK_SPACE))
-    {     
-    evt.consume();  
+        char car = evt.getKeyChar();
+        if ((car < 'a' || car > 'z') && (car < 'A' || car > 'Z')
+                && car != 'á' //Minúsculas            
+                && car != 'é'
+                && car != 'í'
+                && car != 'ó'
+                && car != 'ú'
+                && car != 'Á' //Mayúsculas            
+                && car != 'É'
+                && car != 'Í'
+                && car != 'Ó'
+                && car != 'Ú'
+                && car != 'ñ'
+                && car != 'Ñ'
+                && (car != (char) KeyEvent.VK_SPACE)) {
+            evt.consume();
 
-    }
+        }
     }//GEN-LAST:event_txtDireccionKeyTyped
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        new AdminData().setVisible(true);
+        new resultadoEditorial().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 

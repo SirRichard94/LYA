@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import utez.app.daos.DaoArea;
 import utez.app.daos.DaoAutor;
 import utez.app.daos.DaoEditorial;
@@ -68,7 +69,14 @@ public class CLibro extends javax.swing.JFrame {
                 this.setLocationRelativeTo(null);
 
     }
+        public boolean comprobarTexto(String dato) {
+        boolean valido = false;
+        if (dato.length() > 0) {
+            valido = true;
+        }
 
+        return valido;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -275,38 +283,39 @@ public class CLibro extends javax.swing.JFrame {
         consultaBean.setEditorial(editorialBean);
         consultaBean.setAutores(autorBean);
         
-        boolean agregado=daoLibro.add(consultaBean);
-        if(agregado){
-            System.out.println("exito");
+        if(txtIsbn.getText().length()==0 && txtNombre.getText().length()==0 && txtPag.getText().length()==0){
+            JOptionPane.showMessageDialog(rootPane, "Los campos estan vacios");
         }else{
-            System.out.println("tonto");
+            if(comprobarTexto(txtIsbn.getText())==false){
+                JOptionPane.showMessageDialog(rootPane, "El campo ISBN esta vacio");
+            }else{
+                 if(comprobarTexto(txtNombre.getText())==false){
+                     JOptionPane.showMessageDialog(rootPane, "El campo Nombre esta vacio");
+                 }else{
+                      if(comprobarTexto(txtPag.getText())==false){
+                          JOptionPane.showMessageDialog(rootPane, "El campo de Numero de pag esta vacio");
+                      }else{
+                          boolean agregado=daoLibro.add(consultaBean);
+                        if(agregado){
+                        JOptionPane.showMessageDialog(rootPane, "Registro Exitoso");
+                        new resultadoLibro().setVisible(true);
+                        this.dispose();
+                        }else{
+                         JOptionPane.showMessageDialog(rootPane, "Error al Registrar");
+                                            }
+                        
+                      }
+                 }
+            }
         }
-        new resultadoLibro().setVisible(true);
+        
         
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         // TODO add your handling code here:
-        char car = evt.getKeyChar();
-       if((car<'a' || car>'z') && (car<'A' || car>'Z')            
-        && car !='á' //Minúsculas            
-        && car !='é'           
-        && car !='í'           
-        && car !='ó'          
-        && car !='ú'  
-        && car !='Á' //Mayúsculas            
-        && car !='É'           
-        && car !='Í'           
-        && car !='Ó'
-        && car !='Ú'
-        && car !='ñ'
-        && car !='Ñ'    
-        && (car!=(char)KeyEvent.VK_SPACE))
-    {     
-    evt.consume();  
-
-    }
+        
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void txtIsbnKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIsbnKeyTyped
@@ -323,7 +332,7 @@ public class CLibro extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        new AdminData().setVisible(true);
+        new resultadoLibro().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
