@@ -6,6 +6,7 @@
 
 package com.utez.app.desktop;
 
+import Utilerias.Comprobacion;
 import Utilerias.ConexionSQLServer;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -15,6 +16,7 @@ import javax.swing.ComboBoxEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import utez.app.daos.DaoUsuario;
 import utez.app.model.UsuarioBean;
 
@@ -246,6 +248,8 @@ public class CUser extends javax.swing.JFrame {
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         // TODO add your handling code here:
+        Comprobacion comprobacion=new Comprobacion();
+        
          DaoUsuario daoUsuario= new DaoUsuario(conexion);
          boolean esAdmin;
          String nombre=txtNombre.getText();
@@ -259,28 +263,34 @@ public class CUser extends javax.swing.JFrame {
          }else{
              esAdmin=false;
          }
-         
-        usuarioBean=new UsuarioBean(0, nombre, direccion, tel, correo, 0, pass, rootPaneCheckingEnabled, esAdmin);
+        boolean validado= comprobacion.correo(correo);
+        if (validado){
+            usuarioBean=new UsuarioBean(0, nombre, direccion, tel, correo, 0, pass, rootPaneCheckingEnabled, esAdmin);
         boolean ex = daoUsuario.add(usuarioBean);
-        JFrame frame = new JFrame("no image");
-        ImageIcon image = new ImageIcon("C:\\Users\\Koffo\\Documents\\GitHub\\LYA\\appEscritorio\\imagenes\\circular icons\\yes.png");
-        ImageIcon image1 = new ImageIcon("C:\\Users\\Koffo\\Documents\\GitHub\\LYA\\appEscritorio\\imagenes\\circular icons\\warning.png");
-        
         if(ex){
             registro.setText("Registro guardado ");
-           
-           imagen.setIcon(image);
+//           imagen.setIcon(image);
            
            if(esAdmin){
             daoUsuario.update(usuarioBean);
-            
             }
            new resultadoUsuario().setVisible(true);
         this.dispose();
         }else{
              registro.setText("Error al guardar");
-             imagen.setIcon(image1);
+//             imagen.setIcon(image1);
         }
+        }else
+            JOptionPane.showConfirmDialog(rootPane, "correo no valido");
+        txtCorreo.setText("");
+        return;
+         
+       
+//        JFrame frame = new JFrame("no image");
+//        ImageIcon image = new ImageIcon("C:\\Users\\Koffo\\Documents\\GitHub\\LYA\\appEscritorio\\imagenes\\circular icons\\yes.png");
+//        ImageIcon image1 = new ImageIcon("C:\\Users\\Koffo\\Documents\\GitHub\\LYA\\appEscritorio\\imagenes\\circular icons\\warning.png");
+        
+        
         
         
         
