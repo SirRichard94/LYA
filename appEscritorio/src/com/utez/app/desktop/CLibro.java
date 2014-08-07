@@ -85,8 +85,8 @@ public class CLibro extends javax.swing.JFrame {
         txtNombre = new javax.swing.JTextField();
         txtIsbn = new javax.swing.JTextField();
         txtPag = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnCrear = new javax.swing.JButton();
+        btmCancelar = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         cmbEditorial = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -106,19 +106,25 @@ public class CLibro extends javax.swing.JFrame {
 
         jLabel8.setText("Editorial");
 
-        jButton1.setText("Crear");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        txtIsbn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jButton1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jButton1KeyPressed(evt);
+                txtIsbnActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Cancelar");
+        btnCrear.setText("Crear");
+        btnCrear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearActionPerformed(evt);
+            }
+        });
+        btnCrear.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnCrearKeyPressed(evt);
+            }
+        });
+
+        btmCancelar.setText("Cancelar");
 
         jLabel9.setText("Autor");
 
@@ -141,9 +147,9 @@ public class CLibro extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(jButton1)
+                                .addComponent(btnCrear)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton2))
+                                .addComponent(btmCancelar))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addGap(18, 18, 18)
@@ -158,7 +164,7 @@ public class CLibro extends javax.swing.JFrame {
                                     .addComponent(txtIsbn))))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 51, Short.MAX_VALUE)
+                        .addGap(0, 62, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -204,8 +210,8 @@ public class CLibro extends javax.swing.JFrame {
                     .addComponent(jLabel9))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btnCrear)
+                    .addComponent(btmCancelar))
                 .addContainerGap())
         );
 
@@ -216,25 +222,25 @@ public class CLibro extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(21, 21, 21))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
+    private void btnCrearKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCrearKeyPressed
                  
        
-    }//GEN-LAST:event_jButton1KeyPressed
+    }//GEN-LAST:event_btnCrearKeyPressed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         DaoLibro daoLibro=new DaoLibro(conexion);
         List<AutorBean> autorBean = new ArrayList<>();
         for (int i : listAutor.getSelectedIndices()){
@@ -259,8 +265,11 @@ public class CLibro extends javax.swing.JFrame {
         }
         new resultadoLibro().setVisible(true);
         
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnCrearActionPerformed
+
+    private void txtIsbnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIsbnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIsbnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -298,12 +307,12 @@ public class CLibro extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btmCancelar;
+    private javax.swing.JButton btnCrear;
     private javax.swing.JComboBox cmbArea;
     private DefaultComboBoxModel modeloArea= new DefaultComboBoxModel();
     private javax.swing.JComboBox cmbEditorial;
     private DefaultComboBoxModel modelo= new DefaultComboBoxModel();
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
