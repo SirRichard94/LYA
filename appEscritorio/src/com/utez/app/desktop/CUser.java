@@ -250,7 +250,7 @@ public class CUser extends javax.swing.JFrame {
             usuarioBean=new UsuarioBean(0, nombre, direccion, tel, correo, 0, pass, rootPaneCheckingEnabled, esAdmin);
         boolean ex = daoUsuario.add(usuarioBean);
         if(ex){
-            registro.setText("Registro guardado ");
+//            registro.setText("Registro guardado ");
 //           imagen.setIcon(image);
            
            if(esAdmin){
@@ -259,7 +259,7 @@ public class CUser extends javax.swing.JFrame {
            new resultadoUsuario().setVisible(true);
         this.dispose();
         }else{
-             registro.setText("Error al guardar");
+//             registro.setText("Error al guardar");
 //             imagen.setIcon(image1);
         }
         }else

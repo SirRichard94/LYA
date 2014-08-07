@@ -139,6 +139,9 @@ public class resultadoEditorial extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtDatoKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDatoKeyTyped(evt);
+            }
         });
 
         btnActualizar.setText("Cambiar");
@@ -161,7 +164,7 @@ public class resultadoEditorial extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtDato, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtDato, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnActualizar)
                 .addGap(31, 31, 31)
@@ -234,6 +237,29 @@ public class resultadoEditorial extends javax.swing.JFrame {
         // TODO add your handling code here:
         tablaBusqueda(txtDato.getText());
     }//GEN-LAST:event_txtDatoKeyReleased
+
+    private void txtDatoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDatoKeyTyped
+        // TODO add your handling code here:
+        char car = evt.getKeyChar();
+       if((car<'a' || car>'z') && (car<'A' || car>'Z')            
+        && car !='á' //Minúsculas            
+        && car !='é'           
+        && car !='í'           
+        && car !='ó'          
+        && car !='ú'  
+        && car !='Á' //Mayúsculas            
+        && car !='É'           
+        && car !='Í'           
+        && car !='Ó'
+        && car !='Ú'
+        && car !='ñ'
+        && car !='Ñ'    
+        && (car!=(char)KeyEvent.VK_SPACE))
+    {     
+    evt.consume();  
+
+    }
+    }//GEN-LAST:event_txtDatoKeyTyped
 
     /**
      * @param args the command line arguments
