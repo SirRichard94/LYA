@@ -42,7 +42,7 @@ public class resultadoAutor extends javax.swing.JFrame {
     }
     
     private void actualizarTabla(){
-        modelo= new DefaultTableModel (new String[]{"Autor_id","Usuario","Apellido"},0);
+        modelo= new DefaultTableModel (new String[]{"Autor_id","Nombre","Apellido"},0);
         
         List<AutorBean> lista =daoAutor.getActive();
              for (AutorBean bean : lista) {
