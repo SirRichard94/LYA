@@ -41,9 +41,8 @@ public class resultadoUsuario extends javax.swing.JFrame {
         
         actualizarTabla();
 
-        
-        
         initComponents();
+        this.setLocationRelativeTo(null);
     }
     
     private void actualizarTabla(){

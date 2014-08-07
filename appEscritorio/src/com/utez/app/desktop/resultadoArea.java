@@ -39,6 +39,7 @@ public class resultadoArea extends javax.swing.JFrame {
         daoArea = new DaoArea(coneccion);
         actualizarTabla();
         initComponents();
+        this.setLocationRelativeTo(null);
     }
     
     private void actualizarTabla(){

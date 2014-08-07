@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ComboBoxEditor;
+import javax.swing.JOptionPane;
 import utez.app.daos.DaoAutor;
 import utez.app.daos.DaoUsuario;
 import utez.app.model.AutorBean;
@@ -40,6 +41,15 @@ public class CAutor extends javax.swing.JFrame {
                 this.setLocationRelativeTo(null);
 
     }
+    public boolean comprobarTexto(String dato){
+        boolean valido=false;
+       if (dato.length() > 0){
+           valido=true;
+       }
+        
+        return valido;
+    }
+            
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -153,24 +163,7 @@ public class CAutor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCrearKeyPressed
-        // TODO add your handling code here:
-         DaoAutor daoAutor= new DaoAutor(conexion);
-         boolean estado;
-         String nombre=txtNombre.getText();
-         String apellido=txtApellido.getText();
-         
-         ComboBoxEditor admin;
-       
-         
-        autorBean=new AutorBean(0, nombre, apellido, rootPaneCheckingEnabled);
-        boolean ex= daoAutor.add(autorBean);
-        if(ex){
-            System.out.println("exito"); 
-        }else{
-            System.out.println("tonto");
-        }
-         
-       
+        // TODO add your handling code here:   
     }//GEN-LAST:event_btnCrearKeyPressed
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
@@ -181,22 +174,27 @@ public class CAutor extends javax.swing.JFrame {
          String apellido=txtApellido.getText();
          
          ComboBoxEditor admin;
-       
+         
          
         autorBean=new AutorBean(0, nombre, apellido, rootPaneCheckingEnabled);
-        boolean ex= daoAutor.add(autorBean);
-        if(ex){
-            System.out.println("exito"); 
-        }else{
-            System.out.println("tonto");
-        }
-         new resultadoAutor().setVisible(true);
-         this.dispose();
+       boolean valido =comprobarTexto(nombre);
+       if (valido){
+           boolean valido1=comprobarTexto(apellido);
+           if (valido1){
+               
+           }
+           
+       }
+        
+        
+    
+        
+        
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        new AdminData().setVisible(true);
+        new resultadoAutor().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 

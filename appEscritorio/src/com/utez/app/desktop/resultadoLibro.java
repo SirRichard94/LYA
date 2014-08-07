@@ -48,6 +48,7 @@ public class resultadoLibro extends javax.swing.JFrame {
             actualizarTabla(result);
         }
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     

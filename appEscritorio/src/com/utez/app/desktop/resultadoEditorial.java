@@ -41,6 +41,7 @@ public class resultadoEditorial extends javax.swing.JFrame {
         daoEditorial = new DaoEditorial(coneccion);
         actualizarTabla();
         initComponents();
+        this.setLocationRelativeTo(null);
     }
     
     private void actualizarTabla(){

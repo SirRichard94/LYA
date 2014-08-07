@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ComboBoxEditor;
+import javax.swing.JOptionPane;
 import utez.app.daos.DaoArea;
 import utez.app.daos.DaoAutor;
 import utez.app.daos.DaoUsuario;
@@ -141,22 +142,7 @@ public class CArea extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCrearKeyPressed
-        // TODO add your handling code here:
-         DaoArea daoArea= new DaoArea(conexion);
-         
-         String nombre=txtNombre.getText();
-        
-         
-        
-       
-         
-        areaBean=new AreaBean(0, nombre, rootPaneCheckingEnabled);
-        boolean ex= daoArea.add(areaBean);
-        if(ex){
-            System.out.println("exito"); 
-        }else{
-            System.out.println("tonto");
-        }
+      
          
        
     }//GEN-LAST:event_btnCrearKeyPressed
@@ -167,14 +153,19 @@ public class CArea extends javax.swing.JFrame {
          
          String nombre=txtNombre.getText();
         areaBean=new AreaBean(0, nombre, false);
-        boolean ex= daoArea.add(areaBean);
-        if(ex){
-            System.out.println("exito"); 
+       
+        if(nombre.length()>0){
+             boolean ex= daoArea.add(areaBean);
+            if(ex){
+                JOptionPane.showMessageDialog(rootPane, "Registro exitoso");
+                 new resultadoArea().setVisible(true);
+                 this.dispose();
+            }else{
+            JOptionPane.showMessageDialog(rootPane, "Registro No exitoso");
+             }
         }else{
-            System.out.println("tonto");
+            JOptionPane.showMessageDialog(rootPane, "El campo nombre esta vacio");
         }
-       new resultadoArea().setVisible(true);
-       this.dispose();
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
