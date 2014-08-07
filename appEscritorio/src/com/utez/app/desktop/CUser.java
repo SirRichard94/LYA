@@ -8,6 +8,7 @@ package com.utez.app.desktop;
 
 import Utilerias.Comprobacion;
 import Utilerias.ConexionSQLServer;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -93,9 +94,27 @@ public class CUser extends javax.swing.JFrame {
 
         jLabel8.setText("Contraseña");
 
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
+
         txtCorreo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCorreoActionPerformed(evt);
+            }
+        });
+
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyTyped(evt);
+            }
+        });
+
+        txtPass.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPassKeyTyped(evt);
             }
         });
 
@@ -220,28 +239,43 @@ public class CUser extends javax.swing.JFrame {
 
     private void btnCrearKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCrearKeyPressed
         // TODO add your handling code here:
+           Comprobacion comprobacion=new Comprobacion();
+        
          DaoUsuario daoUsuario= new DaoUsuario(conexion);
-         boolean estado;
+         boolean esAdmin;
          String nombre=txtNombre.getText();
          String direccion=txtDireccion.getText();
          String correo=txtCorreo.getText();
          String tel=txtTelefono.getText();  
          String pass=txtPass.getText();
-         ComboBoxEditor admin;
-        admin = cmbTipoUser.getEditor();
-         if(admin.equals("Admin")){
-            estado=true; 
-         }else{
-             estado=false;
-         }
          
-        usuarioBean=new UsuarioBean(0, nombre, direccion, tel, correo, 0, pass, rootPaneCheckingEnabled, estado);
-        boolean ex= daoUsuario.add(usuarioBean);
+        
+         if(cmbTipoUser.getSelectedIndex()<=1){
+            esAdmin=true; 
+         }else{
+             esAdmin=false;
+         }
+        boolean validado= comprobacion.correo(correo);
+        if (validado){
+            usuarioBean=new UsuarioBean(0, nombre, direccion, tel, correo, 0, pass, rootPaneCheckingEnabled, esAdmin);
+        boolean ex = daoUsuario.add(usuarioBean);
         if(ex){
-            System.out.println("exito"); 
+            registro.setText("Registro guardado ");
+//           imagen.setIcon(image);
+           
+           if(esAdmin){
+            daoUsuario.update(usuarioBean);
+            }
+           new resultadoUsuario().setVisible(true);
+        this.dispose();
         }else{
-            System.out.println("tonto");
+             registro.setText("Error al guardar");
+//             imagen.setIcon(image1);
         }
+        }else
+            JOptionPane.showConfirmDialog(rootPane, "correo no valido");
+        txtCorreo.setText("");
+        return;
          
        
     }//GEN-LAST:event_btnCrearKeyPressed
@@ -282,7 +316,7 @@ public class CUser extends javax.swing.JFrame {
 //             imagen.setIcon(image1);
         }
         }else
-            JOptionPane.showConfirmDialog(rootPane, "correo no valido");
+            
         txtCorreo.setText("");
         return;
          
@@ -312,6 +346,58 @@ public class CUser extends javax.swing.JFrame {
         // TODO add your handling code here:
          this.dispose();
     }//GEN-LAST:event_formWindowClosing
+
+    private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
+        // TODO add your handling code here:
+          char c= evt.getKeyChar();
+        if(!Character.isDigit(c)) evt.consume();
+    }//GEN-LAST:event_txtTelefonoKeyTyped
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        // TODO add your handling code here:
+         char car = evt.getKeyChar();
+       if((car<'a' || car>'z') && (car<'A' || car>'Z')            
+        && car !='á' //Minúsculas            
+        && car !='é'           
+        && car !='í'           
+        && car !='ó'          
+        && car !='ú'  
+        && car !='Á' //Mayúsculas            
+        && car !='É'           
+        && car !='Í'           
+        && car !='Ó'
+        && car !='Ú'
+        && car !='ñ'
+        && car !='Ñ'    
+        && (car!=(char)KeyEvent.VK_SPACE))
+    {     
+    evt.consume();  
+
+    }
+    }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtPassKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPassKeyTyped
+        // TODO add your handling code here:
+         char car = evt.getKeyChar();
+       if((car<'a' || car>'z') && (car<'A' || car>'Z')            
+        && car !='á' //Minúsculas            
+        && car !='é'           
+        && car !='í'           
+        && car !='ó'          
+        && car !='ú'  
+        && car !='Á' //Mayúsculas            
+        && car !='É'           
+        && car !='Í'           
+        && car !='Ó'
+        && car !='Ú'
+        && car !='ñ'
+        && car !='Ñ'    
+        && (car!=(char)KeyEvent.VK_SPACE))
+    {     
+    evt.consume();  
+
+    }
+    }//GEN-LAST:event_txtPassKeyTyped
 
     /**
      * @param args the command line arguments
