@@ -7,6 +7,7 @@
 package com.utez.app.desktop;
 
 import Utilerias.ConexionSQLServer;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -65,7 +66,7 @@ public class CEjemplar extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtLocalizacion = new javax.swing.JTextField();
         btnCrear = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
         cmbLibro = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
         txtNumEjemplares = new javax.swing.JTextField();
@@ -82,6 +83,11 @@ public class CEjemplar extends javax.swing.JFrame {
                 txtLocalizacionActionPerformed(evt);
             }
         });
+        txtLocalizacion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtLocalizacionKeyTyped(evt);
+            }
+        });
 
         btnCrear.setText("Crear");
         btnCrear.addActionListener(new java.awt.event.ActionListener() {
@@ -95,11 +101,22 @@ public class CEjemplar extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Cancelar");
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         cmbLibro.setModel(modeloLibro);
 
         jLabel3.setText("Libro");
+
+        txtNumEjemplares.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNumEjemplaresKeyTyped(evt);
+            }
+        });
 
         jLabel6.setText("Num Ejemplares");
 
@@ -123,7 +140,7 @@ public class CEjemplar extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnCrear)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)))
+                        .addComponent(btnCancelar)))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -144,7 +161,7 @@ public class CEjemplar extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCrear)
-                    .addComponent(jButton2))
+                    .addComponent(btnCancelar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -198,6 +215,43 @@ public class CEjemplar extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtLocalizacionActionPerformed
 
+    private void txtLocalizacionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLocalizacionKeyTyped
+        // TODO add your handling code here:
+         char car = evt.getKeyChar();
+       if((car<'a' || car>'z') && (car<'A' || car>'Z')            
+        && car !='á' //Minúsculas            
+        && car !='é'           
+        && car !='í'           
+        && car !='ó'          
+        && car !='ú'  
+        && car !='Á' //Mayúsculas            
+        && car !='É'           
+        && car !='Í'           
+        && car !='Ó'
+        && car !='Ú'
+        && car !='ñ'
+        && car !='Ñ'    
+        && (car!=(char)KeyEvent.VK_SPACE))
+    {     
+    evt.consume();  
+
+    }
+    }//GEN-LAST:event_txtLocalizacionKeyTyped
+
+    private void txtNumEjemplaresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumEjemplaresKeyTyped
+        // TODO add your handling code here:
+        char c= evt.getKeyChar();
+        if(!Character.isDigit(c)) evt.consume();
+            
+        
+    }//GEN-LAST:event_txtNumEjemplaresKeyTyped
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        new AdminData().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -234,10 +288,10 @@ public class CEjemplar extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnCrear;
     private javax.swing.JComboBox cmbLibro;
     private DefaultComboBoxModel modeloLibro=new DefaultComboBoxModel();
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;

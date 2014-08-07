@@ -257,8 +257,9 @@ public class CUser extends javax.swing.JFrame {
          String correo=txtCorreo.getText();
          String tel=txtTelefono.getText();  
          String pass=txtPass.getText();
+         
         
-         if(cmbTipoUser.getSelectedIndex()==1){
+         if(cmbTipoUser.getSelectedIndex()<=1){
             esAdmin=true; 
          }else{
              esAdmin=false;
