@@ -158,6 +158,7 @@
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable()"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="tblLibros.setAutoCreateRowSorter(true);"/>
               </AuxValues>
             </Component>
           </SubComponents>

@@ -7,6 +7,7 @@
 package com.utez.app.desktop;
 
 import Utilerias.ConexionSQLServer;
+import com.utez.app.desktop.controlador.ControlSesion;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -28,7 +29,7 @@ public class resultadoLibro extends javax.swing.JFrame {
     private DefaultTableModel modelo;
     private Connection coneccion;
     private DaoLibro daoLibro; 
-   
+   private ControlSesion sesion;
     /**
      * Creates new form resultadosUsuario
      */
@@ -49,6 +50,11 @@ public class resultadoLibro extends javax.swing.JFrame {
         }
         initComponents();
         this.setLocationRelativeTo(null);
+        sesion = ControlSesion.getInstance();
+        if (!sesion.isAdmin()){
+            btnActualizar.setVisible(false);
+            btnEliminar.setVisible(false);
+        }
     }
 
     
@@ -59,7 +65,24 @@ public class resultadoLibro extends javax.swing.JFrame {
              actualizarTabla(lista);
     }
     private void actualizarTabla(List<LibroBean> lista){
-        modelo= new DefaultTableModel (new String[]{"Libro_id","ISBN","Titulo","Area","Editorial","Autores"},0);
+        modelo= new DefaultTableModel (new String[]{"Libro_id","ISBN","Titulo","Area","Editorial","Autores","Ejemplares", "Prestamos"},0){
+            Class[] types = {Integer.class, Object.class, String.class, String.class, String.class, String.class, Integer.class, Integer.class};
+            
+            @Override
+            public Class getColumnClass(int index){
+                return this.types[index];
+            }
+            public boolean isCellEditable(int index){
+                return false;
+            }
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+            
+           
+        };
         
              for (LibroBean bean : lista) {
                  String autores = "";
@@ -67,9 +90,8 @@ public class resultadoLibro extends javax.swing.JFrame {
                         autores += autorBean.getNombre()+" "+autorBean.getApellido();
                     }
                     
-                    Object[] arreglo
-                            
-                            = {bean.getLibro_id(), bean.getIsbn(),bean.getNombre(),bean.getArea().getNombre(),bean.getEditorial().getNombre(),autores};
+                    Object[] arreglo                           
+                            = {bean.getLibro_id(), bean.getIsbn(),bean.getNombre(),bean.getArea().getNombre(),bean.getEditorial().getNombre(),autores, daoLibro.countEjemplares(bean), daoLibro.countPrestamos(bean)};
                  
                  modelo.addRow(arreglo);
         }
@@ -140,6 +162,7 @@ public class resultadoLibro extends javax.swing.JFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Tabla Libro"));
 
+        tblLibros.setAutoCreateRowSorter(true);
         tblLibros.setModel(modelo);
         jScrollPane2.setViewportView(tblLibros);
 
