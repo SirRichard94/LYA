@@ -16,6 +16,8 @@ import utez.app.daos.DaoArea;
 import utez.app.model.AreaBean;
 import utez.app.model.EditorialBean;
 import static com.utez.app.desktop.Constants.*;
+import javax.swing.JFrame;
+import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 import utez.app.utilidades.Biblioteca;
 
 /**
@@ -112,9 +114,10 @@ public class UDArea extends javax.swing.JFrame {
                                                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                                .addGap(0, 0, Short.MAX_VALUE)
                                                 .addComponent(btnActualizar)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addComponent(btnCancelar)))
                                 .addContainerGap())
                 );
@@ -125,11 +128,11 @@ public class UDArea extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel1)
                                         .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(69, 69, 69)
+                                .addGap(36, 36, 36)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(btnActualizar)
-                                        .addComponent(btnCancelar))
-                                .addGap(178, 178, 178))
+                                        .addComponent(btnCancelar)
+                                        .addComponent(btnActualizar))
+                                .addGap(217, 217, 217))
                 );
 
                 javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -144,9 +147,9 @@ public class UDArea extends javax.swing.JFrame {
                 layout.setVerticalGroup(
                         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addGap(19, 19, 19)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, Short.MAX_VALUE)
-                                .addContainerGap())
+                                .addContainerGap()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 );
 
                 pack();
@@ -169,8 +172,9 @@ public class UDArea extends javax.swing.JFrame {
              boolean ex= daoArea.update(consultaBean);
             if(ex){
                 JOptionPane.showMessageDialog(rootPane, "Area guardada");
-                 new resultadoArea().setVisible(true);
-                 this.dispose();
+                 JFrame jf = new resultadoArea(); jf.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+			jf.setVisible(true);
+                        this.dispose();
             }else{
             JOptionPane.showMessageDialog(rootPane, "Registro No exitoso");
              }
@@ -181,8 +185,9 @@ public class UDArea extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        new AdminData().setVisible(true);
-        this.dispose();
+        JFrame jf = new resultadoArea(); jf.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+			jf.setVisible(true);
+                        this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
