@@ -66,17 +66,17 @@ public class Bienvenida extends javax.swing.JFrame {
             resultados = daoLibro.getActive();
             
         }else{
-            if(jComboBox1.getSelectedIndex()<=1){
+            if(cmbAreas.getSelectedIndex()<=1){
                 LibroBean libro=new LibroBean();
                 libro.setNombre(txtBusqueda.getText());
                 resultados= daoLibro.findByTitulo(libro.getNombre());
-            }if(jComboBox1.getSelectedIndex()==2){
+            }if(cmbAreas.getSelectedIndex()==2){
                 resultados = daoLibro.findByAutorNombre(txtBusqueda.getText());
-            } if(jComboBox1.getSelectedIndex()==3){
+            } if(cmbAreas.getSelectedIndex()==3){
               EditorialBean editorial = new EditorialBean();
                 editorial.setNombre(txtBusqueda.getText());
                 resultados = daoLibro.findByEditorialNombre(editorial);
-            }if(jComboBox1.getSelectedIndex()==4){
+            }if(cmbAreas.getSelectedIndex()==4){
              AreaBean area = new AreaBean();
                 area.setNombre(txtBusqueda.getText());
                 resultados = daoLibro.findByAreaNombre(area);
@@ -103,7 +103,7 @@ public class Bienvenida extends javax.swing.JFrame {
         jMenu6 = new javax.swing.JMenu();
         txtBusqueda = new javax.swing.JTextField();
         btnBusqueda = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox();
+        cmbAreas = new javax.swing.JComboBox();
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         lblAdminData = new javax.swing.JLabel();
@@ -134,6 +134,9 @@ public class Bienvenida extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtBusquedaKeyPressed(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBusquedaKeyTyped(evt);
+            }
         });
 
         btnBusqueda.setText("Bùsqueda");
@@ -143,7 +146,7 @@ public class Bienvenida extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecciòne...", "Libro", "Autor", "Editorial", "Àrea" }));
+        cmbAreas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecciòne...", "Libro", "Autor", "Editorial", "Àrea" }));
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 102));
 
@@ -284,8 +287,9 @@ public class Bienvenida extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnBusqueda)
                 .addGap(18, 18, 18)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(cmbAreas, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(199, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
@@ -304,7 +308,7 @@ public class Bienvenida extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBusqueda)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbAreas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -376,6 +380,29 @@ public class Bienvenida extends javax.swing.JFrame {
         
     }//GEN-LAST:event_txtBusquedaKeyPressed
 
+    private void txtBusquedaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyTyped
+        // TODO add your handling code here:
+        char car = evt.getKeyChar();
+       if((car<'a' || car>'z') && (car<'A' || car>'Z')            
+        && car !='á' //Minúsculas            
+        && car !='é'           
+        && car !='í'           
+        && car !='ó'          
+        && car !='ú'  
+        && car !='Á' //Mayúsculas            
+        && car !='É'           
+        && car !='Í'           
+        && car !='Ó'
+        && car !='Ú'
+        && car !='ñ'
+        && car !='Ñ'    
+        && (car!=(char)KeyEvent.VK_SPACE))
+    {     
+    evt.consume();  
+
+    }
+    }//GEN-LAST:event_txtBusquedaKeyTyped
+
     /**
      * @param args the command line arguments
      */
@@ -413,7 +440,7 @@ public class Bienvenida extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBusqueda;
-    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JComboBox cmbAreas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
