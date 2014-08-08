@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.utez.app.desktop;
 
 import Utilerias.ConexionSQLServer;
@@ -12,33 +11,40 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ComboBoxEditor;
+import javax.swing.JOptionPane;
 import utez.app.daos.DaoAutor;
-import utez.app.daos.DaoUsuario;
 import utez.app.model.AutorBean;
-import utez.app.model.UsuarioBean;
 
 /**
  *
  * @author Koffo
  */
 public class CAutor extends javax.swing.JFrame {
+
     //private List<UsuarioBean> lista;
     //private DaoUsuario daoUsuario;
     private Connection conexion;
     private AutorBean autorBean;
-    
+
     public CAutor() {
         try {
-            conexion=ConexionSQLServer.getConnection();
+            conexion = ConexionSQLServer.getConnection();
         } catch (SQLException ex) {
             Logger.getLogger(CAutor.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
-        
-        initComponents();
-                this.setLocationRelativeTo(null);
 
+        initComponents();
+        this.setLocationRelativeTo(null);
+
+    }
+
+    public boolean comprobarTexto(String dato) {
+        boolean valido = false;
+        if (dato.length() > 0) {
+            valido = true;
+        }
+
+        return valido;
     }
 
     /**
@@ -153,74 +159,71 @@ public class CAutor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCrearKeyPressed
-        // TODO add your handling code here:
-         DaoAutor daoAutor= new DaoAutor(conexion);
-         boolean estado;
-         String nombre=txtNombre.getText();
-         String apellido=txtApellido.getText();
-         
-         ComboBoxEditor admin;
-       
-         
-        autorBean=new AutorBean(0, nombre, apellido, rootPaneCheckingEnabled);
-        boolean ex= daoAutor.add(autorBean);
-        if(ex){
-            System.out.println("exito"); 
-        }else{
-            System.out.println("tonto");
-        }
-         
-       
+        // TODO add your handling code here:   
     }//GEN-LAST:event_btnCrearKeyPressed
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         // TODO add your handling code here:
-         DaoAutor daoAutor= new DaoAutor(conexion);
-         boolean estado;
-         String nombre=txtNombre.getText();
-         String apellido=txtApellido.getText();
-         
-         ComboBoxEditor admin;
-       
-         
-        autorBean=new AutorBean(0, nombre, apellido, rootPaneCheckingEnabled);
-        boolean ex= daoAutor.add(autorBean);
-        if(ex){
-            System.out.println("exito"); 
-        }else{
-            System.out.println("tonto");
+        DaoAutor daoAutor = new DaoAutor(conexion);
+//        boolean estado;
+        String nombre = txtNombre.getText();
+        String apellido = txtApellido.getText();
+
+        
+        if (nombre.length() == 0 && apellido.length() == 0) {
+            JOptionPane.showMessageDialog(rootPane, "Los campos estan vacios");
+        } else {
+            boolean validarNombre = comprobarTexto(nombre);
+            if (validarNombre == false) {
+                JOptionPane.showMessageDialog(rootPane, "El campo de Nombre esta vacio");
+            } else if (validarNombre) {
+                boolean validarApellido = comprobarTexto(apellido);
+                if (validarApellido == false) {
+                    JOptionPane.showMessageDialog(rootPane, "El campo de Apellido esta vacio");
+                } else if (validarApellido) {
+                    autorBean = new AutorBean(0, nombre, apellido, true);
+                    boolean ex = daoAutor.add(autorBean);
+                    if (ex) {
+                        JOptionPane.showMessageDialog(rootPane, "Registro Guardado con exito");
+                        new resultadoAutor().setVisible(true);
+                        this.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(rootPane, "Error al guardar el Registro");
+                    }
+
+                }
+
+            }
         }
-         new resultadoAutor().setVisible(true);
-         this.dispose();
+
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        new AdminData().setVisible(true);
+        new resultadoAutor().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         // TODO add your handling code here:
-         char car = evt.getKeyChar();
-       if((car<'a' || car>'z') && (car<'A' || car>'Z')            
-        && car !='á' //Minúsculas            
-        && car !='é'           
-        && car !='í'           
-        && car !='ó'          
-        && car !='ú'  
-        && car !='Á' //Mayúsculas            
-        && car !='É'           
-        && car !='Í'           
-        && car !='Ó'
-        && car !='Ú'
-        && car !='ñ'
-        && car !='Ñ'    
-        && (car!=(char)KeyEvent.VK_SPACE))
-    {     
-    evt.consume();  
+        char car = evt.getKeyChar();
+        if ((car < 'a' || car > 'z') && (car < 'A' || car > 'Z')
+                && car != 'á' //Minúsculas            
+                && car != 'é'
+                && car != 'í'
+                && car != 'ó'
+                && car != 'ú'
+                && car != 'Á' //Mayúsculas            
+                && car != 'É'
+                && car != 'Í'
+                && car != 'Ó'
+                && car != 'Ú'
+                && car != 'ñ'
+                && car != 'Ñ'
+                && (car != (char) KeyEvent.VK_SPACE)) {
+            evt.consume();
 
-    }
+        }
     }//GEN-LAST:event_txtNombreKeyTyped
 
     /**

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.utez.app.desktop;
 
 import Utilerias.ConexionSQLServer;
@@ -16,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import utez.app.daos.DaoArea;
 import utez.app.daos.DaoAutor;
 import utez.app.daos.DaoEditorial;
@@ -30,6 +30,7 @@ import utez.app.model.LibroBean;
  * @author Koffo
  */
 public class CLibro extends javax.swing.JFrame {
+
     //private List<UsuarioBean> lista;
     //private DaoUsuario daoUsuario;
     private Connection conexion;
@@ -40,33 +41,42 @@ public class CLibro extends javax.swing.JFrame {
     private DaoAutor daoAutor;
     private DaoEditorial daoEditorial;
     private DaoArea daoArea;
-    
+
     public CLibro() {
-       
+
         try {
-            conexion=ConexionSQLServer.getConnection();
+            conexion = ConexionSQLServer.getConnection();
         } catch (SQLException ex) {
             Logger.getLogger(CLibro.class.getName()).log(Level.SEVERE, null, ex);
         }
-         daoLibro= new DaoLibro(conexion);
-        daoAutor=new DaoAutor(conexion);
-        daoArea=new DaoArea(conexion);
-        daoEditorial=new DaoEditorial(conexion);
-        listaArea=daoArea.getActive();
-        for(AreaBean areaBean : listaArea){
+        daoLibro = new DaoLibro(conexion);
+        daoAutor = new DaoAutor(conexion);
+        daoArea = new DaoArea(conexion);
+        daoEditorial = new DaoEditorial(conexion);
+        listaArea = daoArea.getActive();
+        for (AreaBean areaBean : listaArea) {
             modeloArea.addElement(areaBean.getNombre());
         }
         listaEditorial = daoEditorial.getActive();
         for (EditorialBean editorialBean : listaEditorial) {
             modelo.addElement(editorialBean.getNombre());
         }
-        listaAutor=daoAutor.getActive();
-        for (AutorBean autorBean : listaAutor){
-            modeloAutor.addElement(autorBean.getNombre());
+        listaAutor = daoAutor.getActive();
+        for (AutorBean autorBean : listaAutor) {
+            modeloAutor.addElement(autorBean.getNombre() + " " + autorBean.getApellido());
         }
         initComponents();
-                this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
 
+    }
+
+    public boolean comprobarTexto(String dato) {
+        boolean valido = false;
+        if (dato.length() > 0) {
+            valido = true;
+        }
+
+        return valido;
     }
 
     /**
@@ -87,7 +97,7 @@ public class CLibro extends javax.swing.JFrame {
         txtIsbn = new javax.swing.JTextField();
         txtPag = new javax.swing.JTextField();
         btnCrear = new javax.swing.JButton();
-        btmCancelar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         cmbEditorial = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -107,9 +117,23 @@ public class CLibro extends javax.swing.JFrame {
 
         jLabel8.setText("Editorial");
 
-        txtIsbn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtIsbnActionPerformed(evt);
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
+
+        txtIsbn.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtIsbnKeyTyped(evt);
+            }
+        });
+
+        txtPag.setToolTipText("");
+        txtPag.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtPag.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPagKeyTyped(evt);
             }
         });
 
@@ -125,7 +149,12 @@ public class CLibro extends javax.swing.JFrame {
             }
         });
 
-        btmCancelar.setText("Cancelar");
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         jLabel9.setText("Autor");
 
@@ -150,7 +179,7 @@ public class CLibro extends javax.swing.JFrame {
                                 .addContainerGap()
                                 .addComponent(btnCrear)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btmCancelar))
+                                .addComponent(btnCancelar))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -163,9 +192,9 @@ public class CLibro extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
                                     .addComponent(txtIsbn))))
-                        .addGap(0, 162, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 62, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -212,7 +241,7 @@ public class CLibro extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCrear)
-                    .addComponent(btmCancelar))
+                    .addComponent(btnCancelar))
                 .addContainerGap())
         );
 
@@ -222,94 +251,107 @@ public class CLibro extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCrearKeyPressed
-                 
-       
+
+
     }//GEN-LAST:event_btnCrearKeyPressed
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
-        DaoLibro daoLibro=new DaoLibro(conexion);
+        DaoLibro daoLibro = new DaoLibro(conexion);
         List<AutorBean> autorBean = new ArrayList<>();
-        for (int i : listAutor.getSelectedIndices()){
-        autorBean.add(listaAutor.get(i));
+        for (int i : listAutor.getSelectedIndices()) {
+            autorBean.add(listaAutor.get(i));
         }
-        EditorialBean editorialBean= listaEditorial.get(cmbEditorial.getSelectedIndex());
-         AreaBean areaBean= listaArea.get(cmbArea.getSelectedIndex());
-       
-        LibroBean consultaBean = new LibroBean();
-        consultaBean.setNombre(txtNombre.getText());
-        consultaBean.setIsbn(Long.parseLong(txtIsbn.getText()));
-        consultaBean.setPaginas(Integer.parseInt(txtPag.getText()));
-        consultaBean.setArea(areaBean);
-        consultaBean.setEditorial(editorialBean);
-        consultaBean.setAutores(autorBean);
-        
-        boolean agregado=daoLibro.add(consultaBean);
-        if(agregado){
-            System.out.println("exito");
-        }else{
-            System.out.println("tonto");
-        }
-        new resultadoLibro().setVisible(true);
-        
-    }//GEN-LAST:event_btnCrearActionPerformed
 
-    private void txtIsbnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIsbnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtIsbnActionPerformed
+        if (txtIsbn.getText().length() == 0 || txtNombre.getText().length() == 0
+                || txtPag.getText().length() == 0) {
+            String mensaje = "Error, campos vacios:";
+            if (comprobarTexto(txtIsbn.getText()) == false) {
+                mensaje += "\n -ISBN ";
+            }
+            if (comprobarTexto(txtNombre.getText()) == false) {
+                mensaje += "\n -Nombre";
+            }
+            if (comprobarTexto(txtPag.getText()) == false) {
+                mensaje += "\n -Num paginas";
+            }
+            if (listAutor.isSelectionEmpty()) {
+                mensaje += "\n -Autor";
+            }
+
+            JOptionPane.showMessageDialog(rootPane, mensaje);
+        } else {
+
+            EditorialBean editorialBean = listaEditorial.get(cmbEditorial.getSelectedIndex());
+            AreaBean areaBean = listaArea.get(cmbArea.getSelectedIndex());
+
+            LibroBean consultaBean = new LibroBean();
+            consultaBean.setNombre(txtNombre.getText());
+            consultaBean.setIsbn(Long.parseLong(txtIsbn.getText()));
+            consultaBean.setPaginas(Integer.parseInt(txtPag.getText()));
+            consultaBean.setArea(areaBean);
+            consultaBean.setEditorial(editorialBean);
+            consultaBean.setAutores(autorBean);
+
+            if (consultaBean.getPaginas() < 0 || consultaBean.getPaginas() >= Integer.MAX_VALUE) {
+                JOptionPane.showMessageDialog(rootPane, "Num. Paginas fuera del rango");
+                return;
+            }
+            if ((txtIsbn.getText().length() < 10 || txtIsbn.getText().length() > 13)) {
+                JOptionPane.showMessageDialog(rootPane, "ISBN incorrecto :10-13 digitos");
+                return;
+            }
+
+            boolean agregado = daoLibro.add(consultaBean);
+            if (agregado) {
+                JOptionPane.showMessageDialog(rootPane, "Libro Agregado");
+                new resultadoLibro().setVisible(true);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Error al Registrar");
+            }
+
+        }
+    }//GEN-LAST:event_btnCrearActionPerformed
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         // TODO add your handling code here:
-        char car = evt.getKeyChar();
-       if((car<'a' || car>'z') && (car<'A' || car>'Z')            
-        && car !='á' //Minúsculas            
-        && car !='é'           
-        && car !='í'           
-        && car !='ó'          
-        && car !='ú'  
-        && car !='Á' //Mayúsculas            
-        && car !='É'           
-        && car !='Í'           
-        && car !='Ó'
-        && car !='Ú'
-        && car !='ñ'
-        && car !='Ñ'    
-        && (car!=(char)KeyEvent.VK_SPACE))
-    {     
-    evt.consume();  
 
-    }
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void txtIsbnKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIsbnKeyTyped
         // TODO add your handling code here:
-        char c= evt.getKeyChar();
-        if(!Character.isDigit(c)) evt.consume();
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c)) {
+            evt.consume();
+        }
     }//GEN-LAST:event_txtIsbnKeyTyped
 
     private void txtPagKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPagKeyTyped
         // TODO add your handling code here:
-         char c= evt.getKeyChar();
-        if(!Character.isDigit(c)) evt.consume();
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c)) {
+            evt.consume();
+        }
     }//GEN-LAST:event_txtPagKeyTyped
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        new AdminData().setVisible(true);
+        new resultadoLibro().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
@@ -349,7 +391,7 @@ public class CLibro extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btmCancelar;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnCrear;
     private javax.swing.JComboBox cmbArea;
     private DefaultComboBoxModel modeloArea= new DefaultComboBoxModel();

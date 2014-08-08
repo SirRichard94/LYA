@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.utez.app.desktop;
 
 import Utilerias.Comprobacion;
@@ -26,23 +25,34 @@ import utez.app.model.UsuarioBean;
  * @author Koffo
  */
 public class CUser extends javax.swing.JFrame {
+
     //private List<UsuarioBean> lista;
     //private DaoUsuario daoUsuario;
+
     private Connection conexion;
     private UsuarioBean usuarioBean;
-    
+
     public CUser() {
         try {
-            conexion=ConexionSQLServer.getConnection();
+            conexion = ConexionSQLServer.getConnection();
         } catch (SQLException ex) {
             Logger.getLogger(CUser.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
-       this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-      
-        initComponents();
-                this.setLocationRelativeTo(null);
 
+        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+
+        initComponents();
+        this.setLocationRelativeTo(null);
+
+    }
+
+    public boolean comprobarTexto(String dato) {
+        boolean valido = false;
+        if (dato.length() > 0) {
+            valido = true;
+        }
+
+        return valido;
     }
 
     /**
@@ -67,8 +77,6 @@ public class CUser extends javax.swing.JFrame {
         txtPass = new javax.swing.JTextField();
         btnCrear = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        cmbTipoUser = new javax.swing.JComboBox();
-        jLabel10 = new javax.swing.JLabel();
         imagen = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -85,11 +93,11 @@ public class CUser extends javax.swing.JFrame {
 
         jLabel1.setText("Nombre");
 
-        jLabel2.setText("Direcciòn");
+        jLabel2.setText("Dirección");
 
         jLabel3.setText("Correo");
 
-        jLabel7.setText("Telèfono");
+        jLabel7.setText("Teléfono");
 
         jLabel8.setText("Contraseña");
 
@@ -136,10 +144,6 @@ public class CUser extends javax.swing.JFrame {
             }
         });
 
-        cmbTipoUser.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecciona...", "Admin", "User" }));
-
-        jLabel10.setText("Tipo");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -155,14 +159,12 @@ public class CUser extends javax.swing.JFrame {
                         .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtCorreo)
+                    .addComponent(txtCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
                     .addComponent(txtTelefono)
-                    .addComponent(cmbTipoUser, 0, 206, Short.MAX_VALUE)
                     .addComponent(txtPass)
                     .addComponent(txtDireccion)
                     .addComponent(txtNombre)))
@@ -190,11 +192,7 @@ public class CUser extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbTipoUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10))
-                .addGap(18, 18, 18)
+                .addGap(50, 50, 50)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCrear)
                     .addComponent(btnCancelar))
@@ -228,97 +226,63 @@ public class CUser extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCorreoActionPerformed
 
     private void btnCrearKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCrearKeyPressed
-        // TODO add your handling code here:
-           Comprobacion comprobacion=new Comprobacion();
-        
-         DaoUsuario daoUsuario= new DaoUsuario(conexion);
-         boolean esAdmin;
-         String nombre=txtNombre.getText();
-         String direccion=txtDireccion.getText();
-         String correo=txtCorreo.getText();
-         String tel=txtTelefono.getText();  
-         String pass=txtPass.getText();
-         
-        
-         if(cmbTipoUser.getSelectedIndex()<=1){
-            esAdmin=true; 
-         }else{
-             esAdmin=false;
-         }
-        boolean validado= comprobacion.correo(correo);
-        if (validado){
-            usuarioBean=new UsuarioBean(0, nombre, direccion, tel, correo, 0, pass, rootPaneCheckingEnabled, esAdmin);
-        boolean ex = daoUsuario.add(usuarioBean);
-        if(ex){
-//            registro.setText("Registro guardado ");
-//           imagen.setIcon(image);
-           
-           if(esAdmin){
-            daoUsuario.update(usuarioBean);
-            }
-           new resultadoUsuario().setVisible(true);
-        this.dispose();
-        }else{
-//             registro.setText("Error al guardar");
-//             imagen.setIcon(image1);
-        }
-        }else
-            JOptionPane.showConfirmDialog(rootPane, "correo no valido");
-        txtCorreo.setText("");
-        return;
-         
-       
+
     }//GEN-LAST:event_btnCrearKeyPressed
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         // TODO add your handling code here:
-        Comprobacion comprobacion=new Comprobacion();
-        
-         DaoUsuario daoUsuario= new DaoUsuario(conexion);
-         boolean esAdmin;
-         String nombre=txtNombre.getText();
-         String direccion=txtDireccion.getText();
-         String correo=txtCorreo.getText();
-         String tel=txtTelefono.getText();  
-         String pass=txtPass.getText();
-         
-        
-         if(cmbTipoUser.getSelectedIndex()<=1){
-            esAdmin=true; 
-         }else{
-             esAdmin=false;
-         }
-        boolean validado= comprobacion.correo(correo);
-        if (validado){
-            usuarioBean=new UsuarioBean(0, nombre, direccion, tel, correo, 0, pass, rootPaneCheckingEnabled, esAdmin);
-        boolean ex = daoUsuario.add(usuarioBean);
-        if(ex){
+        Comprobacion comprobacion = new Comprobacion();
+
+        DaoUsuario daoUsuario = new DaoUsuario(conexion);
+        boolean esAdmin;
+        String nombre = txtNombre.getText();
+        String direccion = txtDireccion.getText();
+        String correo = txtCorreo.getText();
+        String tel = txtTelefono.getText();
+        String pass = txtPass.getText();
+
+        if (nombre.length() == 0 || direccion.length() == 0 || correo.length() == 0 || tel.length() == 0 || pass.length() == 0) {
+            String mensaje = "Error, campos vacios:";
+
+            if (comprobarTexto(txtCorreo.getText()) == false) {
+                mensaje += "\n -correo ";
+            }
+            if (comprobarTexto(txtNombre.getText()) == false) {
+                mensaje += "\n -Nombre";
+            }
+            if (comprobarTexto(txtDireccion.getText()) == false) {
+                mensaje += "\n -Num Direccion";
+            }
+            if (comprobarTexto(txtPass.getText()) == false) {
+                mensaje += "\n -Pass";
+            }
+            JOptionPane.showMessageDialog(rootPane, mensaje);
+        } else {
+
+            boolean validado = comprobacion.correo(correo);
+            if (validado) {
+                usuarioBean = new UsuarioBean(0, nombre, direccion, tel, correo, 0, pass, true, false);
+                boolean ex = daoUsuario.add(usuarioBean);
+                if (ex) {
 //            registro.setText("Registro guardado ");
 //           imagen.setIcon(image);
-           
-           if(esAdmin){
-            daoUsuario.update(usuarioBean);
+                    JOptionPane.showMessageDialog(rootPane, "Usuario Agregado");
+                    new resultadoUsuario().setVisible(true);
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "Error al registrar");
+                }
+            } else {
+                txtCorreo.setText("");
             }
-           new resultadoUsuario().setVisible(true);
-        this.dispose();
-        }else{
-//             registro.setText("Error al guardar");
-//             imagen.setIcon(image1);
+            return;
+
         }
-        }else
-            
-        txtCorreo.setText("");
-        return;
-         
-       
 //        JFrame frame = new JFrame("no image");
 //        ImageIcon image = new ImageIcon("C:\\Users\\Koffo\\Documents\\GitHub\\LYA\\appEscritorio\\imagenes\\circular icons\\yes.png");
 //        ImageIcon image1 = new ImageIcon("C:\\Users\\Koffo\\Documents\\GitHub\\LYA\\appEscritorio\\imagenes\\circular icons\\warning.png");
-        
-        
-        
-        
-        
+
+
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -329,64 +293,65 @@ public class CUser extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
-     
+
     }//GEN-LAST:event_formWindowClosed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-         this.dispose();
+        this.dispose();
     }//GEN-LAST:event_formWindowClosing
 
     private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
         // TODO add your handling code here:
-          char c= evt.getKeyChar();
-        if(!Character.isDigit(c)) evt.consume();
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c) && c != '-') {
+            evt.consume();
+        }
     }//GEN-LAST:event_txtTelefonoKeyTyped
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         // TODO add your handling code here:
-         char car = evt.getKeyChar();
-       if((car<'a' || car>'z') && (car<'A' || car>'Z')            
-        && car !='á' //Minúsculas            
-        && car !='é'           
-        && car !='í'           
-        && car !='ó'          
-        && car !='ú'  
-        && car !='Á' //Mayúsculas            
-        && car !='É'           
-        && car !='Í'           
-        && car !='Ó'
-        && car !='Ú'
-        && car !='ñ'
-        && car !='Ñ'    
-        && (car!=(char)KeyEvent.VK_SPACE))
-    {     
-    evt.consume();  
+        char car = evt.getKeyChar();
 
-    }
+        if ((car < 'a' || car > 'z') && (car < 'A' || car > 'Z')
+                && car != 'á' //Minúsculas            
+                && car != 'é'
+                && car != 'í'
+                && car != 'ó'
+                && car != 'ú'
+                && car != 'Á' //Mayúsculas            
+                && car != 'É'
+                && car != 'Í'
+                && car != 'Ó'
+                && car != 'Ú'
+                && car != 'ñ'
+                && car != 'Ñ'
+                && (car != (char) KeyEvent.VK_SPACE)) {
+            evt.consume();
+
+        }
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void txtPassKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPassKeyTyped
         // TODO add your handling code here:
-         char car = evt.getKeyChar();
-       if((car<'a' || car>'z') && (car<'A' || car>'Z')            
-        && car !='á' //Minúsculas            
-        && car !='é'           
-        && car !='í'           
-        && car !='ó'          
-        && car !='ú'  
-        && car !='Á' //Mayúsculas            
-        && car !='É'           
-        && car !='Í'           
-        && car !='Ó'
-        && car !='Ú'
-        && car !='ñ'
-        && car !='Ñ'    
-        && (car!=(char)KeyEvent.VK_SPACE))
-    {     
-    evt.consume();  
+        char car = evt.getKeyChar();
+        if ((car < 'a' || car > 'z') && (car < 'A' || car > 'Z')
+                && car != 'á' //Minúsculas            
+                && car != 'é'
+                && car != 'í'
+                && car != 'ó'
+                && car != 'ú'
+                && car != 'Á' //Mayúsculas            
+                && car != 'É'
+                && car != 'Í'
+                && car != 'Ó'
+                && car != 'Ú'
+                && car != 'ñ'
+                && car != 'Ñ'
+                && (car != (char) KeyEvent.VK_SPACE)) {
+            evt.consume();
 
-    }
+        }
     }//GEN-LAST:event_txtPassKeyTyped
 
     /**
@@ -427,10 +392,8 @@ public class CUser extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnCrear;
-    private javax.swing.JComboBox cmbTipoUser;
     private javax.swing.JLabel imagen;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel7;

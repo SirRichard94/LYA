@@ -100,7 +100,16 @@ public class ServletLogin extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
-		processRequest(request, response);
+		
+		throw new ServletException("Acceso No Permitido");
+		//String mensaje = "<div class=\"alert alert-danger\">  Solo se puede iniciar sesión por post </div>";
+		
+	
+//	
+//	try (PrintWriter out = response.getWriter()) {
+//		out.print(mensaje);
+//	}	
+	
 	}
 
 	/**

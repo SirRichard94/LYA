@@ -1,4 +1,3 @@
-
 package com.utez.app.desktop;
 
 import Utilerias.ConexionSQLServer;
@@ -29,7 +28,6 @@ public class UDLibro extends javax.swing.JFrame {
 
     //private List<UsuarioBean> lista;
     //private DaoUsuario daoUsuario;
-
     private Connection conexion;
     private LibroBean libroBean;
     private LibroBean consultaBean;
@@ -47,46 +45,53 @@ public class UDLibro extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(UDLibro.class.getName()).log(Level.SEVERE, null, ex);
         }
-        daoLibro= new DaoLibro(conexion);
-        daoAutor=new DaoAutor(conexion);
-        daoArea=new DaoArea(conexion);
-        daoEditorial=new DaoEditorial(conexion);
-        listaArea=daoArea.getActive();
-        for(AreaBean areaBean : listaArea){
+        daoLibro = new DaoLibro(conexion);
+        daoAutor = new DaoAutor(conexion);
+        daoArea = new DaoArea(conexion);
+        daoEditorial = new DaoEditorial(conexion);
+        listaArea = daoArea.getActive();
+        for (AreaBean areaBean : listaArea) {
             modeloArea.addElement(areaBean.getNombre());
         }
         listaEditorial = daoEditorial.getActive();
         for (EditorialBean editorialBean : listaEditorial) {
             modelo.addElement(editorialBean.getNombre());
         }
-        listaAutor=daoAutor.getActive();
-        for (AutorBean autorBean : listaAutor){
+        listaAutor = daoAutor.getActive();
+        for (AutorBean autorBean : listaAutor) {
             modeloAutor.addElement(autorBean.getNombre());
         }
 
         initComponents();
-                this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
 
     }
-    
-    public UDLibro(LibroBean consultaBean){
+
+    public UDLibro(LibroBean consultaBean) {
         this();
         this.consultaBean = consultaBean;
         llenarValores();
     }
-    
-    private void llenarValores(){
+
+    private void llenarValores() {
         modeloArea.setSelectedItem(consultaBean.getArea().getNombre());
         modelo.setSelectedItem(consultaBean.getEditorial().getNombre());
         modeloAutor.addElement(consultaBean.getAutores());
         txtNombre.setText(consultaBean.getNombre());
-        txtIsbn.setText (""+consultaBean.getIsbn());
-         txtPag.setText(""+consultaBean.getPaginas());
+        txtIsbn.setText("" + consultaBean.getIsbn());
+        txtPag.setText("" + consultaBean.getPaginas());
 
-       
     }
 
-    
+    public boolean comprobarTexto(String dato) {
+        boolean valido = false;
+        if (dato.length() > 0) {
+            valido = true;
+        }
+
+        return valido;
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -282,34 +287,59 @@ public class UDLibro extends javax.swing.JFrame {
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         // TODO add your handling code here:
-        DaoLibro daoLibro = new DaoLibro(conexion); 
+        DaoLibro daoLibro = new DaoLibro(conexion);
         List<AutorBean> autorBean = new ArrayList<>();
-        for (int i : listAutor.getSelectedIndices()){
-        autorBean.add(listaAutor.get(i));
+        for (int i : listAutor.getSelectedIndices()) {
+            autorBean.add(listaAutor.get(i));
         }
-        EditorialBean editorialBean= listaEditorial.get(cmbEditorial.getSelectedIndex());
-         AreaBean areaBean= listaArea.get(cmbArea.getSelectedIndex());
-        consultaBean.setNombre(txtNombre.getText());
-        consultaBean.setIsbn(Long.parseLong(txtIsbn.getText()) );
-        consultaBean.setPaginas(Integer.parseInt(txtPag.getText()));
-        consultaBean.setArea(areaBean);
-        consultaBean.setEditorial(editorialBean);
-        consultaBean.setAutores(autorBean);
-    
-        boolean agregado = daoLibro.update(consultaBean);
-        if (agregado) {
-            JOptionPane.showMessageDialog(rootPane, "Registro Exitoso");
-           
+        if (txtIsbn.getText().length() == 0 || txtNombre.getText().length() == 0
+                || txtPag.getText().length() == 0) {
+            String mensaje = "Error, campos vacios:";
+            if (comprobarTexto(txtIsbn.getText()) == false) {
+                mensaje += "\n -ISBN ";
+            }
+            if (comprobarTexto(txtNombre.getText()) == false) {
+                mensaje += "\n -Nombre";
+            }
+            if (comprobarTexto(txtPag.getText()) == false) {
+                mensaje += "\n -Num paginas";
+            }
+            JOptionPane.showMessageDialog(rootPane, mensaje);
         } else {
-             JOptionPane.showMessageDialog(rootPane, "Registro Fallido");
+
+            EditorialBean editorialBean = listaEditorial.get(cmbEditorial.getSelectedIndex());
+            AreaBean areaBean = listaArea.get(cmbArea.getSelectedIndex());
+            consultaBean.setNombre(txtNombre.getText());
+            consultaBean.setIsbn(Long.parseLong(txtIsbn.getText()));
+            consultaBean.setPaginas(Integer.parseInt(txtPag.getText()));
+            consultaBean.setArea(areaBean);
+            consultaBean.setEditorial(editorialBean);
+            consultaBean.setAutores(autorBean);
+            
+            if (consultaBean.getPaginas() < 0 || consultaBean.getPaginas() >= Integer.MAX_VALUE) {
+                JOptionPane.showMessageDialog(rootPane, "Num. Paginas fuera del rango");
+                return;
+            }
+            if ((txtIsbn.getText().length() < 10 || txtIsbn.getText().length() > 13)) {
+                JOptionPane.showMessageDialog(rootPane, "ISBN incorrecto :10-13 digitos");
+                return;
+            }
+            boolean agregado = daoLibro.update(consultaBean);
+            if (agregado) {
+                JOptionPane.showMessageDialog(rootPane, "Actualizacion Libro Exitosa");
+                new resultadoLibro().setVisible(true);
+                this.dispose();
+
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "No se puedo Actualizar el Libro");
+            }
+
         }
-        new resultadoLibro().setVisible(true);
-        this.dispose();
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        new AdminData().setVisible(true);
+        new resultadoLibro().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
@@ -320,36 +350,39 @@ public class UDLibro extends javax.swing.JFrame {
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         // TODO add your handling code here:
         char car = evt.getKeyChar();
-       if((car<'a' || car>'z') && (car<'A' || car>'Z')            
-        && car !='á' //Minúsculas            
-        && car !='é'           
-        && car !='í'           
-        && car !='ó'          
-        && car !='ú'  
-        && car !='Á' //Mayúsculas            
-        && car !='É'           
-        && car !='Í'           
-        && car !='Ó'
-        && car !='Ú'
-        && car !='ñ'
-        && car !='Ñ'    
-        && (car!=(char)KeyEvent.VK_SPACE))
-    {     
-    evt.consume();  
+        if ((car < 'a' || car > 'z') && (car < 'A' || car > 'Z')
+                && car != 'á' //Minúsculas            
+                && car != 'é'
+                && car != 'í'
+                && car != 'ó'
+                && car != 'ú'
+                && car != 'Á' //Mayúsculas            
+                && car != 'É'
+                && car != 'Í'
+                && car != 'Ó'
+                && car != 'Ú'
+                && car != 'ñ'
+                && car != 'Ñ'
+                && (car != (char) KeyEvent.VK_SPACE)) {
+            evt.consume();
 
-    }
+        }
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void txtIsbnKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIsbnKeyTyped
         // TODO add your handling code here:
-        char c= evt.getKeyChar();
-        if(!Character.isDigit(c)) evt.consume();
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c)) {
+            evt.consume();
+        }
     }//GEN-LAST:event_txtIsbnKeyTyped
 
     private void txtPagKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPagKeyTyped
         // TODO add your handling code here:
-        char c= evt.getKeyChar();
-        if(!Character.isDigit(c)) evt.consume();
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c)) {
+            evt.consume();
+        }
     }//GEN-LAST:event_txtPagKeyTyped
 
     /**

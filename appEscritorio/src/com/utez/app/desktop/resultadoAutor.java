@@ -39,6 +39,7 @@ public class resultadoAutor extends javax.swing.JFrame {
         daoAutor = new DaoAutor(coneccion);
         actualizarTabla();
         initComponents();
+        this.setLocationRelativeTo(null);
     }
     
     private void actualizarTabla(){

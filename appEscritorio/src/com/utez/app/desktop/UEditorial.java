@@ -60,6 +60,14 @@ public class UEditorial extends javax.swing.JFrame {
         }
         
     }
+     public boolean comprobarTexto(String dato) {
+        boolean valido = false;
+        if (dato.length() > 0) {
+            valido = true;
+        }
+
+        return valido;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -198,24 +206,36 @@ public class UEditorial extends javax.swing.JFrame {
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         // TODO add your handling code here:
         DaoEditorial daoEditorial = new DaoEditorial(conexion); 
-        consultaBean.setNombre(txtNombre.getText());
-        consultaBean.setDireccion(txtDireccion.getText());
+       
+        if(txtNombre.getText().length()==0 && txtDireccion.getText().length()==0){
+        JOptionPane.showMessageDialog(rootPane, "Los campos estan Vacios");
+        }else{
+             
+         if (comprobarTexto(txtNombre.getText()) == false) {
+            JOptionPane.showMessageDialog(rootPane, "El campo Nombre esta Vacio");
+        }else {
+            if (comprobarTexto(txtDireccion.getText()) == false) {
+                JOptionPane.showMessageDialog(rootPane, "El campo Direccion esta Vacio");
+            }else{
+                consultaBean.setNombre(txtNombre.getText());
+             consultaBean.setDireccion(txtDireccion.getText());
          if (cmbAlta.getSelectedIndex()== 0){
             consultaBean.setAlta(true);
         }else if (cmbAlta.getSelectedIndex()== 1){
             consultaBean.setAlta(false);
         }
-         System.out.println(consultaBean);
-       // usuarioBean = new UsuarioBean(consultaBean);
         boolean ex = daoEditorial.update(consultaBean);
         if (ex) {
             JOptionPane.showMessageDialog(rootPane, "Registro Exitoso");
+            new resultadoEditorial().setVisible(true);
+            this.dispose();
            
         } else {
              JOptionPane.showMessageDialog(rootPane, "Registro Fallido");
         }
-        new resultadoEditorial().setVisible(true);
-        this.dispose();
+         }
+        }
+        }
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
@@ -266,7 +286,7 @@ public class UEditorial extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        new AdminData().setVisible(true);
+        new resultadoEditorial().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 

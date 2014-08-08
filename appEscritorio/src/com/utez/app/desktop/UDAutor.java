@@ -23,7 +23,6 @@ public class UDAutor extends javax.swing.JFrame {
 
     //private List<UsuarioBean> lista;
     //private DaoUsuario daoUsuario;
-
     private Connection conexion;
     private AutorBean autorBean;
     private AutorBean consultaBean;
@@ -36,25 +35,34 @@ public class UDAutor extends javax.swing.JFrame {
         }
 
         initComponents();
-                this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
 
     }
-    
-    public UDAutor(AutorBean consultaBean){
+
+    public UDAutor(AutorBean consultaBean) {
         this();
         this.consultaBean = consultaBean;
         llenarValores();
     }
-    
-    private void llenarValores(){
-         txtNombre.setText(consultaBean.getNombre());
-        txtApellido.setText(consultaBean.getApellido());
-        if(consultaBean.isAlta()){
-        cmbAlta.setSelectedIndex(0);
-        }else{
-        cmbAlta.setSelectedIndex(1);
+
+    public boolean comprobarTexto(String dato) {
+        boolean valido = false;
+        if (dato.length() > 0) {
+            valido = true;
         }
-        
+
+        return valido;
+    }
+
+    private void llenarValores() {
+        txtNombre.setText(consultaBean.getNombre());
+        txtApellido.setText(consultaBean.getApellido());
+        if (consultaBean.isAlta()) {
+            cmbAlta.setSelectedIndex(0);
+        } else {
+            cmbAlta.setSelectedIndex(1);
+        }
+
     }
 
     /**
@@ -199,77 +207,91 @@ public class UDAutor extends javax.swing.JFrame {
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         // TODO add your handling code here:
-        DaoAutor daoAutor = new DaoAutor(conexion); 
-        consultaBean.setNombre(txtNombre.getText());
-        consultaBean.setApellido(txtApellido.getText());
-         if (cmbAlta.getSelectedIndex()== 0){
-            consultaBean.setAlta(true);
-        }else if (cmbAlta.getSelectedIndex()== 1){
-            consultaBean.setAlta(false);
-        }
-         System.out.println(consultaBean);
-       // usuarioBean = new UsuarioBean(consultaBean);
-        boolean ex = daoAutor.update(consultaBean);
-        if (ex) {
-           JOptionPane.showMessageDialog(rootPane, "Registro Exitoso");
-           
+        DaoAutor daoAutor = new DaoAutor(conexion);
+
+        if (txtNombre.getText().length() == 0 && txtApellido.getText().length() == 0) {
+            JOptionPane.showMessageDialog(rootPane, "Los campos estan vacios");
         } else {
-             JOptionPane.showMessageDialog(rootPane, "Registro Fallido");
+            boolean validarNombre = comprobarTexto(txtNombre.getText());
+            if (validarNombre == false) {
+                JOptionPane.showMessageDialog(rootPane, "El campo de Nombre esta vacio");
+            } else if (validarNombre) {
+                boolean validarApellido = comprobarTexto(txtApellido.getText());
+                if (validarApellido == false) {
+                    JOptionPane.showMessageDialog(rootPane, "El campo de Apellido esta vacio");
+                } else if (validarApellido) {
+                    consultaBean.setNombre(txtNombre.getText());
+                    consultaBean.setApellido(txtApellido.getText());
+                    if (cmbAlta.getSelectedIndex() == 0) {
+                        consultaBean.setAlta(true);
+                    } else if (cmbAlta.getSelectedIndex() == 1) {
+                        consultaBean.setAlta(false);
+                    }
+
+                    boolean ex = daoAutor.update(consultaBean);
+                    if (ex) {
+                        JOptionPane.showMessageDialog(rootPane, "Registro Guardado con exito");
+                        new resultadoAutor().setVisible(true);
+                        this.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(rootPane, "Error al guardar el Registro");
+                    }
+
+                }
+
+            }
         }
-        new resultadoAutor().setVisible(true);
-        this.dispose();
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        new AdminData().setVisible(true);
+        new resultadoAutor().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         // TODO add your handling code here:
         char car = evt.getKeyChar();
-       if((car<'a' || car>'z') && (car<'A' || car>'Z')            
-        && car !='á' //Minúsculas            
-        && car !='é'           
-        && car !='í'           
-        && car !='ó'          
-        && car !='ú'  
-        && car !='Á' //Mayúsculas            
-        && car !='É'           
-        && car !='Í'           
-        && car !='Ó'
-        && car !='Ú'
-        && car !='ñ'
-        && car !='Ñ'    
-        && (car!=(char)KeyEvent.VK_SPACE))
-    {     
-    evt.consume();  
+        if ((car < 'a' || car > 'z') && (car < 'A' || car > 'Z')
+                && car != 'á' //Minúsculas            
+                && car != 'é'
+                && car != 'í'
+                && car != 'ó'
+                && car != 'ú'
+                && car != 'Á' //Mayúsculas            
+                && car != 'É'
+                && car != 'Í'
+                && car != 'Ó'
+                && car != 'Ú'
+                && car != 'ñ'
+                && car != 'Ñ'
+                && car != '.'
+                && (car != (char) KeyEvent.VK_SPACE)) {
+            evt.consume();
 
-    }
+        }
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void txtApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoKeyTyped
         // TODO add your handling code here:
         char car = evt.getKeyChar();
-       if((car<'a' || car>'z') && (car<'A' || car>'Z')            
-        && car !='á' //Minúsculas            
-        && car !='é'           
-        && car !='í'           
-        && car !='ó'          
-        && car !='ú'  
-        && car !='Á' //Mayúsculas            
-        && car !='É'           
-        && car !='Í'           
-        && car !='Ó'
-        && car !='Ú'
-        && car !='ñ'
-        && car !='Ñ'    
-        && (car!=(char)KeyEvent.VK_SPACE))
-    {     
-    evt.consume();  
+        if ((car < 'a' || car > 'z') && (car < 'A' || car > 'Z')
+                && car != 'á' //Minúsculas            
+                && car != 'é'
+                && car != 'í'
+                && car != 'ó'
+                && car != 'ú'
+                && car != 'Á' //Mayúsculas            
+                && car != 'É'
+                && car != 'Í'
+                && car != 'Ó'
+                && car != 'Ú'
+                && car != 'ñ'
+                && car != 'Ñ'
+                && (car != (char) KeyEvent.VK_SPACE)) {
+            evt.consume();
 
-    }
+        }
     }//GEN-LAST:event_txtApellidoKeyTyped
 
     /**
