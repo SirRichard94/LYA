@@ -170,20 +170,22 @@ public class CEditorial extends javax.swing.JFrame {
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         // TODO add your handling code here:
         DaoEditorial daoEditorial = new DaoEditorial(conexion);
-        boolean estado;
+        
         String nombre = txtNombre.getText();
         String direccion = txtDireccion.getText();
 
-        editorialBean = new EditorialBean(0, nombre, direccion, rootPaneCheckingEnabled);
+        
         if(nombre.length()==0 && direccion.length()==0){
         JOptionPane.showMessageDialog(rootPane, "Los campos estan Vacios");
         }else{
+            editorialBean = new EditorialBean(0, nombre, direccion, true);
         if (comprobarTexto(nombre) == false) {
             JOptionPane.showMessageDialog(rootPane, "El campo Nombre esta Vacio");
         } else {
             if (comprobarTexto(direccion) == false) {
                 JOptionPane.showMessageDialog(rootPane, "El campo Direccion esta Vacio");
             } else {
+                
                 boolean ex = daoEditorial.add(editorialBean);
                 if (ex) {
                        JOptionPane.showMessageDialog(rootPane, "Registro Exitoso");

@@ -25,7 +25,6 @@ public class UDUser extends javax.swing.JFrame {
 
     //private List<UsuarioBean> lista;
     //private DaoUsuario daoUsuario;
-
     private Connection conexion;
     private UsuarioBean usuarioBean;
     private UsuarioBean consultaBean;
@@ -41,26 +40,27 @@ public class UDUser extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
 
     }
-    
-    public UDUser(UsuarioBean consultaBean){
+
+    public UDUser(UsuarioBean consultaBean) {
         this();
         this.consultaBean = consultaBean;
         llenarValores();
     }
-    
-    private void llenarValores(){
-         txtNombre.setText(consultaBean.getNombre());
+
+    private void llenarValores() {
+        txtNombre.setText(consultaBean.getNombre());
         txtDireccion.setText(consultaBean.getDireccion());
         txtTelefono.setText(consultaBean.getTelefono());
         txtCorreo.setText(consultaBean.getCorreo());
         txtPass.setText(consultaBean.getPasswd());
-        if(consultaBean.isEs_admi()){
-        cmbTipo.setSelectedIndex(0);
-        }else{
-        cmbTipo.setSelectedIndex(1);
+        if (consultaBean.isEs_admi()) {
+            cmbTipo.setSelectedIndex(0);
+        } else {
+            cmbTipo.setSelectedIndex(1);
         }
     }
-public boolean comprobarTexto(String dato) {
+
+    public boolean comprobarTexto(String dato) {
         boolean valido = false;
         if (dato.length() > 0) {
             valido = true;
@@ -68,6 +68,7 @@ public boolean comprobarTexto(String dato) {
 
         return valido;
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -260,13 +261,13 @@ public boolean comprobarTexto(String dato) {
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         // TODO add your handling code here:
         DaoUsuario daoUsuario = new DaoUsuario(conexion);
-        
+
         boolean admi = false;
-        if(txtNombre.getText().length()==0 || txtDireccion.getText().length()==0 || txtCorreo.getText().length()==0 
-                || txtTelefono.getText().length() ==0 || txtPass.getText().length()==0 ){
-             String mensaje = "Error, campos vacios:";
-         
-         if (comprobarTexto(txtCorreo.getText()) == false) {
+        if (txtNombre.getText().length() == 0 || txtDireccion.getText().length() == 0 || txtCorreo.getText().length() == 0
+                || txtTelefono.getText().length() == 0 || txtPass.getText().length() == 0) {
+            String mensaje = "Error, campos vacios:";
+
+            if (comprobarTexto(txtCorreo.getText()) == false) {
                 mensaje += "\n -correo ";
             }
             if (comprobarTexto(txtNombre.getText()) == false) {
@@ -278,35 +279,35 @@ public boolean comprobarTexto(String dato) {
             if (comprobarTexto(txtPass.getText()) == false) {
                 mensaje += "\n -Pass";
             }
-            
+
             JOptionPane.showMessageDialog(rootPane, mensaje);
-         }else{
-        Comprobacion comprobacion= new Comprobacion();
-        consultaBean.setCorreo(txtCorreo.getText());
-        consultaBean.setNombre(txtNombre.getText());
-        consultaBean.setPasswd(txtPass.getText());
-        consultaBean.setDireccion(txtDireccion.getText());
-        consultaBean.setTelefono(txtTelefono.getText());
-        
-        if (cmbTipo.getSelectedIndex()<= 0){
-            consultaBean.setEs_admi(true);
-            }else if (cmbTipo.getSelectedIndex()== 1){
-            consultaBean.setEs_admi(false);
-        }
-         boolean validado= comprobacion.correo(txtCorreo.getText());
-        if (validado){
-            boolean ex = daoUsuario.update(consultaBean);
-            if (ex) {
-            JOptionPane.showMessageDialog(rootPane, "Se han realizado los cambios Correctamente");
-            new resultadoUsuario().setVisible(true);
-            this.dispose();
+        } else {
+            Comprobacion comprobacion = new Comprobacion();
+            consultaBean.setCorreo(txtCorreo.getText());
+            consultaBean.setNombre(txtNombre.getText());
+            consultaBean.setPasswd(txtPass.getText());
+            consultaBean.setDireccion(txtDireccion.getText());
+            consultaBean.setTelefono(txtTelefono.getText());
+
+            if (cmbTipo.getSelectedIndex() <= 0) {
+                consultaBean.setEs_admi(true);
+            } else if (cmbTipo.getSelectedIndex() == 1) {
+                consultaBean.setEs_admi(false);
+            }
+            boolean validado = comprobacion.correo(txtCorreo.getText());
+            if (validado) {
+                boolean ex = daoUsuario.update(consultaBean);
+                if (ex) {
+                    JOptionPane.showMessageDialog(rootPane, "Se han realizado los cambios Correctamente");
+                    new resultadoUsuario().setVisible(true);
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "No se han realizado los cambios Correctamente");
+                }
             } else {
-             JOptionPane.showMessageDialog(rootPane, "No se han realizado los cambios Correctamente");
-            }  
-        }else{
-           txtCorreo.setText("");
+                txtCorreo.setText("");
+            }
         }
-        } 
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -318,35 +319,36 @@ public boolean comprobarTexto(String dato) {
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         // TODO add your handling code here:
         char car = evt.getKeyChar();
-       if((car<'a' || car>'z') && (car<'A' || car>'Z')            
-        && car !='á' //Minúsculas            
-        && car !='é'           
-        && car !='í'           
-        && car !='ó'          
-        && car !='ú'  
-        && car !='Á' //Mayúsculas            
-        && car !='É'           
-        && car !='Í'           
-        && car !='Ó'
-        && car !='Ú'
-        && car !='ñ'
-        && car !='Ñ'    
-        && (car!=(char)KeyEvent.VK_SPACE))
-    {     
-    evt.consume();  
+        if ((car < 'a' || car > 'z') && (car < 'A' || car > 'Z')
+                && car != 'á' //Minúsculas            
+                && car != 'é'
+                && car != 'í'
+                && car != 'ó'
+                && car != 'ú'
+                && car != 'Á' //Mayúsculas            
+                && car != 'É'
+                && car != 'Í'
+                && car != 'Ó'
+                && car != 'Ú'
+                && car != 'ñ'
+                && car != 'Ñ'
+                && (car != (char) KeyEvent.VK_SPACE)) {
+            evt.consume();
 
-    }
+        }
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void txtDireccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDireccionKeyTyped
         // TODO add your handling code here:
-      
+
     }//GEN-LAST:event_txtDireccionKeyTyped
 
     private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
         // TODO add your handling code here:
-        char c= evt.getKeyChar();
-        if(!Character.isDigit(c)) evt.consume();
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c)) {
+            evt.consume();
+        }
     }//GEN-LAST:event_txtTelefonoKeyTyped
 
     /**

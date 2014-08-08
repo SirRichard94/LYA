@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.utez.app.desktop;
 
 import Utilerias.Comprobacion;
@@ -26,24 +25,27 @@ import utez.app.model.UsuarioBean;
  * @author Koffo
  */
 public class CUser extends javax.swing.JFrame {
+
     //private List<UsuarioBean> lista;
     //private DaoUsuario daoUsuario;
+
     private Connection conexion;
     private UsuarioBean usuarioBean;
-    
+
     public CUser() {
         try {
-            conexion=ConexionSQLServer.getConnection();
+            conexion = ConexionSQLServer.getConnection();
         } catch (SQLException ex) {
             Logger.getLogger(CUser.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
-       this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-      
+
+        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+
         initComponents();
-                this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
 
     }
+
     public boolean comprobarTexto(String dato) {
         boolean valido = false;
         if (dato.length() > 0) {
@@ -52,6 +54,7 @@ public class CUser extends javax.swing.JFrame {
 
         return valido;
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -223,25 +226,25 @@ public class CUser extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCorreoActionPerformed
 
     private void btnCrearKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCrearKeyPressed
-      
+
     }//GEN-LAST:event_btnCrearKeyPressed
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         // TODO add your handling code here:
-        Comprobacion comprobacion=new Comprobacion();
-        
-         DaoUsuario daoUsuario= new DaoUsuario(conexion);
-         boolean esAdmin;
-         String nombre=txtNombre.getText();
-         String direccion=txtDireccion.getText();
-         String correo=txtCorreo.getText();
-         String tel=txtTelefono.getText();  
-         String pass=txtPass.getText();
-         
-         if(nombre.length()==0 || direccion.length()==0 || correo.length()==0 || tel.length() ==0 || pass.length()==0 ){
-             String mensaje = "Error, campos vacios:";
-         
-         if (comprobarTexto(txtCorreo.getText()) == false) {
+        Comprobacion comprobacion = new Comprobacion();
+
+        DaoUsuario daoUsuario = new DaoUsuario(conexion);
+        boolean esAdmin;
+        String nombre = txtNombre.getText();
+        String direccion = txtDireccion.getText();
+        String correo = txtCorreo.getText();
+        String tel = txtTelefono.getText();
+        String pass = txtPass.getText();
+
+        if (nombre.length() == 0 || direccion.length() == 0 || correo.length() == 0 || tel.length() == 0 || pass.length() == 0) {
+            String mensaje = "Error, campos vacios:";
+
+            if (comprobarTexto(txtCorreo.getText()) == false) {
                 mensaje += "\n -correo ";
             }
             if (comprobarTexto(txtNombre.getText()) == false) {
@@ -254,35 +257,32 @@ public class CUser extends javax.swing.JFrame {
                 mensaje += "\n -Pass";
             }
             JOptionPane.showMessageDialog(rootPane, mensaje);
-         }else{
-         
-        boolean validado= comprobacion.correo(correo);
-        if (validado){
-            usuarioBean=new UsuarioBean(0, nombre, direccion, tel, correo, 0, pass, true, false);
-        boolean ex = daoUsuario.add(usuarioBean);
-        if(ex){
+        } else {
+
+            boolean validado = comprobacion.correo(correo);
+            if (validado) {
+                usuarioBean = new UsuarioBean(0, nombre, direccion, tel, correo, 0, pass, true, false);
+                boolean ex = daoUsuario.add(usuarioBean);
+                if (ex) {
 //            registro.setText("Registro guardado ");
 //           imagen.setIcon(image);
-           JOptionPane.showMessageDialog(rootPane, "Usuario Agregado");
-           new resultadoUsuario().setVisible(true);
-        this.dispose();
-        }else{
-            JOptionPane.showMessageDialog(rootPane, "Error al registrar");
+                    JOptionPane.showMessageDialog(rootPane, "Usuario Agregado");
+                    new resultadoUsuario().setVisible(true);
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "Error al registrar");
+                }
+            } else {
+                txtCorreo.setText("");
+            }
+            return;
+
         }
-        }else
-            
-        txtCorreo.setText("");
-        return;
-         
-         }
 //        JFrame frame = new JFrame("no image");
 //        ImageIcon image = new ImageIcon("C:\\Users\\Koffo\\Documents\\GitHub\\LYA\\appEscritorio\\imagenes\\circular icons\\yes.png");
 //        ImageIcon image1 = new ImageIcon("C:\\Users\\Koffo\\Documents\\GitHub\\LYA\\appEscritorio\\imagenes\\circular icons\\warning.png");
-        
-        
-        
-        
-        
+
+
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -293,65 +293,65 @@ public class CUser extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
-     
+
     }//GEN-LAST:event_formWindowClosed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-         this.dispose();
+        this.dispose();
     }//GEN-LAST:event_formWindowClosing
 
     private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
         // TODO add your handling code here:
-          char c= evt.getKeyChar();
-        if(!Character.isDigit(c) && c != '-') evt.consume();
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c) && c != '-') {
+            evt.consume();
+        }
     }//GEN-LAST:event_txtTelefonoKeyTyped
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         // TODO add your handling code here:
-         char car = evt.getKeyChar();
-         
-       if((car<'a' || car>'z') && (car<'A' || car>'Z')            
-        && car !='á' //Minúsculas            
-        && car !='é'           
-        && car !='í'           
-        && car !='ó'          
-        && car !='ú'  
-        && car !='Á' //Mayúsculas            
-        && car !='É'           
-        && car !='Í'           
-        && car !='Ó'
-        && car !='Ú'
-        && car !='ñ'
-        && car !='Ñ'    
-        && (car!=(char)KeyEvent.VK_SPACE))
-    {     
-    evt.consume();  
+        char car = evt.getKeyChar();
 
-    }
+        if ((car < 'a' || car > 'z') && (car < 'A' || car > 'Z')
+                && car != 'á' //Minúsculas            
+                && car != 'é'
+                && car != 'í'
+                && car != 'ó'
+                && car != 'ú'
+                && car != 'Á' //Mayúsculas            
+                && car != 'É'
+                && car != 'Í'
+                && car != 'Ó'
+                && car != 'Ú'
+                && car != 'ñ'
+                && car != 'Ñ'
+                && (car != (char) KeyEvent.VK_SPACE)) {
+            evt.consume();
+
+        }
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void txtPassKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPassKeyTyped
         // TODO add your handling code here:
-         char car = evt.getKeyChar();
-       if((car<'a' || car>'z') && (car<'A' || car>'Z')            
-        && car !='á' //Minúsculas            
-        && car !='é'           
-        && car !='í'           
-        && car !='ó'          
-        && car !='ú'  
-        && car !='Á' //Mayúsculas            
-        && car !='É'           
-        && car !='Í'           
-        && car !='Ó'
-        && car !='Ú'
-        && car !='ñ'
-        && car !='Ñ'    
-        && (car!=(char)KeyEvent.VK_SPACE))
-    {     
-    evt.consume();  
+        char car = evt.getKeyChar();
+        if ((car < 'a' || car > 'z') && (car < 'A' || car > 'Z')
+                && car != 'á' //Minúsculas            
+                && car != 'é'
+                && car != 'í'
+                && car != 'ó'
+                && car != 'ú'
+                && car != 'Á' //Mayúsculas            
+                && car != 'É'
+                && car != 'Í'
+                && car != 'Ó'
+                && car != 'Ú'
+                && car != 'ñ'
+                && car != 'Ñ'
+                && (car != (char) KeyEvent.VK_SPACE)) {
+            evt.consume();
 
-    }
+        }
     }//GEN-LAST:event_txtPassKeyTyped
 
     /**

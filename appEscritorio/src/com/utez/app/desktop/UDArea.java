@@ -183,23 +183,26 @@ public class UDArea extends javax.swing.JFrame {
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         // TODO add your handling code here:
         DaoArea daoArea = new DaoArea(conexion); 
-        consultaBean.setNombre(txtNombre.getText());
+        
+         
+        if(txtNombre.getText().length()>0){
+            consultaBean.setNombre(txtNombre.getText());
          if (cmbAlta.getSelectedIndex()== 0){
             consultaBean.setAlta(true);
         }else if (cmbAlta.getSelectedIndex()== 1){
             consultaBean.setAlta(false);
         }
-         System.out.println(consultaBean);
-       // usuarioBean = new UsuarioBean(consultaBean);
-        boolean ex = daoArea.update(consultaBean);
-        if (ex) {
-            JOptionPane.showMessageDialog(rootPane, "Registro Exitoso");
-           
-        } else {
-             JOptionPane.showMessageDialog(rootPane, "Registro Fallido");
+             boolean ex= daoArea.update(consultaBean);
+            if(ex){
+                JOptionPane.showMessageDialog(rootPane, "Registro exitoso");
+                 new resultadoArea().setVisible(true);
+                 this.dispose();
+            }else{
+            JOptionPane.showMessageDialog(rootPane, "Registro No exitoso");
+             }
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "El campo nombre esta vacio");
         }
-        new resultadoArea().setVisible(true);
-        this.dispose();
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
