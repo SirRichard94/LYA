@@ -144,14 +144,11 @@
           </Events>
         </Component>
         <Component class="javax.swing.JPasswordField" name="txtPass">
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtPassKeyPressed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\Koffo\Google Drive\INTEGRADORA_\logotipo de pag.png"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="jLabel4"/>
-          </Properties>
         </Component>
       </SubComponents>
     </Container>

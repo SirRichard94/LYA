@@ -7,6 +7,7 @@
 package com.utez.app.desktop;
 
 import Utilerias.ConexionSQLServer;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -48,6 +49,16 @@ public class CEjemplar extends javax.swing.JFrame {
         }
         
         initComponents();
+                this.setLocationRelativeTo(null);
+
+    }
+    public boolean comprobarTexto(String dato) {
+        boolean valido = false;
+        if (dato.length() > 0) {
+            valido = true;
+        }
+
+        return valido;
     }
 
     /**
@@ -59,14 +70,11 @@ public class CEjemplar extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtLocalizacion = new javax.swing.JTextField();
         btnCrear = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
         cmbLibro = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
         txtNumEjemplares = new javax.swing.JTextField();
@@ -74,62 +82,18 @@ public class CEjemplar extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel2.setBackground(new java.awt.Color(0, 0, 102));
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("LyA");
-        jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel4MouseClicked(evt);
-            }
-        });
-
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Inicar Sesiòn");
-        jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel5MouseClicked(evt);
-            }
-        });
-        jLabel5.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jLabel5KeyPressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(257, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(52, Short.MAX_VALUE))
-        );
-
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Nueva Editorial"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Nueva Ejemplar"));
 
         jLabel2.setText("Localizacion");
 
         txtLocalizacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtLocalizacionActionPerformed(evt);
+            }
+        });
+        txtLocalizacion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtLocalizacionKeyTyped(evt);
             }
         });
 
@@ -145,11 +109,22 @@ public class CEjemplar extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Cancelar");
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         cmbLibro.setModel(modeloLibro);
 
         jLabel3.setText("Libro");
+
+        txtNumEjemplares.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNumEjemplaresKeyTyped(evt);
+            }
+        });
 
         jLabel6.setText("Num Ejemplares");
 
@@ -159,22 +134,22 @@ public class CEjemplar extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cmbLibro, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtLocalizacion)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtNumEjemplares, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 100, Short.MAX_VALUE)))
-                .addGap(61, 61, 61))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(btnCrear)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNumEjemplares, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(cmbLibro, javax.swing.GroupLayout.Alignment.LEADING, 0, 193, Short.MAX_VALUE)
+                                .addComponent(txtLocalizacion, javax.swing.GroupLayout.Alignment.LEADING))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnCrear)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCancelar)))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -194,7 +169,7 @@ public class CEjemplar extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCrear)
-                    .addComponent(jButton2))
+                    .addComponent(btnCancelar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -202,39 +177,21 @@ public class CEjemplar extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(22, 22, 22)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(23, 23, 23)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-        // TODO add your handling code here:
-        new Bienvenida().setVisible(true);
-    }//GEN-LAST:event_jLabel4MouseClicked
-
-    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
-        // TODO add your handling code here:
-        new Login().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jLabel5MouseClicked
-
-    private void jLabel5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLabel5KeyPressed
-        // TODO add your handling code here:
-        new Login().setVisible(true);
-    }//GEN-LAST:event_jLabel5KeyPressed
 
     private void btnCrearKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCrearKeyPressed
         // TODO add your handling code here:
@@ -250,21 +207,60 @@ public class CEjemplar extends javax.swing.JFrame {
          consultaBean.setLocalizacion(txtLocalizacion.getText());
          consultaBean.setLibro(libro);
         int num = Integer.parseInt(txtNumEjemplares.getText());
-        
+
         for (int i = 0; i < num; i++){
              if(!daoEjemplar.add(consultaBean)){
-                 JOptionPane.showMessageDialog(rootPane, "Error");
+                 JOptionPane.showMessageDialog(rootPane, "Error al registrar");
                  return;
              }
         }
-         JOptionPane.showMessageDialog(rootPane, "Exito");
-       
+         JOptionPane.showMessageDialog(rootPane, "Registro Exitoso");
+         new AdminData().setVisible(true);
+         this.dispose();
+            
         
     }//GEN-LAST:event_btnCrearActionPerformed
-
+    
     private void txtLocalizacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLocalizacionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtLocalizacionActionPerformed
+
+    private void txtLocalizacionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLocalizacionKeyTyped
+        // TODO add your handling code here:
+         char car = evt.getKeyChar();
+       if((car<'a' || car>'z') && (car<'A' || car>'Z')            
+        && car !='á' //Minúsculas            
+        && car !='é'           
+        && car !='í'           
+        && car !='ó'          
+        && car !='ú'  
+        && car !='Á' //Mayúsculas            
+        && car !='É'           
+        && car !='Í'           
+        && car !='Ó'
+        && car !='Ú'
+        && car !='ñ'
+        && car !='Ñ'    
+        && (car!=(char)KeyEvent.VK_SPACE))
+    {     
+    evt.consume();  
+
+    }
+    }//GEN-LAST:event_txtLocalizacionKeyTyped
+
+    private void txtNumEjemplaresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumEjemplaresKeyTyped
+        // TODO add your handling code here:
+        char c= evt.getKeyChar();
+        if(!Character.isDigit(c)) evt.consume();
+            
+        
+    }//GEN-LAST:event_txtNumEjemplaresKeyTyped
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        new AdminData().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -302,17 +298,14 @@ public class CEjemplar extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnCrear;
     private javax.swing.JComboBox cmbLibro;
     private DefaultComboBoxModel modeloLibro=new DefaultComboBoxModel();
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField txtLocalizacion;
     private javax.swing.JTextField txtNumEjemplares;
     // End of variables declaration//GEN-END:variables

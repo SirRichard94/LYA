@@ -9,65 +9,53 @@ package com.utez.app.desktop;
 import Utilerias.ConexionSQLServer;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import utez.app.daos.DaoLibro;
 import utez.app.daos.DaoPrestamo;
-import utez.app.daos.DaoUsuario;
-import utez.app.model.LibroBean;
 import utez.app.model.PrestamoBean;
-import utez.app.model.UsuarioBean;
+import utez.app.utilidades.Biblioteca;
 
 /**
  *
  * @author Koffo
  */
-public class Prestamo extends javax.swing.JFrame {
+public class Entrega extends javax.swing.JFrame {
 
-   private List<LibroBean>libroBeans;
-   private List<UsuarioBean>usuarioBeans;
-   private List<PrestamoBean> prestamoBeans;
+  
+   private PrestamoBean prestamo;
    private Connection conexion;
-   private DefaultTableModel tablaPrestamo;
-   
-    public Prestamo() {
+   DaoPrestamo daoPrestamo;
+   boolean mysql;
+   Biblioteca biblioteca;
+   public Entrega(PrestamoBean prestamo) {
+       mysql = false;
+       this.prestamo = prestamo;
        try {
            conexion=ConexionSQLServer.getConnection();
        } catch (SQLException ex) {
            Logger.getLogger(Prestamo.class.getName()).log(Level.SEVERE, null, ex);
        }
-       DaoPrestamo daoPrestamo=new DaoPrestamo(conexion);
-       DaoLibro daoLibro=new DaoLibro(conexion);
-       DaoUsuario daoUsuario=new DaoUsuario(conexion);
+        daoPrestamo = new DaoPrestamo(conexion);
+        biblioteca.actualizarPenalizaciones(prestamo.getUsuario());
+        
        
-       libroBeans=daoLibro.getActive();
-        for (LibroBean beanLib : libroBeans) {
-            modeloLibro.addElement(beanLib.getNombre());
-        }
-        usuarioBeans=daoUsuario.getActive();
-        for (UsuarioBean beanUser : usuarioBeans) {
-            modeloUsuario.addElement(beanUser.getNombre());
-        }
-    
-      actualizarTabla();
+        lblDeuda.setText("$"+prestamo.getUsuario().getDeuda());
+        lblUser.setText(prestamo.getUsuario().getNombre());
+        lblDias.setText(""+daoPrestamo.diasDeRetraso(prestamo, mysql));
+        lblLibro.setText(prestamo.getEjemplar().getLibro().getNombre());
+     
           initComponents();   
+           this.setLocationRelativeTo(null);
         
     }
-    
-    private void actualizarTabla(){
-        tablaPrestamo= new DefaultTableModel (new String[]{"Usuario","Ejemplar_id","Libro","Fecha Salida","Fecha Entrega"},0);
-        prestamoBeans = new DaoPrestamo(conexion).getAll();
-        for (PrestamoBean bean : prestamoBeans) {
-            Object arre[]=
-            {bean.getUsuario().getNombre(),bean.getEjemplar().getEjemplar_id(),bean.getEjemplar().getLibro().getNombre() ,bean.getFecha_salida(),bean.getFecha_entrega()};
-            tablaPrestamo.addRow(arre);
-        }
-        try{tblPrestmos.setModel(tablaPrestamo);}catch(NullPointerException e){}
+   
+    public Entrega() {
+        this(new PrestamoBean());
     }
+    
+    
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -88,14 +76,17 @@ public class Prestamo extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        cmbUsuario = new javax.swing.JComboBox();
-        jLabel2 = new javax.swing.JLabel();
-        cmbLibro = new javax.swing.JComboBox();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblPrestmos = new javax.swing.JTable();
-        btnCrear = new javax.swing.JButton();
         btnEntregado = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        lblUser = new javax.swing.JLabel();
+        lblDeuda = new javax.swing.JLabel();
+        lblDias = new javax.swing.JLabel();
+        lblLibro = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -147,7 +138,7 @@ public class Prestamo extends javax.swing.JFrame {
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(340, Short.MAX_VALUE)
+                .addContainerGap(270, Short.MAX_VALUE)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
@@ -165,29 +156,6 @@ public class Prestamo extends javax.swing.JFrame {
                 .addContainerGap(52, Short.MAX_VALUE))
         );
 
-        jLabel1.setText("Usuario");
-
-        cmbUsuario.setModel(modeloUsuario);
-
-        jLabel2.setText("Libro");
-
-        cmbLibro.setModel(modeloLibro);
-        cmbLibro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbLibroActionPerformed(evt);
-            }
-        });
-
-        tblPrestmos.setModel(tablaPrestamo);
-        jScrollPane1.setViewportView(tblPrestmos);
-
-        btnCrear.setText("Crear");
-        btnCrear.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCrearActionPerformed(evt);
-            }
-        });
-
         btnEntregado.setText("Entregado");
         btnEntregado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -195,45 +163,87 @@ public class Prestamo extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setText("Usuario");
+
+        jLabel7.setText("Deuda");
+
+        jLabel8.setText("Dias ");
+
+        jLabel9.setText("Libro");
+
+        jLabel1.setText("El prestamo tiene penalizacion");
+
+        jButton1.setText("Cancelar");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(31, 31, 31)
-                        .addComponent(cmbLibro, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9))
+                        .addGap(48, 48, 48)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblDias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblLibro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel7)
+                            .addGap(40, 40, 40)
+                            .addComponent(lblDeuda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(lblUser, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(368, 368, 368))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(193, 193, 193)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(cmbUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCrear)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnEntregado))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnEntregado)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)
+                        .addGap(42, 42, 42))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(3, 3, 3)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(cmbUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel3)
+                    .addComponent(lblUser))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(cmbLibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCrear))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnEntregado)
-                .addContainerGap(22, Short.MAX_VALUE))
+                    .addComponent(jLabel7)
+                    .addComponent(lblDeuda))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblDias)
+                        .addGap(11, 11, 11))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addGap(18, 18, 18)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(lblLibro))
+                .addGap(29, 116, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(btnEntregado))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -242,16 +252,15 @@ public class Prestamo extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -277,62 +286,13 @@ public class Prestamo extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel6KeyPressed
 
-    private void cmbLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbLibroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbLibroActionPerformed
-
-    private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
-        // TODO add your handling code here:
-        //nuevo prestamo
-        LibroBean libro = libroBeans.get(
-                modeloLibro.getIndexOf(
-                        modeloLibro.getSelectedItem()));
-        UsuarioBean usuario = usuarioBeans.get(
-                modeloUsuario.getIndexOf(
-                        modeloUsuario.getSelectedItem()));
-        
-        if ( usuario.getDeuda() > 0){
-            JOptionPane.showMessageDialog(rootPane, "No se pudo crear prestamo"
-                    + "\n El Usuario Tiene Penalizacion");
-            return;
-        } 
-        if ( new DaoUsuario(conexion).countPrestamos(usuario) >= 3 ){
-            JOptionPane.showMessageDialog(rootPane, "No se pudo crear prestamo"
-                    + "\n El usuario ya tiene 3 prestamos");
-            return;
-        } 
-        if ( new DaoLibro(conexion).countEjemplaresDisponibles(libro) <= 3 ){
-            JOptionPane.showMessageDialog(rootPane, "No se pudo crear prestamo"
-                    + "\n No hay suficientes ejemplares disponibles");
-            return;
-        }
-         
-        if (new DaoPrestamo(conexion).nuevoPrestamo(usuario, libro, 3, false)){//sql server
-            //creado
-            JOptionPane.showMessageDialog(rootPane, "Exito");
-            
-        }else{
-            //no creado
-            JOptionPane.showMessageDialog(rootPane, "Nope");
-        }
-        
-        actualizarTabla();
-    }//GEN-LAST:event_btnCrearActionPerformed
-
     private void btnEntregadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntregadoActionPerformed
         // TODO add your handling code here:
-        PrestamoBean prestamo = prestamoBeans.get(             
-                tblPrestmos.getSelectedRow());
-        DaoPrestamo daoPrestamo = new DaoPrestamo(conexion);
-        
-        if (daoPrestamo.penalizacion(prestamo) > 0){
-            
-            new Entrega(prestamo).setVisible(true);
-            
-        }else {
-            daoPrestamo.delete(prestamo);
-        }
-        actualizarTabla();
+        daoPrestamo.delete(prestamo);
+        biblioteca.actualizarPenalizaciones(prestamo.getUsuario());
+        JOptionPane.showMessageDialog(rootPane, "Libro Entregado, Penalizacion pagada");
+        this.dispose();
+        //cambiar de ventana
     }//GEN-LAST:event_btnEntregadoActionPerformed
 
     /**
@@ -352,36 +312,35 @@ public class Prestamo extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Prestamo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Entrega.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Prestamo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Entrega.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Prestamo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Entrega.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Prestamo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Entrega.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Prestamo().setVisible(true);
+                new Entrega().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCrear;
     private javax.swing.JButton btnEntregado;
-    private javax.swing.JComboBox cmbLibro;
-    private DefaultComboBoxModel modeloLibro =new DefaultComboBoxModel();
-    private javax.swing.JComboBox cmbUsuario;
-    private DefaultComboBoxModel modeloUsuario=new DefaultComboBoxModel();
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
@@ -389,7 +348,9 @@ public class Prestamo extends javax.swing.JFrame {
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JPopupMenu jPopupMenu2;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblPrestmos;
+    private javax.swing.JLabel lblDeuda;
+    private javax.swing.JLabel lblDias;
+    private javax.swing.JLabel lblLibro;
+    private javax.swing.JLabel lblUser;
     // End of variables declaration//GEN-END:variables
 }

@@ -24,6 +24,7 @@ import utez.app.model.UsuarioBean;
 public class AdminData extends javax.swing.JFrame {
  private Connection connection;
  private DaoUsuario daoUsuario;
+ private ControlSesion sesion;
  
     /**
      * Creates new form AdminData
@@ -32,11 +33,13 @@ public class AdminData extends javax.swing.JFrame {
      try {
          connection=ConexionSQLServer.getConnection();
          initComponents();
+         this.setLocationRelativeTo(null);
      } catch (SQLException ex) {
          Logger.getLogger(AdminData.class.getName()).log(Level.SEVERE, null, ex);
      }
-     
-     if(!ControlSesion.isAdmin()){
+      this.setLocationRelativeTo(null);
+     sesion = ControlSesion.getInstance();
+     if(!sesion.isAdmin()){
          //cerrar ventana
      }
     }
@@ -50,14 +53,20 @@ public class AdminData extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuBar2 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuBar3 = new javax.swing.JMenuBar();
+        jMenu4 = new javax.swing.JMenu();
+        jMenu10 = new javax.swing.JMenu();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
@@ -65,30 +74,44 @@ public class AdminData extends javax.swing.JFrame {
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
-        jMenuItem17 = new javax.swing.JMenuItem();
-        jMenuItem18 = new javax.swing.JMenuItem();
-        jMenuItem19 = new javax.swing.JMenuItem();
-        jMenuItem20 = new javax.swing.JMenuItem();
+        btnAgregarUsuario = new javax.swing.JMenuItem();
+        btnCosultarUsuario = new javax.swing.JMenuItem();
+        btnModificarUsuario = new javax.swing.JMenuItem();
+        btnDeleteUsuario = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
-        jMenuItem21 = new javax.swing.JMenuItem();
-        jMenuItem22 = new javax.swing.JMenuItem();
-        jMenuItem23 = new javax.swing.JMenuItem();
-        jMenuItem24 = new javax.swing.JMenuItem();
+        btnAgregarAutor = new javax.swing.JMenuItem();
+        btnConsultarAutor = new javax.swing.JMenuItem();
+        btnModificarAutor = new javax.swing.JMenuItem();
+        btnBorrarAutor = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
-        jMenuItem25 = new javax.swing.JMenuItem();
-        jMenuItem26 = new javax.swing.JMenuItem();
-        jMenuItem27 = new javax.swing.JMenuItem();
-        jMenuItem28 = new javax.swing.JMenuItem();
+        btnAgregarLibro = new javax.swing.JMenuItem();
+        btnConsultarLibro = new javax.swing.JMenuItem();
+        btnModificarLibro = new javax.swing.JMenuItem();
+        btnEliminarLibro = new javax.swing.JMenuItem();
         jMenu8 = new javax.swing.JMenu();
-        jMenuItem29 = new javax.swing.JMenuItem();
-        jMenuItem30 = new javax.swing.JMenuItem();
-        jMenuItem31 = new javax.swing.JMenuItem();
-        jMenuItem32 = new javax.swing.JMenuItem();
+        btnAgregarEditorial = new javax.swing.JMenuItem();
+        btnConsultarrEditorial = new javax.swing.JMenuItem();
+        btnModificarEditorial = new javax.swing.JMenuItem();
+        btnEliminarEditorial = new javax.swing.JMenuItem();
         jMenu9 = new javax.swing.JMenu();
-        jMenuItem33 = new javax.swing.JMenuItem();
-        jMenuItem34 = new javax.swing.JMenuItem();
-        jMenuItem35 = new javax.swing.JMenuItem();
-        jMenuItem36 = new javax.swing.JMenuItem();
+        btnAgregarArea = new javax.swing.JMenuItem();
+        btnConsultarArea = new javax.swing.JMenuItem();
+        btnModificarArea = new javax.swing.JMenuItem();
+        btnEliminarArea = new javax.swing.JMenuItem();
+        jMenu11 = new javax.swing.JMenu();
+        btnPrestamo = new javax.swing.JMenuItem();
+
+        jMenu1.setText("File");
+        jMenuBar2.add(jMenu1);
+
+        jMenu2.setText("Edit");
+        jMenuBar2.add(jMenu2);
+
+        jMenu4.setText("File");
+        jMenuBar3.add(jMenu4);
+
+        jMenu10.setText("Edit");
+        jMenuBar3.add(jMenu10);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -101,6 +124,11 @@ public class AdminData extends javax.swing.JFrame {
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel4MouseClicked(evt);
+            }
+        });
+        jLabel4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jLabel4KeyPressed(evt);
             }
         });
 
@@ -118,6 +146,19 @@ public class AdminData extends javax.swing.JFrame {
             }
         });
 
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel6MouseClicked(evt);
+            }
+        });
+        jLabel6.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jLabel6KeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -127,13 +168,15 @@ public class AdminData extends javax.swing.JFrame {
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(481, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(170, 170, 170))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(74, 74, 74))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -142,7 +185,9 @@ public class AdminData extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addContainerGap(32, Short.MAX_VALUE))
@@ -159,13 +204,14 @@ public class AdminData extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(64, 64, 64)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(58, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,203 +244,196 @@ public class AdminData extends javax.swing.JFrame {
 
         jMenu5.setText("Usuario");
 
-        jMenuItem17.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\add.png")); // NOI18N
-        jMenuItem17.setText("Agregar");
-        jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregarUsuario.setText("Agregar");
+        btnAgregarUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem17ActionPerformed(evt);
+                btnAgregarUsuarioActionPerformed(evt);
             }
         });
-        jMenu5.add(jMenuItem17);
+        jMenu5.add(btnAgregarUsuario);
 
-        jMenuItem18.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\eye.png")); // NOI18N
-        jMenuItem18.setText("Consultar");
-        jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
+        btnCosultarUsuario.setText("Consultar");
+        btnCosultarUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem18ActionPerformed(evt);
+                btnCosultarUsuarioActionPerformed(evt);
             }
         });
-        jMenu5.add(jMenuItem18);
+        jMenu5.add(btnCosultarUsuario);
 
-        jMenuItem19.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\clock.png")); // NOI18N
-        jMenuItem19.setText("Modificar");
-        jMenuItem19.addActionListener(new java.awt.event.ActionListener() {
+        btnModificarUsuario.setText("Modificar");
+        btnModificarUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem19ActionPerformed(evt);
+                btnModificarUsuarioActionPerformed(evt);
             }
         });
-        jMenu5.add(jMenuItem19);
+        jMenu5.add(btnModificarUsuario);
 
-        jMenuItem20.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\delete.png")); // NOI18N
-        jMenuItem20.setText("Eliminar");
-        jMenuItem20.addActionListener(new java.awt.event.ActionListener() {
+        btnDeleteUsuario.setText("Eliminar");
+        btnDeleteUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem20ActionPerformed(evt);
+                btnDeleteUsuarioActionPerformed(evt);
             }
         });
-        jMenu5.add(jMenuItem20);
+        jMenu5.add(btnDeleteUsuario);
 
         jMenuBar1.add(jMenu5);
 
         jMenu6.setText("Autor");
 
-        jMenuItem21.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\add.png")); // NOI18N
-        jMenuItem21.setText("Agregar");
-        jMenuItem21.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregarAutor.setText("Agregar");
+        btnAgregarAutor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem21ActionPerformed(evt);
+                btnAgregarAutorActionPerformed(evt);
             }
         });
-        jMenu6.add(jMenuItem21);
+        jMenu6.add(btnAgregarAutor);
 
-        jMenuItem22.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\eye.png")); // NOI18N
-        jMenuItem22.setText("Consultar");
-        jMenuItem22.addActionListener(new java.awt.event.ActionListener() {
+        btnConsultarAutor.setText("Consultar");
+        btnConsultarAutor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem22ActionPerformed(evt);
+                btnConsultarAutorActionPerformed(evt);
             }
         });
-        jMenu6.add(jMenuItem22);
+        jMenu6.add(btnConsultarAutor);
 
-        jMenuItem23.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\clock.png")); // NOI18N
-        jMenuItem23.setText("Modificar");
-        jMenuItem23.addActionListener(new java.awt.event.ActionListener() {
+        btnModificarAutor.setText("Modificar");
+        btnModificarAutor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem23ActionPerformed(evt);
+                btnModificarAutorActionPerformed(evt);
             }
         });
-        jMenu6.add(jMenuItem23);
+        jMenu6.add(btnModificarAutor);
 
-        jMenuItem24.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\delete.png")); // NOI18N
-        jMenuItem24.setText("Eliminar");
-        jMenuItem24.addActionListener(new java.awt.event.ActionListener() {
+        btnBorrarAutor.setText("Eliminar");
+        btnBorrarAutor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem24ActionPerformed(evt);
+                btnBorrarAutorActionPerformed(evt);
             }
         });
-        jMenu6.add(jMenuItem24);
+        jMenu6.add(btnBorrarAutor);
 
         jMenuBar1.add(jMenu6);
 
         jMenu7.setText("Libro");
 
-        jMenuItem25.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\add.png")); // NOI18N
-        jMenuItem25.setText("Agregar");
-        jMenuItem25.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregarLibro.setText("Agregar");
+        btnAgregarLibro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem25ActionPerformed(evt);
+                btnAgregarLibroActionPerformed(evt);
             }
         });
-        jMenu7.add(jMenuItem25);
+        jMenu7.add(btnAgregarLibro);
 
-        jMenuItem26.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\eye.png")); // NOI18N
-        jMenuItem26.setText("Consultar");
-        jMenuItem26.addActionListener(new java.awt.event.ActionListener() {
+        btnConsultarLibro.setText("Consultar");
+        btnConsultarLibro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem26ActionPerformed(evt);
+                btnConsultarLibroActionPerformed(evt);
             }
         });
-        jMenu7.add(jMenuItem26);
+        jMenu7.add(btnConsultarLibro);
 
-        jMenuItem27.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\clock.png")); // NOI18N
-        jMenuItem27.setText("Modificar");
-        jMenuItem27.addActionListener(new java.awt.event.ActionListener() {
+        btnModificarLibro.setText("Modificar");
+        btnModificarLibro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem27ActionPerformed(evt);
+                btnModificarLibroActionPerformed(evt);
             }
         });
-        jMenu7.add(jMenuItem27);
+        jMenu7.add(btnModificarLibro);
 
-        jMenuItem28.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\delete.png")); // NOI18N
-        jMenuItem28.setText("Eliminar");
-        jMenuItem28.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminarLibro.setText("Eliminar");
+        btnEliminarLibro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem28ActionPerformed(evt);
+                btnEliminarLibroActionPerformed(evt);
             }
         });
-        jMenu7.add(jMenuItem28);
+        jMenu7.add(btnEliminarLibro);
 
         jMenuBar1.add(jMenu7);
 
         jMenu8.setText("Editorial");
 
-        jMenuItem29.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\add.png")); // NOI18N
-        jMenuItem29.setText("Agregar");
-        jMenuItem29.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregarEditorial.setText("Agregar");
+        btnAgregarEditorial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem29ActionPerformed(evt);
+                btnAgregarEditorialActionPerformed(evt);
             }
         });
-        jMenu8.add(jMenuItem29);
+        jMenu8.add(btnAgregarEditorial);
 
-        jMenuItem30.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\eye.png")); // NOI18N
-        jMenuItem30.setText("Consultar");
-        jMenuItem30.addActionListener(new java.awt.event.ActionListener() {
+        btnConsultarrEditorial.setText("Consultar");
+        btnConsultarrEditorial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem30ActionPerformed(evt);
+                btnConsultarrEditorialActionPerformed(evt);
             }
         });
-        jMenu8.add(jMenuItem30);
+        jMenu8.add(btnConsultarrEditorial);
 
-        jMenuItem31.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\clock.png")); // NOI18N
-        jMenuItem31.setText("Modificar");
-        jMenuItem31.addActionListener(new java.awt.event.ActionListener() {
+        btnModificarEditorial.setText("Modificar");
+        btnModificarEditorial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem31ActionPerformed(evt);
+                btnModificarEditorialActionPerformed(evt);
             }
         });
-        jMenu8.add(jMenuItem31);
+        jMenu8.add(btnModificarEditorial);
 
-        jMenuItem32.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\delete.png")); // NOI18N
-        jMenuItem32.setText("Eliminar");
-        jMenuItem32.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminarEditorial.setText("Eliminar");
+        btnEliminarEditorial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem32ActionPerformed(evt);
+                btnEliminarEditorialActionPerformed(evt);
             }
         });
-        jMenu8.add(jMenuItem32);
+        jMenu8.add(btnEliminarEditorial);
 
         jMenuBar1.add(jMenu8);
 
-        jMenu9.setText("Area");
+        jMenu9.setText("Área");
 
-        jMenuItem33.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\add.png")); // NOI18N
-        jMenuItem33.setText("Agregar");
-        jMenuItem33.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregarArea.setText("Agregar");
+        btnAgregarArea.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem33ActionPerformed(evt);
+                btnAgregarAreaActionPerformed(evt);
             }
         });
-        jMenu9.add(jMenuItem33);
+        jMenu9.add(btnAgregarArea);
 
-        jMenuItem34.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\eye.png")); // NOI18N
-        jMenuItem34.setText("Consultar");
-        jMenuItem34.addActionListener(new java.awt.event.ActionListener() {
+        btnConsultarArea.setText("Consultar");
+        btnConsultarArea.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem34ActionPerformed(evt);
+                btnConsultarAreaActionPerformed(evt);
             }
         });
-        jMenu9.add(jMenuItem34);
+        jMenu9.add(btnConsultarArea);
 
-        jMenuItem35.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\clock.png")); // NOI18N
-        jMenuItem35.setText("Modificar");
-        jMenuItem35.addActionListener(new java.awt.event.ActionListener() {
+        btnModificarArea.setText("Modificar");
+        btnModificarArea.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem35ActionPerformed(evt);
+                btnModificarAreaActionPerformed(evt);
             }
         });
-        jMenu9.add(jMenuItem35);
+        jMenu9.add(btnModificarArea);
 
-        jMenuItem36.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\NetBeansProjects\\appEscritorioLYA\\circular icons\\delete.png")); // NOI18N
-        jMenuItem36.setText("Eliminar");
-        jMenuItem36.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminarArea.setText("Eliminar");
+        btnEliminarArea.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem36ActionPerformed(evt);
+                btnEliminarAreaActionPerformed(evt);
             }
         });
-        jMenu9.add(jMenuItem36);
+        jMenu9.add(btnEliminarArea);
 
         jMenuBar1.add(jMenu9);
+
+        jMenu11.setText("Prestamo");
+
+        btnPrestamo.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Documents\\GitHub\\LYA\\appEscritorio\\circular icons\\cog.png")); // NOI18N
+        btnPrestamo.setText("Prestamo Libro");
+        btnPrestamo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrestamoActionPerformed(evt);
+            }
+        });
+        jMenu11.add(btnPrestamo);
+
+        jMenuBar1.add(jMenu11);
 
         setJMenuBar(jMenuBar1);
 
@@ -404,21 +443,17 @@ public class AdminData extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(70, 70, 70))
+                .addGap(309, 309, 309))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addGap(50, 50, 50)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(119, Short.MAX_VALUE))
         );
 
         pack();
@@ -427,6 +462,7 @@ public class AdminData extends javax.swing.JFrame {
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
         // TODO add your handling code here:
         new Bienvenida().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
@@ -444,129 +480,146 @@ public class AdminData extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
-    private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
+    private void btnAgregarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarUsuarioActionPerformed
         // TODO add your handling code here:
         new CUser().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jMenuItem17ActionPerformed
+        
+    }//GEN-LAST:event_btnAgregarUsuarioActionPerformed
 
-    private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
+    private void btnAgregarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarAutorActionPerformed
         // TODO add your handling code here:
         new CAutor().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jMenuItem21ActionPerformed
+        
+    }//GEN-LAST:event_btnAgregarAutorActionPerformed
 
-    private void jMenuItem25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem25ActionPerformed
+    private void btnAgregarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarLibroActionPerformed
         // TODO add your handling code here:
         new CLibro().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jMenuItem25ActionPerformed
+       
+    }//GEN-LAST:event_btnAgregarLibroActionPerformed
 
-    private void jMenuItem29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem29ActionPerformed
+    private void btnAgregarEditorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarEditorialActionPerformed
         // TODO add your handling code here:
         new CEditorial().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jMenuItem29ActionPerformed
+        
+    }//GEN-LAST:event_btnAgregarEditorialActionPerformed
 
-    private void jMenuItem33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem33ActionPerformed
+    private void btnAgregarAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarAreaActionPerformed
         // TODO add your handling code here:
         new CArea().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jMenuItem33ActionPerformed
+       
+    }//GEN-LAST:event_btnAgregarAreaActionPerformed
 
-    private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
+    private void btnCosultarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCosultarUsuarioActionPerformed
         // TODO add your handling code here:
         new resultadoUsuario().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jMenuItem18ActionPerformed
+        
+    }//GEN-LAST:event_btnCosultarUsuarioActionPerformed
 
-    private void jMenuItem30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem30ActionPerformed
+    private void btnConsultarrEditorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarrEditorialActionPerformed
         // TODO add your handling code here:
         new resultadoEditorial().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jMenuItem30ActionPerformed
+        
+    }//GEN-LAST:event_btnConsultarrEditorialActionPerformed
 
-    private void jMenuItem34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem34ActionPerformed
+    private void btnConsultarAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarAreaActionPerformed
         // TODO add your handling code here:
         new resultadoArea().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jMenuItem34ActionPerformed
+        
+    }//GEN-LAST:event_btnConsultarAreaActionPerformed
 
-    private void jMenuItem26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem26ActionPerformed
+    private void btnConsultarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarLibroActionPerformed
         // TODO add your handling code here:
         new resultadoLibro().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jMenuItem26ActionPerformed
+       
+    }//GEN-LAST:event_btnConsultarLibroActionPerformed
 
-    private void jMenuItem31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem31ActionPerformed
+    private void btnModificarEditorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarEditorialActionPerformed
         // TODO add your handling code here:
         new resultadoEditorial().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jMenuItem31ActionPerformed
+        
+    }//GEN-LAST:event_btnModificarEditorialActionPerformed
 
-    private void jMenuItem22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem22ActionPerformed
+    private void btnConsultarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarAutorActionPerformed
         // TODO add your handling code here:
         new resultadoAutor().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jMenuItem22ActionPerformed
+        
+    }//GEN-LAST:event_btnConsultarAutorActionPerformed
 
-    private void jMenuItem35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem35ActionPerformed
+    private void btnModificarAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarAreaActionPerformed
         // TODO add your handling code here:
         new resultadoArea().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jMenuItem35ActionPerformed
+        
+    }//GEN-LAST:event_btnModificarAreaActionPerformed
 
-    private void jMenuItem36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem36ActionPerformed
+    private void btnEliminarAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarAreaActionPerformed
         // TODO add your handling code here:
         new resultadoArea().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jMenuItem36ActionPerformed
+        
+    }//GEN-LAST:event_btnEliminarAreaActionPerformed
 
-    private void jMenuItem32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem32ActionPerformed
+    private void btnEliminarEditorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarEditorialActionPerformed
         // TODO add your handling code here:
         new resultadoEditorial().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jMenuItem32ActionPerformed
+        
+    }//GEN-LAST:event_btnEliminarEditorialActionPerformed
 
-    private void jMenuItem27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem27ActionPerformed
+    private void btnModificarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarLibroActionPerformed
         // TODO add your handling code here:
         new resultadoLibro().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jMenuItem27ActionPerformed
+        
+    }//GEN-LAST:event_btnModificarLibroActionPerformed
 
-    private void jMenuItem28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem28ActionPerformed
+    private void btnEliminarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarLibroActionPerformed
         // TODO add your handling code here:
          new resultadoLibro().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jMenuItem28ActionPerformed
+        
+    }//GEN-LAST:event_btnEliminarLibroActionPerformed
 
-    private void jMenuItem23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem23ActionPerformed
+    private void btnModificarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarAutorActionPerformed
         // TODO add your handling code here:
         new resultadoAutor().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jMenuItem23ActionPerformed
+       
+    }//GEN-LAST:event_btnModificarAutorActionPerformed
 
-    private void jMenuItem24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem24ActionPerformed
+    private void btnBorrarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarAutorActionPerformed
         // TODO add your handling code here:
         new resultadoAutor().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jMenuItem24ActionPerformed
+        
+    }//GEN-LAST:event_btnBorrarAutorActionPerformed
 
-    private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
+    private void btnModificarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarUsuarioActionPerformed
         // TODO add your handling code here:
         new resultadoUsuario().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jMenuItem19ActionPerformed
+        
+    }//GEN-LAST:event_btnModificarUsuarioActionPerformed
 
-    private void jMenuItem20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem20ActionPerformed
+    private void btnDeleteUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteUsuarioActionPerformed
         // TODO add your handling code here:
         new resultadoUsuario().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jMenuItem20ActionPerformed
+        
+    }//GEN-LAST:event_btnDeleteUsuarioActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void jLabel4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLabel4KeyPressed
+        // TODO add your handling code here:
+        new Bienvenida().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel4KeyPressed
+
+    private void btnPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrestamoActionPerformed
+        // TODO add your handling code here:
+        new Prestamo().setVisible(true);
+        
+    }//GEN-LAST:event_btnPrestamoActionPerformed
+
+    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel6MouseClicked
+
+    private void jLabel6KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLabel6KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel6KeyPressed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -600,42 +653,50 @@ public class AdminData extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem btnAgregarArea;
+    private javax.swing.JMenuItem btnAgregarAutor;
+    private javax.swing.JMenuItem btnAgregarEditorial;
+    private javax.swing.JMenuItem btnAgregarLibro;
+    private javax.swing.JMenuItem btnAgregarUsuario;
+    private javax.swing.JMenuItem btnBorrarAutor;
+    private javax.swing.JMenuItem btnConsultarArea;
+    private javax.swing.JMenuItem btnConsultarAutor;
+    private javax.swing.JMenuItem btnConsultarLibro;
+    private javax.swing.JMenuItem btnConsultarrEditorial;
+    private javax.swing.JMenuItem btnCosultarUsuario;
+    private javax.swing.JMenuItem btnDeleteUsuario;
+    private javax.swing.JMenuItem btnEliminarArea;
+    private javax.swing.JMenuItem btnEliminarEditorial;
+    private javax.swing.JMenuItem btnEliminarLibro;
+    private javax.swing.JMenuItem btnModificarArea;
+    private javax.swing.JMenuItem btnModificarAutor;
+    private javax.swing.JMenuItem btnModificarEditorial;
+    private javax.swing.JMenuItem btnModificarLibro;
+    private javax.swing.JMenuItem btnModificarUsuario;
+    private javax.swing.JMenuItem btnPrestamo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu10;
+    private javax.swing.JMenu jMenu11;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenu jMenu8;
     private javax.swing.JMenu jMenu9;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuBar jMenuBar3;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem17;
-    private javax.swing.JMenuItem jMenuItem18;
-    private javax.swing.JMenuItem jMenuItem19;
-    private javax.swing.JMenuItem jMenuItem20;
-    private javax.swing.JMenuItem jMenuItem21;
-    private javax.swing.JMenuItem jMenuItem22;
-    private javax.swing.JMenuItem jMenuItem23;
-    private javax.swing.JMenuItem jMenuItem24;
-    private javax.swing.JMenuItem jMenuItem25;
-    private javax.swing.JMenuItem jMenuItem26;
-    private javax.swing.JMenuItem jMenuItem27;
-    private javax.swing.JMenuItem jMenuItem28;
-    private javax.swing.JMenuItem jMenuItem29;
-    private javax.swing.JMenuItem jMenuItem30;
-    private javax.swing.JMenuItem jMenuItem31;
-    private javax.swing.JMenuItem jMenuItem32;
-    private javax.swing.JMenuItem jMenuItem33;
-    private javax.swing.JMenuItem jMenuItem34;
-    private javax.swing.JMenuItem jMenuItem35;
-    private javax.swing.JMenuItem jMenuItem36;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

@@ -8,6 +8,7 @@ package com.utez.app.desktop;
 
 import Utilerias.ConexionSQLServer;
 import com.utez.app.desktop.controlador.ControlSesion;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -31,8 +32,28 @@ public class Login extends javax.swing.JFrame {
        } catch (SQLException ex) {
            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
        }
+       
         daoUsuario= new DaoUsuario(conexion);
         initComponents();
+        this.setLocationRelativeTo(null);
+    }
+    public void login(){
+         ControlSesion sesion = ControlSesion.getInstance();
+        boolean aunt;
+         aunt=sesion.iniciarSesion(txtCorreo.getText(), txtPass.getText());
+        if (aunt){
+            if(sesion.isAdmin()){
+                new AdminData().setVisible(true); 
+            }
+            else{
+                new Bienvenida().setVisible(true);
+            }
+            
+            this.dispose();
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Datos Incorrectos");
+        }
+        
     }
 
     /**
@@ -88,8 +109,11 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\Koffo\\Google Drive\\INTEGRADORA_\\logotipo de pag.png")); // NOI18N
-        jLabel4.setText("jLabel4");
+        txtPass.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPassKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -167,31 +191,24 @@ public class Login extends javax.swing.JFrame {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
         new Bienvenida().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
-        boolean aunt;
-         aunt=ControlSesion.iniciarSesion(txtCorreo.getText(), txtPass.getText());
-        if (aunt){
-            if(ControlSesion.isAdmin()){
-                new AdminData().setVisible(true); 
-            }
-            else{
-                new Bienvenida().setVisible(true);
-            }
-            
-            this.dispose();
-        }else{
-            JOptionPane.showMessageDialog(rootPane, "Datos Incorrectos");
-        }
-            
-        
+       login(); 
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void txtCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCorreoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCorreoActionPerformed
+
+    private void txtPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPassKeyPressed
+        // TODO add your handling code here:
+         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+             login();
+         }
+    }//GEN-LAST:event_txtPassKeyPressed
 
     /**
      * @param args the command line arguments
