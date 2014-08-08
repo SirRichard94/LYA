@@ -7,6 +7,7 @@
 package com.utez.app.desktop;
 
 import Utilerias.ConexionSQLServer;
+import static com.utez.app.desktop.Constants.MYSQL;
 import com.utez.app.desktop.controlador.ControlSesion;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -18,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import utez.app.daos.DaoUsuario;
 import utez.app.model.UsuarioBean;
+import utez.app.utilidades.Biblioteca;
 
 /**
  *
@@ -25,19 +27,16 @@ import utez.app.model.UsuarioBean;
  */
 public class resultadoUsuario extends javax.swing.JFrame {
     private DefaultTableModel modelo;
-    private Connection coneccion;
+    private Connection conexion;
     private DaoUsuario daoUsuario; 
    
     /**
      * Creates new form resultadosUsuario
      */
     public resultadoUsuario() {
-        try {
-            coneccion = ConexionSQLServer.getConnection();
-        } catch (SQLException ex) {
-            Logger.getLogger(resultadoUsuario.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        daoUsuario = new DaoUsuario(coneccion);
+        conexion = new Biblioteca(MYSQL).getConection();
+        
+        daoUsuario = new DaoUsuario(conexion);
         
         actualizarTabla();
 

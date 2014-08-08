@@ -7,6 +7,7 @@
 package com.utez.app.desktop;
 
 import Utilerias.ConexionSQLServer;
+import static com.utez.app.desktop.Constants.*;
 import com.utez.app.desktop.controlador.ControlSesion;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -20,6 +21,7 @@ import utez.app.model.AreaBean;
 import utez.app.model.AutorBean;
 import utez.app.model.EditorialBean;
 import utez.app.model.LibroBean;
+import utez.app.utilidades.Biblioteca;
 
 /**
  *
@@ -33,15 +35,9 @@ public class Bienvenida extends javax.swing.JFrame {
      * Creates new form NewJFrame
      */
     public Bienvenida() {
-        try {
-            conexion=ConexionSQLServer.getConnection();
-            
-            initComponents();
-            this.setLocationRelativeTo(null);
-        } catch (SQLException ex) {
-            Logger.getLogger(Bienvenida.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        conexion = new Biblioteca(MYSQL).getConection();
         
+	initComponents();
         sesion = ControlSesion.getInstance();
         if(sesion.sesionIniciada()){
             lblSesion1.setText("Cerrar Sesion");
@@ -71,7 +67,7 @@ public class Bienvenida extends javax.swing.JFrame {
                 libro.setNombre(txtBusqueda.getText());
                 resultados= daoLibro.findByTitulo(libro.getNombre());
             }if(cmbAreas.getSelectedIndex()==2){
-                resultados = daoLibro.findByAutorNombre(txtBusqueda.getText());
+                resultados = daoLibro.findByAutorNombre(txtBusqueda.getText(), MYSQL);
             } if(cmbAreas.getSelectedIndex()==3){
               EditorialBean editorial = new EditorialBean();
                 editorial.setNombre(txtBusqueda.getText());

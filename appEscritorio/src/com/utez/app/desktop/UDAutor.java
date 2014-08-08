@@ -14,6 +14,8 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import utez.app.daos.DaoAutor;
 import utez.app.model.AutorBean;
+import static com.utez.app.desktop.Constants.*;
+import utez.app.utilidades.Biblioteca;
 
 /**
  *
@@ -28,11 +30,7 @@ public class UDAutor extends javax.swing.JFrame {
     private AutorBean consultaBean;
 
     public UDAutor() {
-        try {
-            conexion = ConexionSQLServer.getConnection();
-        } catch (SQLException ex) {
-            Logger.getLogger(UDAutor.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        conexion = new Biblioteca(MYSQL).getConection();
 
         initComponents();
         this.setLocationRelativeTo(null);

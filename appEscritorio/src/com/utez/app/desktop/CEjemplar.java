@@ -22,6 +22,8 @@ import utez.app.daos.DaoPrestamo;
 import utez.app.model.EditorialBean;
 import utez.app.model.EjemplarBean;
 import utez.app.model.LibroBean;
+import static com.utez.app.desktop.Constants.*;
+import utez.app.utilidades.Biblioteca;
 
 
 /**
@@ -37,11 +39,8 @@ public class CEjemplar extends javax.swing.JFrame {
     private EjemplarBean consultaBean;
     
     public CEjemplar() {
-        try {
-            conexion=ConexionSQLServer.getConnection();
-        } catch (SQLException ex) {
-            Logger.getLogger(CEjemplar.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        conexion = new Biblioteca(MYSQL).getConection();
+		
        DaoLibro daoLibro=new DaoLibro(conexion);
         libroBeans=daoLibro.getActive();
         for (LibroBean beanLib : libroBeans) {

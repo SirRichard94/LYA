@@ -226,9 +226,9 @@ public class DaoAutor extends AbstractDao<AutorBean>{
 	 * @param verdadero si se va a utilizar mysql
 	 * @return
 	 */
-	public List<AutorBean> findByNombreYApellido(String busqueda){
-		return findByNombreYApellido(busqueda, false);
-	}
+//	public List<AutorBean> findByNombreYApellido(String busqueda){
+//		return findByNombreYApellido(busqueda, false);
+//	}
 	public List<AutorBean> findByNombreYApellido(String busqueda, boolean mysql){
 		List<AutorBean> list = new ArrayList<>();
 		

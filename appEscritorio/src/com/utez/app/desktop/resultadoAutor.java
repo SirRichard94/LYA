@@ -7,6 +7,7 @@
 package com.utez.app.desktop;
 
 import Utilerias.ConexionSQLServer;
+import static com.utez.app.desktop.Constants.MYSQL;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -17,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import utez.app.daos.DaoAutor;
 import utez.app.model.AutorBean;
+import utez.app.utilidades.Biblioteca;
 
 /**
  *
@@ -24,19 +26,16 @@ import utez.app.model.AutorBean;
  */
 public class resultadoAutor extends javax.swing.JFrame {
     private DefaultTableModel modelo;
-    private Connection coneccion;
+    private Connection conexion;
     private DaoAutor daoAutor; 
    
     /**
      * Creates new form resultadosUsuario
      */
     public resultadoAutor() {
-        try {
-            coneccion = ConexionSQLServer.getConnection();
-        } catch (SQLException ex) {
-            Logger.getLogger(resultadoAutor.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        daoAutor = new DaoAutor(coneccion);
+       conexion = new Biblioteca(MYSQL).getConection();
+        
+        daoAutor = new DaoAutor(conexion);
         actualizarTabla();
         initComponents();
         this.setLocationRelativeTo(null);

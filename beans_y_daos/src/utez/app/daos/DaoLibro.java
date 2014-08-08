@@ -405,9 +405,9 @@ public class DaoLibro extends AbstractDao<LibroBean>{
 	}
 	
         
-        public List<LibroBean> findByAutorNombre(String nombre){
+        public List<LibroBean> findByAutorNombre(String nombre, boolean mysql){
 		List<LibroBean> list = new ArrayList<>();
-		List<AutorBean> autores = new DaoAutor(con).findByNombreYApellido(nombre);
+		List<AutorBean> autores = new DaoAutor(con).findByNombreYApellido(nombre, mysql);
                 
                 for (AutorBean autorBean : autores) {
                     for (LibroBean libro : findByAutor(autorBean)) {

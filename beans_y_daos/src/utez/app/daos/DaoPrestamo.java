@@ -167,10 +167,10 @@ public class DaoPrestamo extends AbstractDao<PrestamoBean>{
 		return false;
 	}
 	
-	public boolean nuevoPrestamo(UsuarioBean usuario, LibroBean libro, int dias){
-	return nuevoPrestamo(usuario, libro, dias, false);
-	}
-	
+//	public boolean nuevoPrestamo(UsuarioBean usuario, LibroBean libro, int dias){
+//	return nuevoPrestamo(usuario, libro, dias, false);
+//	}
+//	
 	public boolean nuevoPrestamo(UsuarioBean usuario, LibroBean libro, int dias, boolean mysql){
 		EjemplarBean ejemplar = new DaoEjemplar(con).getDisponibleByLibro(libro);
 		if (ejemplar == null || usuario == null){

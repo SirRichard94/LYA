@@ -27,9 +27,6 @@ public class Biblioteca {
 		this.mysql = mysql;
 		con = DbConnection.getConnection(mysql);
 	}
-	public Biblioteca(){
-		this(false);
-	}
 	
 	/**
 	 *  Actualiza las penalizacíones de Los usuarios

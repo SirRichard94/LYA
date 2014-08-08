@@ -8,6 +8,9 @@ package com.utez.app.desktop;
 
 //import javafx.scene.input.KeyCode;
 
+import javax.swing.JFrame;
+
+
 /**
  *
  * @author Koffo
@@ -20,7 +23,8 @@ public class AppEscritorioLYA {
     public static void main(String[] args) {
         // TODO code application logic here
        
-        new Bienvenida().setVisible(true);
+	    JFrame app = new Bienvenida();
+	    app.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
     }
 

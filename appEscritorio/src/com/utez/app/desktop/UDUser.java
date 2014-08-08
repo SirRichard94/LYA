@@ -16,6 +16,8 @@ import javax.swing.ComboBoxEditor;
 import javax.swing.JOptionPane;
 import utez.app.daos.DaoUsuario;
 import utez.app.model.UsuarioBean;
+import static com.utez.app.desktop.Constants.*;
+import utez.app.utilidades.Biblioteca;
 
 /**
  *
@@ -30,11 +32,7 @@ public class UDUser extends javax.swing.JFrame {
     private UsuarioBean consultaBean;
 
     public UDUser() {
-        try {
-            conexion = ConexionSQLServer.getConnection();
-        } catch (SQLException ex) {
-            Logger.getLogger(UDUser.class.getName()).log(Level.SEVERE, null, ex);
-        }
+	conexion = new Biblioteca(MYSQL).getConection();
 
         initComponents();
         this.setLocationRelativeTo(null);

@@ -17,6 +17,8 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import utez.app.daos.DaoArea;
 import utez.app.model.AreaBean;
+import static com.utez.app.desktop.Constants.*;
+import utez.app.utilidades.Biblioteca;
 
 /**
  *
@@ -24,19 +26,16 @@ import utez.app.model.AreaBean;
  */
 public class resultadoArea extends javax.swing.JFrame {
     private DefaultTableModel modelo;
-    private Connection coneccion;
+    private Connection conexion;
     private DaoArea daoArea; 
    
     /**
      * Creates new form resultadosUsuario
      */
     public resultadoArea() {
-        try {
-            coneccion = ConexionSQLServer.getConnection();
-        } catch (SQLException ex) {
-            Logger.getLogger(resultadoArea.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        daoArea = new DaoArea(coneccion);
+	    conexion = new Biblioteca(MYSQL).getConection();
+        
+        daoArea = new DaoArea(conexion);
         actualizarTabla();
         initComponents();
         this.setLocationRelativeTo(null);

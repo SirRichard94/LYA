@@ -45,6 +45,7 @@ class DbConnection {
 		}
 		return connection;
     }
+	
 	private static Connection getSQLConnection() {
 		 final String ipAddress = "localhost"; //nota: localhost= 127.0.0.1
 		 final String dbName = "SB_LYA";

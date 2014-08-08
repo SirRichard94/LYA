@@ -7,6 +7,7 @@
 package com.utez.app.desktop;
 
 import Utilerias.ConexionSQLServer;
+import static com.utez.app.desktop.Constants.MYSQL;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -17,6 +18,7 @@ import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import utez.app.daos.DaoLibro;
 import utez.app.model.LibroBean;
+import utez.app.utilidades.Biblioteca;
 
 /**
  *
@@ -24,7 +26,7 @@ import utez.app.model.LibroBean;
  */
 public class tablaLibros extends javax.swing.JFrame {
     private DefaultTableModel modelo;
-    private Connection coneccion;
+    private Connection conexion;
     private DaoLibro daoLibro; 
     private List<LibroBean> lista;
    
@@ -33,12 +35,9 @@ public class tablaLibros extends javax.swing.JFrame {
      */
     
     public tablaLibros(List<LibroBean> result) {
-        try {
-            coneccion = ConexionSQLServer.getConnection();
-        } catch (SQLException ex) {
-            Logger.getLogger(tablaLibros.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        daoLibro = new DaoLibro(coneccion);
+       conexion = new Biblioteca(MYSQL).getConection();
+        
+        daoLibro = new DaoLibro(conexion);
         
         modelo= new DefaultTableModel (new String[]{"Libro_id","ISBN","Nombre","Paginas"},0);
         

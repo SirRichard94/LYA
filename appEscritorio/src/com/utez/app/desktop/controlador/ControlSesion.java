@@ -12,6 +12,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import utez.app.daos.DaoUsuario;
 import utez.app.model.UsuarioBean;
+import utez.app.utilidades.Biblioteca;
+import static com.utez.app.desktop.Constants.*;
 
 /**
  *
@@ -37,8 +39,9 @@ public class ControlSesion {
     
     public  boolean iniciarSesion(String correo, String pass){
        boolean aunt = false;
-       try {
-            DaoUsuario daoUsuario = new DaoUsuario(ConexionSQLServer.getConnection());
+       
+            DaoUsuario daoUsuario = new DaoUsuario(new Biblioteca(MYSQL).getConection());
+	    
             aunt=daoUsuario.autenticar(correo, pass);
             
             if (aunt){
@@ -47,9 +50,7 @@ public class ControlSesion {
             }else {
                 usuario = null;
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(ControlSesion.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
         
         return aunt;
     }

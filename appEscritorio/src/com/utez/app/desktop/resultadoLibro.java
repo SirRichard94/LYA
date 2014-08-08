@@ -7,6 +7,7 @@
 package com.utez.app.desktop;
 
 import Utilerias.ConexionSQLServer;
+import static com.utez.app.desktop.Constants.MYSQL;
 import com.utez.app.desktop.controlador.ControlSesion;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -20,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 import utez.app.daos.DaoLibro;
 import utez.app.model.AutorBean;
 import utez.app.model.LibroBean;
+import utez.app.utilidades.Biblioteca;
 
 /**
  *
@@ -27,7 +29,7 @@ import utez.app.model.LibroBean;
  */
 public class resultadoLibro extends javax.swing.JFrame {
     private DefaultTableModel modelo;
-    private Connection coneccion;
+    private Connection conexion;
     private DaoLibro daoLibro; 
    private ControlSesion sesion;
     /**
@@ -37,12 +39,9 @@ public class resultadoLibro extends javax.swing.JFrame {
         this(null);
     }
     public resultadoLibro(List<LibroBean> result) {
-        try {
-            coneccion = ConexionSQLServer.getConnection();
-        } catch (SQLException ex) {
-            Logger.getLogger(resultadoLibro.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        daoLibro = new DaoLibro(coneccion);
+        conexion = new Biblioteca(MYSQL).getConection();
+        
+        daoLibro = new DaoLibro(conexion);
         if (result == null){
             actualizarTabla();
         }else{
@@ -102,7 +101,7 @@ public class resultadoLibro extends javax.swing.JFrame {
         if (busqueda.length() < 0) {
             actualizarTabla();
         } else {
-            List<LibroBean> resultados = new DaoLibro(coneccion).findByTitulo(busqueda);
+            List<LibroBean> resultados = new DaoLibro(conexion).findByTitulo(busqueda);
             actualizarTabla(resultados);
         }
                

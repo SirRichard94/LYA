@@ -16,12 +16,15 @@ import java.util.logging.Logger;
 import javax.swing.JTextArea;
 import utez.app.daos.DaoUsuario;
 import utez.app.model.UsuarioBean;
+import utez.app.utilidades.Biblioteca;
+import static com.utez.app.desktop.Constants.*;
 
 /**
  *
  * @author Koffo
  */
 public class AdminData extends javax.swing.JFrame {
+	
  private Connection connection;
  private DaoUsuario daoUsuario;
  private ControlSesion sesion;
@@ -30,14 +33,13 @@ public class AdminData extends javax.swing.JFrame {
      * Creates new form AdminData
      */
     public AdminData() {
-     try {
-         connection=ConexionSQLServer.getConnection();
+     
+        // connection=ConexionSQLServer.getConnection();
+	connection = new Biblioteca(MYSQL).getConection();
          initComponents();
          this.setLocationRelativeTo(null);
-     } catch (SQLException ex) {
-         Logger.getLogger(AdminData.class.getName()).log(Level.SEVERE, null, ex);
-     }
-      this.setLocationRelativeTo(null);
+     
+     this.setLocationRelativeTo(null);
      sesion = ControlSesion.getInstance();
      if(!sesion.isAdmin()){
          //cerrar ventana

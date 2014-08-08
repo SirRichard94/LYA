@@ -18,6 +18,8 @@ import utez.app.daos.DaoUsuario;
 import utez.app.model.AutorBean;
 import utez.app.model.EditorialBean;
 import utez.app.model.UsuarioBean;
+import static com.utez.app.desktop.Constants.*;
+import utez.app.utilidades.Biblioteca;
 
 /**
  *
@@ -33,11 +35,7 @@ public class UEditorial extends javax.swing.JFrame {
     private EditorialBean consultaBean;
 
     public UEditorial() {
-        try {
-            conexion = ConexionSQLServer.getConnection();
-        } catch (SQLException ex) {
-            Logger.getLogger(UEditorial.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        conexion = new Biblioteca(MYSQL).getConection();
 
         initComponents();
                 this.setLocationRelativeTo(null);
