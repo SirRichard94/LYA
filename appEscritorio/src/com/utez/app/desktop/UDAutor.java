@@ -6,10 +6,12 @@
 package com.utez.app.desktop;
 
 import Utilerias.ConexionSQLServer;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import utez.app.daos.DaoAutor;
 import utez.app.model.AutorBean;
 
@@ -85,6 +87,18 @@ public class UDAutor extends javax.swing.JFrame {
 
         jLabel2.setText("Apellido:");
 
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
+
+        txtApellido.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApellidoKeyTyped(evt);
+            }
+        });
+
         btnActualizar.setText("Guardar");
         btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -138,7 +152,7 @@ public class UDAutor extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(16, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -170,8 +184,8 @@ public class UDAutor extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pack();
@@ -197,9 +211,10 @@ public class UDAutor extends javax.swing.JFrame {
        // usuarioBean = new UsuarioBean(consultaBean);
         boolean ex = daoAutor.update(consultaBean);
         if (ex) {
-            System.out.println("exito");
+           JOptionPane.showMessageDialog(rootPane, "Registro Exitoso");
+           
         } else {
-            System.out.println("tonto");
+             JOptionPane.showMessageDialog(rootPane, "Registro Fallido");
         }
         new resultadoAutor().setVisible(true);
         this.dispose();
@@ -210,6 +225,52 @@ public class UDAutor extends javax.swing.JFrame {
         new AdminData().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        // TODO add your handling code here:
+        char car = evt.getKeyChar();
+       if((car<'a' || car>'z') && (car<'A' || car>'Z')            
+        && car !='á' //Minúsculas            
+        && car !='é'           
+        && car !='í'           
+        && car !='ó'          
+        && car !='ú'  
+        && car !='Á' //Mayúsculas            
+        && car !='É'           
+        && car !='Í'           
+        && car !='Ó'
+        && car !='Ú'
+        && car !='ñ'
+        && car !='Ñ'    
+        && (car!=(char)KeyEvent.VK_SPACE))
+    {     
+    evt.consume();  
+
+    }
+    }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoKeyTyped
+        // TODO add your handling code here:
+        char car = evt.getKeyChar();
+       if((car<'a' || car>'z') && (car<'A' || car>'Z')            
+        && car !='á' //Minúsculas            
+        && car !='é'           
+        && car !='í'           
+        && car !='ó'          
+        && car !='ú'  
+        && car !='Á' //Mayúsculas            
+        && car !='É'           
+        && car !='Í'           
+        && car !='Ó'
+        && car !='Ú'
+        && car !='ñ'
+        && car !='Ñ'    
+        && (car!=(char)KeyEvent.VK_SPACE))
+    {     
+    evt.consume();  
+
+    }
+    }//GEN-LAST:event_txtApellidoKeyTyped
 
     /**
      * @param args the command line arguments

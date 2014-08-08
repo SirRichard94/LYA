@@ -29,7 +29,7 @@ public class Comprobacion {
            
             validado=true;
         }else{
-            JOptionPane.showMessageDialog(null, "No Valido");
+            JOptionPane.showMessageDialog(null, "Correo No Valido");
             validado =false;
         }
         
