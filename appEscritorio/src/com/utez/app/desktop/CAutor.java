@@ -6,15 +6,16 @@
 package com.utez.app.desktop;
 
 import Utilerias.ConexionSQLServer;
+import static com.utez.app.desktop.Constants.*;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import utez.app.daos.DaoAutor;
 import utez.app.model.AutorBean;
-import static com.utez.app.desktop.Constants.*;
 import utez.app.utilidades.Biblioteca;
 
 /**
@@ -182,7 +183,8 @@ public class CAutor extends javax.swing.JFrame {
                     boolean ex = daoAutor.add(autorBean);
                     if (ex) {
                         JOptionPane.showMessageDialog(rootPane, "Registro Guardado con exito");
-                        new resultadoAutor().setVisible(true);
+                        JFrame jf = new resultadoAutor(); jf.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+			jf.setVisible(true);
                         this.dispose();
                     } else {
                         JOptionPane.showMessageDialog(rootPane, "Error al guardar el Registro");
@@ -197,8 +199,8 @@ public class CAutor extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        new resultadoAutor().setVisible(true);
-        this.dispose();
+       
+	       this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped

@@ -227,13 +227,13 @@ public class Prestamo extends javax.swing.JFrame {
             return;
         }
          
-        if (new DaoPrestamo(conexion).nuevoPrestamo(usuario, libro, 3, false)){//sql server
+        if (new DaoPrestamo(conexion).nuevoPrestamo(usuario, libro, 3, MYSQL)){
             //creado
-            JOptionPane.showMessageDialog(rootPane, "Exito");
+            JOptionPane.showMessageDialog(rootPane, "Prestamo Agregado");
             
         }else{
             //no creado
-            JOptionPane.showMessageDialog(rootPane, "Nope");
+            JOptionPane.showMessageDialog(rootPane, "Error al Agregar prestamo");
         }
         
         actualizarTabla();
@@ -245,7 +245,7 @@ public class Prestamo extends javax.swing.JFrame {
                 tblPrestmos.getSelectedRow());
         DaoPrestamo daoPrestamo = new DaoPrestamo(conexion);
         
-        if (daoPrestamo.penalizacion(prestamo) > 0){
+        if (daoPrestamo.penalizacion(prestamo, MYSQL) > 0){
             
            JFrame jf = new Entrega(prestamo); jf.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 			jf.setVisible(true);

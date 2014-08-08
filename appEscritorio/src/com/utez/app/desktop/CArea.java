@@ -7,12 +7,14 @@
 package com.utez.app.desktop;
 
 import Utilerias.ConexionSQLServer;
+import static com.utez.app.desktop.Constants.*;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ComboBoxEditor;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import utez.app.daos.DaoArea;
 import utez.app.daos.DaoAutor;
@@ -21,7 +23,6 @@ import utez.app.model.AreaBean;
 import utez.app.model.AutorBean;
 import utez.app.model.UsuarioBean;
 import utez.app.utilidades.Biblioteca;
-import static com.utez.app.desktop.Constants.*;
 
 /**
  *
@@ -155,8 +156,9 @@ public class CArea extends javax.swing.JFrame {
              boolean ex= daoArea.add(areaBean);
             if(ex){
                 JOptionPane.showMessageDialog(rootPane, "Registro exitoso");
-                 new resultadoArea().setVisible(true);
-                 this.dispose();
+                 JFrame jf = new resultadoArea(); jf.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+	       jf.setVisible(true);
+	       this.dispose();
             }else{
             JOptionPane.showMessageDialog(rootPane, "Registro No exitoso");
              }
@@ -167,8 +169,8 @@ public class CArea extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        new AdminData().setVisible(true);
-        this.dispose();
+       
+	       this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped

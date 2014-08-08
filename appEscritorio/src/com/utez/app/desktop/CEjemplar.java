@@ -7,6 +7,7 @@
 package com.utez.app.desktop;
 
 import Utilerias.ConexionSQLServer;
+import static com.utez.app.desktop.Constants.*;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import utez.app.daos.DaoEditorial;
 import utez.app.daos.DaoEjemplar;
@@ -22,7 +24,6 @@ import utez.app.daos.DaoPrestamo;
 import utez.app.model.EditorialBean;
 import utez.app.model.EjemplarBean;
 import utez.app.model.LibroBean;
-import static com.utez.app.desktop.Constants.*;
 import utez.app.utilidades.Biblioteca;
 
 
@@ -34,7 +35,6 @@ public class CEjemplar extends javax.swing.JFrame {
     //private List<UsuarioBean> lista;
     //private DaoUsuario daoUsuario;
     private Connection conexion;
-    private EjemplarBean ejemplarBean;
     private List<LibroBean>libroBeans;
     private EjemplarBean consultaBean;
     
@@ -50,6 +50,11 @@ public class CEjemplar extends javax.swing.JFrame {
         initComponents();
                 this.setLocationRelativeTo(null);
 
+    }
+    
+    CEjemplar (LibroBean libro){
+	    this();
+	    modeloLibro.setSelectedItem(libro.getNombre());
     }
     public boolean comprobarTexto(String dato) {
         boolean valido = false;
@@ -137,22 +142,25 @@ public class CEjemplar extends javax.swing.JFrame {
                                         .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txtNumEjemplares, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                                        .addComponent(btnCrear)
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addComponent(btnCancelar))
-                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                        .addComponent(cmbLibro, javax.swing.GroupLayout.Alignment.LEADING, 0, 193, Short.MAX_VALUE)
-                                                        .addComponent(txtLocalizacion, javax.swing.GroupLayout.Alignment.LEADING))))
-                                .addContainerGap(29, Short.MAX_VALUE))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addGap(0, 70, Short.MAX_VALUE)
+                                                .addComponent(btnCrear)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(btnCancelar)
+                                                .addGap(23, 23, 23))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                                .addComponent(cmbLibro, javax.swing.GroupLayout.Alignment.LEADING, 0, 193, Short.MAX_VALUE)
+                                                                .addComponent(txtLocalizacion, javax.swing.GroupLayout.Alignment.LEADING))
+                                                        .addComponent(txtNumEjemplares, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 );
                 jPanel1Layout.setVerticalGroup(
                         jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(43, 43, 43)
+                                .addContainerGap()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(cmbLibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jLabel3))
@@ -177,14 +185,14 @@ public class CEjemplar extends javax.swing.JFrame {
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(22, 22, 22)
                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(27, Short.MAX_VALUE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 );
                 layout.setVerticalGroup(
                         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(23, 23, 23)
                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(39, Short.MAX_VALUE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 );
 
                 pack();
@@ -212,7 +220,8 @@ public class CEjemplar extends javax.swing.JFrame {
              }
         }
          JOptionPane.showMessageDialog(rootPane, "Registro Exitoso");
-         new AdminData().setVisible(true);
+         JFrame jf = new resultadoLibro(); jf.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+	       jf.setVisible(true);
          this.dispose();
             
         
@@ -255,8 +264,8 @@ public class CEjemplar extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        new AdminData().setVisible(true);
-        this.dispose();
+        
+	       this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**

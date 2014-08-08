@@ -79,10 +79,8 @@
                                   </Group>
                                   <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="cmbEditorial" max="32767" attributes="0"/>
-                                          <Component id="cmbArea" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
-                                      </Group>
+                                      <Component id="cmbEditorial" max="32767" attributes="0"/>
+                                      <Component id="cmbArea" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
                                       <Component id="txtNombre" alignment="0" pref="212" max="32767" attributes="0"/>
                                       <Component id="txtIsbn" alignment="0" max="32767" attributes="0"/>
                                       <Component id="txtPag" alignment="0" min="-2" pref="68" max="-2" attributes="0"/>

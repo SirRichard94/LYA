@@ -77,23 +77,23 @@ public class AdminData extends javax.swing.JFrame {
                 jMenuItem10 = new javax.swing.JMenuItem();
                 jMenuItem11 = new javax.swing.JMenuItem();
                 jMenuItem12 = new javax.swing.JMenuItem();
-                jMenu8 = new javax.swing.JMenu();
-                btnAgregarEditorial = new javax.swing.JMenuItem();
-                btnConsultarrEditorial = new javax.swing.JMenuItem();
                 jMenu7 = new javax.swing.JMenu();
-                btnAgregarLibro = new javax.swing.JMenuItem();
                 btnConsultarLibro = new javax.swing.JMenuItem();
+                btnAgregarLibro = new javax.swing.JMenuItem();
+                jMenu8 = new javax.swing.JMenu();
+                btnConsultarrEditorial = new javax.swing.JMenuItem();
+                btnAgregarEditorial = new javax.swing.JMenuItem();
                 jMenu11 = new javax.swing.JMenu();
                 btnPrestamo = new javax.swing.JMenuItem();
                 jMenu9 = new javax.swing.JMenu();
-                btnAgregarArea = new javax.swing.JMenuItem();
                 btnConsultarArea = new javax.swing.JMenuItem();
+                btnAgregarArea = new javax.swing.JMenuItem();
                 jMenu5 = new javax.swing.JMenu();
-                btnAgregarUsuario = new javax.swing.JMenuItem();
                 btnCosultarUsuario = new javax.swing.JMenuItem();
+                btnAgregarUsuario = new javax.swing.JMenuItem();
                 jMenu6 = new javax.swing.JMenu();
-                btnAgregarAutor = new javax.swing.JMenuItem();
                 btnConsultarAutor = new javax.swing.JMenuItem();
+                btnAgregarAutor = new javax.swing.JMenuItem();
 
                 jMenu1.setText("File");
                 jMenuBar2.add(jMenu1);
@@ -235,35 +235,7 @@ public class AdminData extends javax.swing.JFrame {
 
                 jMenuBar1.add(jMenu3);
 
-                jMenu8.setText("Editorial");
-
-                btnAgregarEditorial.setText("Agregar");
-                btnAgregarEditorial.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                btnAgregarEditorialActionPerformed(evt);
-                        }
-                });
-                jMenu8.add(btnAgregarEditorial);
-
-                btnConsultarrEditorial.setText("Consultar");
-                btnConsultarrEditorial.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                btnConsultarrEditorialActionPerformed(evt);
-                        }
-                });
-                jMenu8.add(btnConsultarrEditorial);
-
-                jMenuBar1.add(jMenu8);
-
                 jMenu7.setText("Libro");
-
-                btnAgregarLibro.setText("Agregar");
-                btnAgregarLibro.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                btnAgregarLibroActionPerformed(evt);
-                        }
-                });
-                jMenu7.add(btnAgregarLibro);
 
                 btnConsultarLibro.setText("Consultar");
                 btnConsultarLibro.addActionListener(new java.awt.event.ActionListener() {
@@ -273,7 +245,35 @@ public class AdminData extends javax.swing.JFrame {
                 });
                 jMenu7.add(btnConsultarLibro);
 
+                btnAgregarLibro.setText("Agregar");
+                btnAgregarLibro.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                btnAgregarLibroActionPerformed(evt);
+                        }
+                });
+                jMenu7.add(btnAgregarLibro);
+
                 jMenuBar1.add(jMenu7);
+
+                jMenu8.setText("Editorial");
+
+                btnConsultarrEditorial.setText("Consultar");
+                btnConsultarrEditorial.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                btnConsultarrEditorialActionPerformed(evt);
+                        }
+                });
+                jMenu8.add(btnConsultarrEditorial);
+
+                btnAgregarEditorial.setText("Agregar");
+                btnAgregarEditorial.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                btnAgregarEditorialActionPerformed(evt);
+                        }
+                });
+                jMenu8.add(btnAgregarEditorial);
+
+                jMenuBar1.add(jMenu8);
 
                 jMenu11.setText("Préstamo");
 
@@ -289,14 +289,6 @@ public class AdminData extends javax.swing.JFrame {
 
                 jMenu9.setText("Área");
 
-                btnAgregarArea.setText("Agregar");
-                btnAgregarArea.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                btnAgregarAreaActionPerformed(evt);
-                        }
-                });
-                jMenu9.add(btnAgregarArea);
-
                 btnConsultarArea.setText("Consultar");
                 btnConsultarArea.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -305,17 +297,17 @@ public class AdminData extends javax.swing.JFrame {
                 });
                 jMenu9.add(btnConsultarArea);
 
+                btnAgregarArea.setText("Agregar");
+                btnAgregarArea.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                btnAgregarAreaActionPerformed(evt);
+                        }
+                });
+                jMenu9.add(btnAgregarArea);
+
                 jMenuBar1.add(jMenu9);
 
                 jMenu5.setText("Usuario");
-
-                btnAgregarUsuario.setText("Agregar");
-                btnAgregarUsuario.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                btnAgregarUsuarioActionPerformed(evt);
-                        }
-                });
-                jMenu5.add(btnAgregarUsuario);
 
                 btnCosultarUsuario.setText("Consultar");
                 btnCosultarUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -325,17 +317,17 @@ public class AdminData extends javax.swing.JFrame {
                 });
                 jMenu5.add(btnCosultarUsuario);
 
+                btnAgregarUsuario.setText("Agregar");
+                btnAgregarUsuario.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                btnAgregarUsuarioActionPerformed(evt);
+                        }
+                });
+                jMenu5.add(btnAgregarUsuario);
+
                 jMenuBar1.add(jMenu5);
 
                 jMenu6.setText("Autor");
-
-                btnAgregarAutor.setText("Agregar");
-                btnAgregarAutor.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                btnAgregarAutorActionPerformed(evt);
-                        }
-                });
-                jMenu6.add(btnAgregarAutor);
 
                 btnConsultarAutor.setText("Consultar");
                 btnConsultarAutor.addActionListener(new java.awt.event.ActionListener() {
@@ -344,6 +336,14 @@ public class AdminData extends javax.swing.JFrame {
                         }
                 });
                 jMenu6.add(btnConsultarAutor);
+
+                btnAgregarAutor.setText("Agregar");
+                btnAgregarAutor.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                btnAgregarAutorActionPerformed(evt);
+                        }
+                });
+                jMenu6.add(btnAgregarAutor);
 
                 jMenuBar1.add(jMenu6);
 

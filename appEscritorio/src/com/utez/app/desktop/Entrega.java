@@ -7,15 +7,16 @@
 package com.utez.app.desktop;
 
 import Utilerias.ConexionSQLServer;
+import static com.utez.app.desktop.Constants.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import utez.app.daos.DaoPrestamo;
 import utez.app.model.PrestamoBean;
 import utez.app.utilidades.Biblioteca;
-import static com.utez.app.desktop.Constants.*;
 
 /**
  *
@@ -215,12 +216,16 @@ public class Entrega extends javax.swing.JFrame {
         daoPrestamo.delete(prestamo);
         biblioteca.actualizarPenalizaciones(prestamo.getUsuario());
         JOptionPane.showMessageDialog(rootPane, "Libro Entregado, Penalizacion pagada");
+	JFrame jf = new Prestamo(); jf.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+	       jf.setVisible(true);
         this.dispose();
         //cambiar de ventana
     }//GEN-LAST:event_btnEntregadoActionPerformed
 
         private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-               this.dispose();
+               JFrame jf = new Prestamo(); jf.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+	       jf.setVisible(true);
+		this.dispose();
         }//GEN-LAST:event_btnCancelActionPerformed
 
     /**

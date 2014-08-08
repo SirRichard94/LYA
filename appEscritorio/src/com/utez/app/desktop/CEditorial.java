@@ -6,18 +6,19 @@
 package com.utez.app.desktop;
 
 import Utilerias.ConexionSQLServer;
+import static com.utez.app.desktop.Constants.*;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ComboBoxEditor;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import utez.app.daos.DaoEditorial;
 import utez.app.daos.DaoUsuario;
 import utez.app.model.EditorialBean;
 import utez.app.model.UsuarioBean;
-import static com.utez.app.desktop.Constants.*;
 import utez.app.utilidades.Biblioteca;
 
 /**
@@ -187,7 +188,9 @@ public class CEditorial extends javax.swing.JFrame {
                 boolean ex = daoEditorial.add(editorialBean);
                 if (ex) {
                        JOptionPane.showMessageDialog(rootPane, "Registro Exitoso");
-                    new resultadoEditorial().setVisible(true);
+                    JFrame jf = new resultadoEditorial(); jf.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+	       jf.setVisible(true);
+	       this.dispose();
                 } else {
 
                     JOptionPane.showMessageDialog(rootPane, "No se pudo Registrar la Editorial");
@@ -205,7 +208,7 @@ public class CEditorial extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        new resultadoEditorial().setVisible(true);
+        
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 

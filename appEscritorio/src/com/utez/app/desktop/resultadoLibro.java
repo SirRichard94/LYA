@@ -57,6 +57,7 @@ public class resultadoLibro extends javax.swing.JFrame {
         if (!sesion.isAdmin()){
             btnCambiar.setVisible(false);
             btnEliminar.setVisible(false);
+            btnEjemplares.setVisible(false);
         }
     }
 
@@ -88,7 +89,7 @@ public class resultadoLibro extends javax.swing.JFrame {
              for (LibroBean bean : lista) {
                  String autores = "";
                             for (AutorBean autorBean : bean.getAutores()) {
-                        autores += autorBean.getNombre()+" "+autorBean.getApellido();
+                        autores += autorBean.getNombre()+" "+autorBean.getApellido()+"\n";
                     }
                     
                     Object[] arreglo                           
@@ -127,6 +128,7 @@ public class resultadoLibro extends javax.swing.JFrame {
                 btnCambiar = new javax.swing.JButton();
                 btnEliminar = new javax.swing.JButton();
                 jLabel1 = new javax.swing.JLabel();
+                btnEjemplares = new javax.swing.JButton();
 
                 jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Resultados Usuario"));
 
@@ -196,6 +198,13 @@ public class resultadoLibro extends javax.swing.JFrame {
 
                 jLabel1.setText("Filtrar");
 
+                btnEjemplares.setText("Ejemplares");
+                btnEjemplares.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                btnEjemplaresActionPerformed(evt);
+                        }
+                });
+
                 javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
                 jPanel3.setLayout(jPanel3Layout);
                 jPanel3Layout.setHorizontalGroup(
@@ -211,6 +220,8 @@ public class resultadoLibro extends javax.swing.JFrame {
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(jLabel1)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(btnEjemplares)
+                                                .addGap(18, 18, 18)
                                                 .addComponent(btnCambiar)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addComponent(btnEliminar)
@@ -219,13 +230,14 @@ public class resultadoLibro extends javax.swing.JFrame {
                 jPanel3Layout.setVerticalGroup(
                         jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(txtDato, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(btnCambiar)
                                         .addComponent(btnEliminar)
-                                        .addComponent(jLabel1))
+                                        .addComponent(jLabel1)
+                                        .addComponent(btnEjemplares))
                                 .addContainerGap())
                 );
 
@@ -307,6 +319,14 @@ public class resultadoLibro extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_txtDatoKeyTyped
 
+        private void btnEjemplaresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEjemplaresActionPerformed
+                // TODO add your handling code here:
+		LibroBean linro = lista.get(tblLibros.getSelectedRow());
+		JFrame jf = new CEjemplar(linro); jf.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+			jf.setVisible(true);
+                        this.dispose();
+        }//GEN-LAST:event_btnEjemplaresActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -344,6 +364,7 @@ public class resultadoLibro extends javax.swing.JFrame {
 
         // Variables declaration - do not modify//GEN-BEGIN:variables
         private javax.swing.JButton btnCambiar;
+        private javax.swing.JButton btnEjemplares;
         private javax.swing.JButton btnEliminar;
         private javax.swing.JLabel jLabel1;
         private javax.swing.JPanel jPanel1;

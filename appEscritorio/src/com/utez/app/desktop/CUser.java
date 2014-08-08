@@ -275,7 +275,8 @@ public class CUser extends javax.swing.JFrame {
 //            registro.setText("Registro guardado ");
 //           imagen.setIcon(image);
                     JOptionPane.showMessageDialog(rootPane, "Usuario Agregado");
-                    new resultadoUsuario().setVisible(true);
+                    JFrame jf = new resultadoUsuario(); jf.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+	       jf.setVisible(true);
                     this.dispose();
                 } else {
                     JOptionPane.showMessageDialog(rootPane, "Error al registrar");
@@ -294,8 +295,7 @@ public class CUser extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
-        new AdminData().setVisible(true);
+      
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 

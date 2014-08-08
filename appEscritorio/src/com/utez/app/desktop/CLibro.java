@@ -6,6 +6,7 @@
 package com.utez.app.desktop;
 
 import Utilerias.ConexionSQLServer;
+import static com.utez.app.desktop.Constants.*;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -15,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import utez.app.daos.DaoArea;
 import utez.app.daos.DaoAutor;
@@ -24,7 +26,6 @@ import utez.app.model.AreaBean;
 import utez.app.model.AutorBean;
 import utez.app.model.EditorialBean;
 import utez.app.model.LibroBean;
-import static com.utez.app.desktop.Constants.*;
 import utez.app.utilidades.Biblioteca;
 
 /**
@@ -310,7 +311,8 @@ public class CLibro extends javax.swing.JFrame {
             boolean agregado = daoLibro.add(consultaBean);
             if (agregado) {
                 JOptionPane.showMessageDialog(rootPane, "Libro Agregado");
-                new resultadoLibro().setVisible(true);
+               JFrame jf = new resultadoLibro(); jf.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+	       jf.setVisible(true);
                 this.dispose();
             } else {
                 JOptionPane.showMessageDialog(rootPane, "Error al Registrar");
@@ -342,7 +344,6 @@ public class CLibro extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        new resultadoLibro().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 

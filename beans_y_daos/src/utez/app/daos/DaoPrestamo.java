@@ -293,9 +293,7 @@ public class DaoPrestamo extends AbstractDao<PrestamoBean>{
 		return penalizacion;
 	}
 	
-	public double penalizacion(PrestamoBean prestamo){
-		return penalizacion(prestamo, false);
-	}
+	
 	
 	public List<PrestamoBean> findByUsuario(UsuarioBean usuario){
 		 List<PrestamoBean>  lista = new ArrayList<>();	 
