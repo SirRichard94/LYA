@@ -220,8 +220,8 @@ public class CEjemplar extends javax.swing.JFrame {
              }
         }
          JOptionPane.showMessageDialog(rootPane, "Registro Exitoso");
-         JFrame jf = new Ejemplares(); jf.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-	       jf.setVisible(true);
+//         JFrame jf = new Ejemplares(); jf.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+//	       jf.setVisible(true);
          this.dispose();
             
         

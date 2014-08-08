@@ -129,6 +129,7 @@ public class AdminData extends javax.swing.JFrame {
 
                 lblLogout.setForeground(new java.awt.Color(255, 255, 255));
                 lblLogout.setText("Cerrar Sesión");
+                lblLogout.setToolTipText("");
                 lblLogout.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
                 lblLogout.addMouseListener(new java.awt.event.MouseAdapter() {
                         public void mouseClicked(java.awt.event.MouseEvent evt) {

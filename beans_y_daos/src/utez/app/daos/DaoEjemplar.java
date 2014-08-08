@@ -93,6 +93,9 @@ public class DaoEjemplar extends AbstractDao<EjemplarBean>{
 
 	@Override
 	public boolean delete(EjemplarBean bean) {
+		if(prestado(bean.getEjemplar_id())){
+			return false;
+		}
 		String query = "DELETE FROM "+TABLA
 				+" WHERE "+PK+" =? ;";
 			
@@ -239,4 +242,23 @@ public class DaoEjemplar extends AbstractDao<EjemplarBean>{
 		return ejemplar;
 	}
 	
+	
+	public boolean prestado(int id){
+	String query = "SELECT * FROM EJEMPLAR WHERE ejemplar_id= ? and ejemplar_id in (SELECT ejemplar_id from PRESTAMO);";
+	
+		try {
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setInt(1, id);
+			
+			if (ps.executeQuery().next()){
+				ps.close();
+				return true;
+			}
+			ps.close();
+		} catch (SQLException ex) {
+			Logger.getLogger(DaoEjemplar.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	
+	return false;
+	}
 }

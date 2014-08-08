@@ -59,7 +59,7 @@ public class UDLibro extends javax.swing.JFrame {
         }
         listaAutor = daoAutor.getActive();
         for (AutorBean autorBean : listaAutor) {
-            modeloAutor.addElement(autorBean.getNombre());
+            modeloAutor.addElement(autorBean.getNombre()+" "+autorBean.getApellido());
         }
 
         initComponents();
@@ -76,7 +76,13 @@ public class UDLibro extends javax.swing.JFrame {
     private void llenarValores() {
         modeloArea.setSelectedItem(consultaBean.getArea().getNombre());
         modelo.setSelectedItem(consultaBean.getEditorial().getNombre());
-        modeloAutor.addElement(consultaBean.getAutores());
+	
+	for (AutorBean autor:consultaBean.getAutores()){
+		listAutor.setSelectedValue(
+			autor.getNombre()+" "+autor.getApellido(), true);
+	}
+	
+     
         txtNombre.setText(consultaBean.getNombre());
         txtIsbn.setText("" + consultaBean.getIsbn());
         txtPag.setText("" + consultaBean.getPaginas());

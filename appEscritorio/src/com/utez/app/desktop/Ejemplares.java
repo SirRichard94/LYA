@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import utez.app.daos.DaoEjemplar;
 import utez.app.daos.DaoLibro;
@@ -77,7 +78,8 @@ public class Ejemplares extends javax.swing.JFrame {
                  
                     
                     Object[] arreglo                           
-                            = {bean.getEjemplar_id(), bean.getLocalizacion(), false};
+                            = {bean.getEjemplar_id(), bean.getLocalizacion(), 
+				    daoEjemplar.prestado(bean.getEjemplar_id()) ? "si": "no"};
                  
                  modeloTabla.addRow(arreglo);
         }
@@ -123,7 +125,7 @@ public class Ejemplares extends javax.swing.JFrame {
                         }
                 });
 
-                jButton2.setText("Nueva");
+                jButton2.setText("Nuevo");
                 jButton2.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
                                 jButton2ActionPerformed(evt);
@@ -143,7 +145,7 @@ public class Ejemplares extends javax.swing.JFrame {
                                                 .addComponent(jButton2)
                                                 .addGap(18, 18, 18)
                                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(0, 137, Short.MAX_VALUE))
+                                                .addGap(0, 136, Short.MAX_VALUE))
                                         .addComponent(jScrollPane1)
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                                 .addGap(0, 0, Short.MAX_VALUE)
@@ -192,7 +194,12 @@ public class Ejemplares extends javax.swing.JFrame {
                 // TODO add your handling code here:
 		int id = (Integer) tblEjemplares.getValueAt(tblEjemplares.getSelectedRow(), 0);
 		
-		daoEjemplar.delete(daoEjemplar.get(id));
+		if (JOptionPane.showConfirmDialog(this, "Desea eliminar el ejemplar? ") == JOptionPane.OK_OPTION){
+		
+		if(!daoEjemplar.delete(daoEjemplar.get(id))){
+			JOptionPane.showMessageDialog(this, "Problema al eliminar");
+		}
+		}
 		actualizarTabla();
         }//GEN-LAST:event_btnEliminarActionPerformed
 
