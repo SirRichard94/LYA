@@ -17,6 +17,7 @@ public class EjemplarBean implements Serializable{
 	private int ejemplar_id;
 	private String localizacion;
 	private LibroBean libro;
+	private boolean prestado;
 
 	public EjemplarBean() {
 	}
@@ -57,6 +58,14 @@ public class EjemplarBean implements Serializable{
 			+", "+localizacion
 			+", "+libro.getLibro_id()
 			;
+	}
+
+	public boolean isPrestado() {
+		return prestado;
+	}
+
+	public void setPrestado(boolean prestado) {
+		this.prestado = prestado;
 	}
 	
 	

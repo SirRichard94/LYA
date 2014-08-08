@@ -80,6 +80,7 @@ public class AdminData extends javax.swing.JFrame {
                 jMenu7 = new javax.swing.JMenu();
                 btnConsultarLibro = new javax.swing.JMenuItem();
                 btnAgregarLibro = new javax.swing.JMenuItem();
+                menuEjemplares = new javax.swing.JMenuItem();
                 jMenu8 = new javax.swing.JMenu();
                 btnConsultarrEditorial = new javax.swing.JMenuItem();
                 btnAgregarEditorial = new javax.swing.JMenuItem();
@@ -127,7 +128,7 @@ public class AdminData extends javax.swing.JFrame {
                 });
 
                 lblLogout.setForeground(new java.awt.Color(255, 255, 255));
-                lblLogout.setText("Cerrar Sesiòn");
+                lblLogout.setText("Cerrar Sesión");
                 lblLogout.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
                 lblLogout.addMouseListener(new java.awt.event.MouseAdapter() {
                         public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -252,6 +253,14 @@ public class AdminData extends javax.swing.JFrame {
                         }
                 });
                 jMenu7.add(btnAgregarLibro);
+
+                menuEjemplares.setText("Ejemplares");
+                menuEjemplares.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                menuEjemplaresActionPerformed(evt);
+                        }
+                });
+                jMenu7.add(menuEjemplares);
 
                 jMenuBar1.add(jMenu7);
 
@@ -499,6 +508,13 @@ public class AdminData extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel6KeyPressed
 
+        private void menuEjemplaresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEjemplaresActionPerformed
+                // TODO add your handling code here:
+		JFrame jf = new Ejemplares();
+		jf.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		jf.setVisible(true);
+        }//GEN-LAST:event_menuEjemplaresActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -570,5 +586,6 @@ public class AdminData extends javax.swing.JFrame {
         private javax.swing.JPanel jPanel2;
         private javax.swing.JLabel lblLYA;
         private javax.swing.JLabel lblLogout;
+        private javax.swing.JMenuItem menuEjemplares;
         // End of variables declaration//GEN-END:variables
 }

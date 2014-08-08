@@ -11,6 +11,7 @@ import static com.utez.app.desktop.Constants.*;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,17 +32,19 @@ import utez.app.utilidades.Biblioteca;
  *
  * @author Koffo
  */
-public class CEjemplar extends javax.swing.JFrame {
+public class UEjemplar extends javax.swing.JFrame {
     //private List<UsuarioBean> lista;
     //private DaoUsuario daoUsuario;
     private Connection conexion;
     private List<LibroBean>libroBeans;
     private EjemplarBean consultaBean;
+    private DaoEjemplar daoEjemplar;
     
-    public CEjemplar() {
+    public UEjemplar() {
         conexion = new Biblioteca(MYSQL).getConection();
 		
        DaoLibro daoLibro=new DaoLibro(conexion);
+       daoEjemplar = new DaoEjemplar(conexion);
         libroBeans=daoLibro.getActive();
         for (LibroBean beanLib : libroBeans) {
             modeloLibro.addElement(beanLib.getNombre());
@@ -51,10 +54,19 @@ public class CEjemplar extends javax.swing.JFrame {
                 this.setLocationRelativeTo(null);
 
     }
-    
-    CEjemplar (LibroBean libro){
+    List<EjemplarBean> ejemplares;
+    UEjemplar (int... ids ){
 	    this();
-	    modeloLibro.setSelectedItem(libro.getNombre());
+	    ejemplares = new ArrayList();
+	    for (int i : ids) {
+		    ejemplares.add(daoEjemplar.get(i));
+	    }
+	    if (ejemplares.size() > 0){
+		modeloLibro.setSelectedItem(ejemplares.get(0).getLibro().getNombre());
+		txtLocalizacion.setText(ejemplares.get(0).getLocalizacion());
+	    }else{
+		    this.dispose();
+	    }
     }
     public boolean comprobarTexto(String dato) {
         boolean valido = false;
@@ -81,12 +93,10 @@ public class CEjemplar extends javax.swing.JFrame {
                 btnCancelar = new javax.swing.JButton();
                 cmbLibro = new javax.swing.JComboBox();
                 jLabel3 = new javax.swing.JLabel();
-                txtNumEjemplares = new javax.swing.JTextField();
-                jLabel6 = new javax.swing.JLabel();
 
                 setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-                jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Nueva Ejemplar"));
+                jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Modificar Ejemplar"));
 
                 jLabel2.setText("Localizacion");
 
@@ -101,7 +111,7 @@ public class CEjemplar extends javax.swing.JFrame {
                         }
                 });
 
-                btnCrear.setText("Crear");
+                btnCrear.setText("Guardar");
                 btnCrear.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
                                 btnCrearActionPerformed(evt);
@@ -124,23 +134,14 @@ public class CEjemplar extends javax.swing.JFrame {
 
                 jLabel3.setText("Libro");
 
-                txtNumEjemplares.addKeyListener(new java.awt.event.KeyAdapter() {
-                        public void keyTyped(java.awt.event.KeyEvent evt) {
-                                txtNumEjemplaresKeyTyped(evt);
-                        }
-                });
-
-                jLabel6.setText("Num Ejemplares");
-
                 javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
                 jPanel1.setLayout(jPanel1Layout);
                 jPanel1Layout.setHorizontalGroup(
                         jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel3)
-                                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addGroup(jPanel1Layout.createSequentialGroup()
@@ -150,11 +151,9 @@ public class CEjemplar extends javax.swing.JFrame {
                                                 .addComponent(btnCancelar)
                                                 .addGap(23, 23, 23))
                                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                                .addComponent(cmbLibro, javax.swing.GroupLayout.Alignment.LEADING, 0, 193, Short.MAX_VALUE)
-                                                                .addComponent(txtLocalizacion, javax.swing.GroupLayout.Alignment.LEADING))
-                                                        .addComponent(txtNumEjemplares, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                        .addComponent(cmbLibro, javax.swing.GroupLayout.Alignment.LEADING, 0, 193, Short.MAX_VALUE)
+                                                        .addComponent(txtLocalizacion, javax.swing.GroupLayout.Alignment.LEADING))
                                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 );
                 jPanel1Layout.setVerticalGroup(
@@ -168,11 +167,7 @@ public class CEjemplar extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel2)
                                         .addComponent(txtLocalizacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(txtNumEjemplares, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel6))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(btnCrear)
                                         .addComponent(btnCancelar)))
@@ -211,10 +206,10 @@ public class CEjemplar extends javax.swing.JFrame {
          consultaBean=new EjemplarBean();
          consultaBean.setLocalizacion(txtLocalizacion.getText());
          consultaBean.setLibro(libro);
-        int num = Integer.parseInt(txtNumEjemplares.getText());
-
-        for (int i = 0; i < num; i++){
-             if(!daoEjemplar.add(consultaBean)){
+        
+        for (EjemplarBean ejemplar : ejemplares){
+	     consultaBean.setEjemplar_id(ejemplar.getEjemplar_id());
+             if(!daoEjemplar.update(consultaBean)){
                  JOptionPane.showMessageDialog(rootPane, "Error al registrar");
                  return;
              }
@@ -254,14 +249,6 @@ public class CEjemplar extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_txtLocalizacionKeyTyped
 
-    private void txtNumEjemplaresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumEjemplaresKeyTyped
-        // TODO add your handling code here:
-        char c= evt.getKeyChar();
-        if(!Character.isDigit(c)) evt.consume();
-            
-        
-    }//GEN-LAST:event_txtNumEjemplaresKeyTyped
-
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
         
@@ -285,20 +272,20 @@ public class CEjemplar extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CEjemplar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UEjemplar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CEjemplar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UEjemplar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CEjemplar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UEjemplar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CEjemplar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UEjemplar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CEjemplar().setVisible(true);
+                new UEjemplar().setVisible(true);
             }
         });
     }
@@ -310,9 +297,7 @@ public class CEjemplar extends javax.swing.JFrame {
         private DefaultComboBoxModel modeloLibro=new DefaultComboBoxModel();
         private javax.swing.JLabel jLabel2;
         private javax.swing.JLabel jLabel3;
-        private javax.swing.JLabel jLabel6;
         private javax.swing.JPanel jPanel1;
         private javax.swing.JTextField txtLocalizacion;
-        private javax.swing.JTextField txtNumEjemplares;
         // End of variables declaration//GEN-END:variables
 }

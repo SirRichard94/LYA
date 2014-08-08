@@ -238,4 +238,5 @@ public class DaoEjemplar extends AbstractDao<EjemplarBean>{
 		
 		return ejemplar;
 	}
+	
 }
