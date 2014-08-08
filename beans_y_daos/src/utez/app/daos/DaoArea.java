@@ -24,6 +24,7 @@ public class DaoArea extends AbstractDao<AreaBean>{
 
 	public DaoArea(Connection con) {
 		super(con);
+		
 	}
 
 	/**

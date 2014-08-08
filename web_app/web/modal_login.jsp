@@ -69,9 +69,7 @@
 			data: $("#login-form").serialize(), // serializes the form's elements.
 			success: function(data)
 			{
-				
-				
-				
+
 				if (data.contains("alert-danger")){
 				//agregar mensaje	
 				$("#mensaje-modal").html(data);	
