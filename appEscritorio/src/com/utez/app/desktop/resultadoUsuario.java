@@ -226,7 +226,7 @@ public class resultadoUsuario extends javax.swing.JFrame {
         int id =(Integer) modelo.getValueAt(tblUsuarios.getSelectedRow(), 0);
        // JOptionPane.showMessageDialog(rootPane, id);
         UsuarioBean usuario = daoUsuario.get(id);
-        new UUser(usuario).setVisible(true);
+        new UDUser(usuario).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnActualizarActionPerformed
 

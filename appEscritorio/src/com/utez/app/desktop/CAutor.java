@@ -165,11 +165,11 @@ public class CAutor extends javax.swing.JFrame {
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         // TODO add your handling code here:
         DaoAutor daoAutor = new DaoAutor(conexion);
-        boolean estado;
+//        boolean estado;
         String nombre = txtNombre.getText();
         String apellido = txtApellido.getText();
 
-        autorBean = new AutorBean(0, nombre, apellido, rootPaneCheckingEnabled);
+        
         if (nombre.length() == 0 && apellido.length() == 0) {
             JOptionPane.showMessageDialog(rootPane, "Los campos estan vacios");
         } else {
@@ -181,6 +181,7 @@ public class CAutor extends javax.swing.JFrame {
                 if (validarApellido == false) {
                     JOptionPane.showMessageDialog(rootPane, "El campo de Apellido esta vacio");
                 } else if (validarApellido) {
+                    autorBean = new AutorBean(0, nombre, apellido, true);
                     boolean ex = daoAutor.add(autorBean);
                     if (ex) {
                         JOptionPane.showMessageDialog(rootPane, "Registro Guardado con exito");

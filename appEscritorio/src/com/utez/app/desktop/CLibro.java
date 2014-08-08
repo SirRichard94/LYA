@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.utez.app.desktop;
 
 import Utilerias.ConexionSQLServer;
@@ -31,6 +30,7 @@ import utez.app.model.LibroBean;
  * @author Koffo
  */
 public class CLibro extends javax.swing.JFrame {
+
     //private List<UsuarioBean> lista;
     //private DaoUsuario daoUsuario;
     private Connection conexion;
@@ -41,35 +41,36 @@ public class CLibro extends javax.swing.JFrame {
     private DaoAutor daoAutor;
     private DaoEditorial daoEditorial;
     private DaoArea daoArea;
-    
+
     public CLibro() {
-       
+
         try {
-            conexion=ConexionSQLServer.getConnection();
+            conexion = ConexionSQLServer.getConnection();
         } catch (SQLException ex) {
             Logger.getLogger(CLibro.class.getName()).log(Level.SEVERE, null, ex);
         }
-         daoLibro= new DaoLibro(conexion);
-        daoAutor=new DaoAutor(conexion);
-        daoArea=new DaoArea(conexion);
-        daoEditorial=new DaoEditorial(conexion);
-        listaArea=daoArea.getActive();
-        for(AreaBean areaBean : listaArea){
+        daoLibro = new DaoLibro(conexion);
+        daoAutor = new DaoAutor(conexion);
+        daoArea = new DaoArea(conexion);
+        daoEditorial = new DaoEditorial(conexion);
+        listaArea = daoArea.getActive();
+        for (AreaBean areaBean : listaArea) {
             modeloArea.addElement(areaBean.getNombre());
         }
         listaEditorial = daoEditorial.getActive();
         for (EditorialBean editorialBean : listaEditorial) {
             modelo.addElement(editorialBean.getNombre());
         }
-        listaAutor=daoAutor.getActive();
-        for (AutorBean autorBean : listaAutor){
-            modeloAutor.addElement(autorBean.getNombre());
+        listaAutor = daoAutor.getActive();
+        for (AutorBean autorBean : listaAutor) {
+            modeloAutor.addElement(autorBean.getNombre()+" "+ autorBean.getApellido());
         }
         initComponents();
-                this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
 
     }
-        public boolean comprobarTexto(String dato) {
+
+    public boolean comprobarTexto(String dato) {
         boolean valido = false;
         if (dato.length() > 0) {
             valido = true;
@@ -77,6 +78,7 @@ public class CLibro extends javax.swing.JFrame {
 
         return valido;
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -127,6 +129,8 @@ public class CLibro extends javax.swing.JFrame {
             }
         });
 
+        txtPag.setToolTipText("");
+        txtPag.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         txtPag.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtPagKeyTyped(evt);
@@ -262,19 +266,39 @@ public class CLibro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
-                 
-       
+
+
     }//GEN-LAST:event_jButton1KeyPressed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        DaoLibro daoLibro=new DaoLibro(conexion);
+        DaoLibro daoLibro = new DaoLibro(conexion);
         List<AutorBean> autorBean = new ArrayList<>();
-        for (int i : listAutor.getSelectedIndices()){
-        autorBean.add(listaAutor.get(i));
+        for (int i : listAutor.getSelectedIndices()) {
+            autorBean.add(listaAutor.get(i));
         }
-        EditorialBean editorialBean= listaEditorial.get(cmbEditorial.getSelectedIndex());
-         AreaBean areaBean= listaArea.get(cmbArea.getSelectedIndex());
        
+        if (txtIsbn.getText().length() == 0 || txtNombre.getText().length() == 0
+                || txtPag.getText().length() == 0) {
+            String mensaje = "Error, campos vacios:";
+            if (comprobarTexto(txtIsbn.getText()) == false) {
+                mensaje += "\n -ISBN ";
+            }
+            if (comprobarTexto(txtNombre.getText()) == false) {
+                mensaje += "\n -Nombre";
+            }
+            if (comprobarTexto(txtPag.getText()) == false) {
+                mensaje += "\n -Num paginas";
+            }
+            if (listAutor.isSelectionEmpty()){
+                mensaje += "\n -Autor";
+            }
+
+            JOptionPane.showMessageDialog(rootPane, mensaje);
+        } else {
+            
+             EditorialBean editorialBean = listaEditorial.get(cmbEditorial.getSelectedIndex());
+        AreaBean areaBean = listaArea.get(cmbArea.getSelectedIndex());
+
         LibroBean consultaBean = new LibroBean();
         consultaBean.setNombre(txtNombre.getText());
         consultaBean.setIsbn(Long.parseLong(txtIsbn.getText()));
@@ -282,52 +306,49 @@ public class CLibro extends javax.swing.JFrame {
         consultaBean.setArea(areaBean);
         consultaBean.setEditorial(editorialBean);
         consultaBean.setAutores(autorBean);
-        
-        if(txtIsbn.getText().length()==0 && txtNombre.getText().length()==0 && txtPag.getText().length()==0){
-            JOptionPane.showMessageDialog(rootPane, "Los campos estan vacios");
-        }else{
-            if(comprobarTexto(txtIsbn.getText())==false){
-                JOptionPane.showMessageDialog(rootPane, "El campo ISBN esta vacio");
-            }else{
-                 if(comprobarTexto(txtNombre.getText())==false){
-                     JOptionPane.showMessageDialog(rootPane, "El campo Nombre esta vacio");
-                 }else{
-                      if(comprobarTexto(txtPag.getText())==false){
-                          JOptionPane.showMessageDialog(rootPane, "El campo de Numero de pag esta vacio");
-                      }else{
-                          boolean agregado=daoLibro.add(consultaBean);
-                        if(agregado){
-                        JOptionPane.showMessageDialog(rootPane, "Registro Exitoso");
+            
+            if (consultaBean.getPaginas() < 0 || consultaBean.getPaginas() >= Integer.MAX_VALUE) {
+                JOptionPane.showMessageDialog(rootPane, "Num. Paginas fuera del rango");
+                return;
+            }
+            if ((txtIsbn.getText().length() < 10 || txtIsbn.getText().length() > 13) ) {
+                    JOptionPane.showMessageDialog(rootPane, "ISBN incorrecto :10-13 digitos");
+                 return;
+            }
+                
+                    boolean agregado = daoLibro.add(consultaBean);
+                    if (agregado) {
+                        JOptionPane.showMessageDialog(rootPane, "Libro Agregado");
                         new resultadoLibro().setVisible(true);
                         this.dispose();
-                        }else{
-                         JOptionPane.showMessageDialog(rootPane, "Error al Registrar");
-                                            }
-                        
-                      }
-                 }
-            }
+                    } else {
+                        JOptionPane.showMessageDialog(rootPane, "Error al Registrar");
+                    }
+
+                
+            
         }
-        
-        
-        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void txtIsbnKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIsbnKeyTyped
         // TODO add your handling code here:
-        char c= evt.getKeyChar();
-        if(!Character.isDigit(c)) evt.consume();
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c)) {
+            evt.consume();
+        }
     }//GEN-LAST:event_txtIsbnKeyTyped
 
     private void txtPagKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPagKeyTyped
         // TODO add your handling code here:
-         char c= evt.getKeyChar();
-        if(!Character.isDigit(c)) evt.consume();
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c)) {
+            evt.consume();
+        }
     }//GEN-LAST:event_txtPagKeyTyped
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
