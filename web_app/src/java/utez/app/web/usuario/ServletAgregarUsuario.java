@@ -15,10 +15,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import utez.app.daos.DaoUsuario;
 import utez.app.model.UsuarioBean;
-import utez.app.web.eq4.util.DbConnection;
+import utez.app.utilidades.Biblioteca;
+import static utez.app.web.Constants.MYSQL;
 
 /**
  *
@@ -49,7 +49,7 @@ public class ServletAgregarUsuario extends HttpServlet {
 //		}catch (NullPointerException ex){
 //			throw new ServerException("Acceso denegado");
 //		}
-		Connection con = DbConnection.getConnection();
+		Connection con = new Biblioteca(MYSQL).getConection();
 		if (con == null){
 			throw new ServerException("No hay coneccion con la BD");
 		}

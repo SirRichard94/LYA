@@ -19,7 +19,8 @@ import utez.app.daos.DaoEjemplar;
 import utez.app.daos.DaoLibro;
 import utez.app.model.EjemplarBean;
 import utez.app.model.LibroBean;
-import utez.app.web.eq4.util.DbConnection;
+import utez.app.utilidades.Biblioteca;
+import static utez.app.web.Constants.MYSQL;
 
 /**
  *
@@ -47,7 +48,7 @@ public class ServletAgregarEjemplares extends HttpServlet {
 
 		//Beans,Daos y conecciones
 		List<EjemplarBean> ejemplarList = new ArrayList();
-		Connection con = DbConnection.getConnection();
+		Connection con = new Biblioteca(MYSQL).getConection();
 		DaoEjemplar daoE = new DaoEjemplar(con);
 		DaoLibro daoL = new DaoLibro(con);
 

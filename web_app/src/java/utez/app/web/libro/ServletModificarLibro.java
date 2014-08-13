@@ -7,7 +7,6 @@
 package utez.app.web.libro;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.rmi.ServerException;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -25,7 +24,8 @@ import utez.app.model.AreaBean;
 import utez.app.model.AutorBean;
 import utez.app.model.EditorialBean;
 import utez.app.model.LibroBean;
-import utez.app.web.eq4.util.DbConnection;
+import utez.app.utilidades.Biblioteca;
+import static utez.app.web.Constants.MYSQL;
 
 /**
  *
@@ -57,7 +57,7 @@ public class ServletModificarLibro extends HttpServlet {
 		}
 		
 		
-		Connection con = DbConnection.getConnection();
+		Connection con = new Biblioteca(MYSQL).getConection();
 		if (con == null){
 			throw new ServerException("No hay coneccion con la BD");
 		}

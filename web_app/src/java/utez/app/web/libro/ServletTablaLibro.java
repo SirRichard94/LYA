@@ -15,13 +15,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import utez.app.daos.DaoArea;
-import utez.app.daos.DaoAutor;
-import utez.app.daos.DaoEditorial;
 import utez.app.daos.DaoLibro;
-import utez.app.model.AreaBean;
 import utez.app.model.LibroBean;
-import utez.app.web.eq4.util.DbConnection;
+import utez.app.utilidades.Biblioteca;
+import static utez.app.web.Constants.MYSQL;
 
 /**
  *
@@ -42,7 +39,7 @@ public class ServletTablaLibro extends HttpServlet {
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
 		
-		Connection con = DbConnection.getConnection();
+		Connection con = new Biblioteca(MYSQL).getConection();
 		DaoLibro daoL = new DaoLibro(con);
 		List<LibroBean> lista = new ArrayList<>();
 		

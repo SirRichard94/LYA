@@ -13,11 +13,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import utez.app.daos.DaoLibro;
 import utez.app.daos.DaoUsuario;
-import utez.app.model.LibroBean;
 import utez.app.model.UsuarioBean;
-import utez.app.web.eq4.util.DbConnection;
+import utez.app.utilidades.Biblioteca;
+import static utez.app.web.Constants.MYSQL;
 
 /**
  *
@@ -39,7 +38,7 @@ public class ServletOptionListUsuario extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		try (PrintWriter out = response.getWriter()) {
 			/* TODO output your page here. You may use following sample code. */
-			Connection con = new DbConnection().getConnection();
+			Connection con = new Biblioteca(MYSQL).getConection();
 			
 			DaoUsuario dao = new DaoUsuario(con);
 			

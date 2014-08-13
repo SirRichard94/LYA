@@ -7,7 +7,6 @@
 package utez.app.web.editorial;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.rmi.ServerException;
 import java.sql.Connection;
 import javax.servlet.ServletException;
@@ -16,12 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import utez.app.daos.DaoEditorial;
-import utez.app.daos.DaoEjemplar;
-import utez.app.daos.DaoUsuario;
 import utez.app.model.EditorialBean;
-import utez.app.model.EjemplarBean;
-import utez.app.model.UsuarioBean;
-import utez.app.web.eq4.util.DbConnection;
+import utez.app.utilidades.Biblioteca;
+import static utez.app.web.Constants.MYSQL;
 
 /**
  *
@@ -51,7 +47,7 @@ public class ServletEliminarEditorial extends HttpServlet {
 			throw new ServerException("Acceso denegado");
 		}
 		
-		Connection con = DbConnection.getConnection();
+		Connection con = new Biblioteca(MYSQL).getConection();
 		if (con == null){
 			throw new ServerException("No hay coneccion con la BD");
 		}

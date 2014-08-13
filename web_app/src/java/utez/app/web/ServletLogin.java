@@ -6,14 +6,9 @@
 
 package utez.app.web;
 
-import java.awt.SystemColor;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.rmi.ServerException;
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import utez.app.daos.DaoUsuario;
 import utez.app.model.UsuarioBean;
-import utez.app.web.eq4.util.DbConnection;
+import utez.app.utilidades.Biblioteca;
+import static utez.app.web.Constants.MYSQL;
 
 /**
  *
@@ -43,7 +39,7 @@ public class ServletLogin extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		
 		
-        Connection con = DbConnection.getConnection();
+        Connection con = new Biblioteca(MYSQL).getConection();
 	if (con==null){
 		throw new ServletException("No hay conexion con la BD");
 	}

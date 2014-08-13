@@ -14,16 +14,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import utez.app.daos.DaoArea;
-import utez.app.daos.DaoAutor;
-import utez.app.daos.DaoEditorial;
 import utez.app.daos.DaoLibro;
-import utez.app.model.AreaBean;
-import utez.app.model.AutorBean;
-import utez.app.model.EditorialBean;
 import utez.app.model.LibroBean;
 import utez.app.utilidades.Biblioteca;
-import utez.app.web.eq4.util.DbConnection;
+import static utez.app.web.Constants.*;
 
 /**
  *
@@ -44,7 +38,7 @@ public class ServletBusqueda extends HttpServlet {
 		throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
-		Connection con = DbConnection.getConnection();
+		Connection con = new Biblioteca(MYSQL).getConection();;
 		if (con==null){
 		throw new ServletException("No hay conexion con la BD");
 		}
@@ -54,7 +48,7 @@ public class ServletBusqueda extends HttpServlet {
 		
 		String busqueda = request.getParameter("search");
 		String categoria = request.getParameter("categoria");
-		Biblioteca biblioteca = new Biblioteca(true); //mysql
+		Biblioteca biblioteca = new Biblioteca(MYSQL); //mysql
 		
 		
 		try{

@@ -7,7 +7,6 @@
 package utez.app.web;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -19,7 +18,8 @@ import utez.app.daos.DaoPrestamo;
 import utez.app.daos.DaoUsuario;
 import utez.app.model.PrestamoBean;
 import utez.app.model.UsuarioBean;
-import utez.app.web.eq4.util.DbConnection;
+import utez.app.utilidades.Biblioteca;
+import static utez.app.web.Constants.MYSQL;
 
 /**
  *
@@ -40,7 +40,7 @@ public class ServletPerfil extends HttpServlet {
 		throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
 		
-		Connection con = DbConnection.getConnection();
+		Connection con = new Biblioteca(MYSQL).getConection();
 		if (con==null){
 		throw new ServletException("No hay conexion con la BD");
 		}
@@ -58,7 +58,7 @@ public class ServletPerfil extends HttpServlet {
 			usuario.setDeuda(0);
 			for (PrestamoBean prestamoBean : lista) {
 				usuario.setDeuda(
-					usuario.getDeuda() + daoP.penalizacion(prestamoBean, true) //mysql
+					usuario.getDeuda() + daoP.penalizacion(prestamoBean, MYSQL) //mysql
 				);
 			}
 

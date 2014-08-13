@@ -7,7 +7,6 @@
 package utez.app.web.libro;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.rmi.ServerException;
 import java.sql.Connection;
 import javax.servlet.ServletException;
@@ -17,7 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import utez.app.daos.DaoLibro;
 import utez.app.model.LibroBean;
-import utez.app.web.eq4.util.DbConnection;
+import utez.app.utilidades.Biblioteca;
+import static utez.app.web.Constants.MYSQL;
 
 /**
  *
@@ -47,7 +47,7 @@ public class ServletEliminarLibro extends HttpServlet {
 			throw new ServerException("Acceso denegado");
 		}
 		
-		Connection con = DbConnection.getConnection();
+		Connection con = new Biblioteca(MYSQL).getConection();
 		if (con == null){
 			throw new ServerException("No hay coneccion con la BD");
 		}

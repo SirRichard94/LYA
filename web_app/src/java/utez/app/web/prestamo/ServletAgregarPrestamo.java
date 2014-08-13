@@ -14,13 +14,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import utez.app.daos.DaoEjemplar;
 import utez.app.daos.DaoLibro;
 import utez.app.daos.DaoPrestamo;
 import utez.app.daos.DaoUsuario;
 import utez.app.model.LibroBean;
 import utez.app.model.UsuarioBean;
-import utez.app.web.eq4.util.DbConnection;
+import utez.app.utilidades.Biblioteca;
+import static utez.app.web.Constants.MYSQL;
 
 /**
  *
@@ -42,7 +42,7 @@ public class ServletAgregarPrestamo extends HttpServlet {
 		throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
 		
-		Connection con = DbConnection.getConnection();
+		Connection con = new Biblioteca(MYSQL).getConection();
 		if (con == null){
 			throw new ServerException("No hay coneccion con la BD");
 		
@@ -68,7 +68,7 @@ public class ServletAgregarPrestamo extends HttpServlet {
 			mensaje = "<div class=\" alert alert-warning\"> Na hay ejemplares para prestar de "
 				+ libro.getNombre() +"</div>";
 		}else{
-			if(daoP.nuevoPrestamo(usuario, libro, 3, true)){ //mysql
+			if(daoP.nuevoPrestamo(usuario, libro, 3, MYSQL)){ //mysql
 				mensaje = "<div class=\" alert alert-info\"> Prestamo agregado</div>";
 			}
 			else{

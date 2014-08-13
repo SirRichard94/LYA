@@ -7,7 +7,6 @@
 package utez.app.web.area;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +16,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import utez.app.daos.DaoArea;
-import utez.app.daos.DaoEditorial;
 import utez.app.daos.DaoLibro;
 import utez.app.model.AreaBean;
-import utez.app.model.EditorialBean;
-import utez.app.web.eq4.util.DbConnection;
+import utez.app.utilidades.Biblioteca;
+import static utez.app.web.Constants.MYSQL;
 
 /**
  *
@@ -43,7 +41,7 @@ public class ServletTablaArea extends HttpServlet {
 		throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
 		
-		Connection con = DbConnection.getConnection();
+		Connection con = new Biblioteca(MYSQL).getConection();
 		DaoArea dao = new DaoArea(con);
 		
 		List<AreaBean> lista ;

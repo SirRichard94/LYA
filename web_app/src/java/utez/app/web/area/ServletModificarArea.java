@@ -7,7 +7,6 @@
 package utez.app.web.area;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.rmi.ServerException;
 import java.sql.Connection;
 import javax.servlet.ServletException;
@@ -16,10 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import utez.app.daos.DaoArea;
-import utez.app.daos.DaoAutor;
 import utez.app.model.AreaBean;
-import utez.app.model.AutorBean;
-import utez.app.web.eq4.util.DbConnection;
+import utez.app.utilidades.Biblioteca;
+import static utez.app.web.Constants.MYSQL;
 
 /**
  *
@@ -51,7 +49,7 @@ public class ServletModificarArea extends HttpServlet {
 		}
 		
 		
-		Connection con = DbConnection.getConnection();
+		Connection con = new Biblioteca(MYSQL).getConection();
 		if (con == null){
 			throw new ServerException("No hay coneccion con la BD");
 		}

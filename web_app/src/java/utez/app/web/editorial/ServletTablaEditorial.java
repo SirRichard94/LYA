@@ -7,7 +7,6 @@
 package utez.app.web.editorial;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +14,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import utez.app.daos.DaoAutor;
 import utez.app.daos.DaoEditorial;
 import utez.app.daos.DaoLibro;
-import utez.app.model.AutorBean;
 import utez.app.model.EditorialBean;
-import utez.app.web.eq4.util.DbConnection;
+import utez.app.utilidades.Biblioteca;
+import static utez.app.web.Constants.MYSQL;
 
 /**
  *
@@ -41,7 +39,7 @@ public class ServletTablaEditorial extends HttpServlet {
 		throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
 		
-		Connection con = DbConnection.getConnection();
+		Connection con = new Biblioteca(MYSQL).getConection();
 		DaoEditorial dao = new DaoEditorial(con);
 		
 		List<EditorialBean> lista ;

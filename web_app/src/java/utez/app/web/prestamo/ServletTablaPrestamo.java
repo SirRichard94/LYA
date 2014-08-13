@@ -7,7 +7,6 @@
 package utez.app.web.prestamo;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +15,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import utez.app.daos.DaoPrestamo;
-import utez.app.daos.DaoUsuario;
 import utez.app.model.PrestamoBean;
-import utez.app.model.UsuarioBean;
-import utez.app.web.eq4.util.DbConnection;
+import utez.app.utilidades.Biblioteca;
+import static utez.app.web.Constants.MYSQL;
 
 /**
  *
@@ -40,13 +38,13 @@ public class ServletTablaPrestamo extends HttpServlet {
 		throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
 		
-		Connection con = DbConnection.getConnection();
+		Connection con = new Biblioteca(MYSQL).getConection();
 		DaoPrestamo daoP = new DaoPrestamo(con);
 		List<PrestamoBean> lista = daoP.getAll();
 		List<Integer> diasRetraso = new ArrayList<>();
 		
 		for (PrestamoBean prestamo : lista) {
-			diasRetraso.add(daoP.diasDeRetraso(prestamo, true)); // mysql
+			diasRetraso.add(daoP.diasDeRetraso(prestamo, MYSQL)); // mysql
 		}
 		
 		request.setAttribute("lista", lista);

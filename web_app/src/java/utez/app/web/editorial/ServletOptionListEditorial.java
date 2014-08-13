@@ -13,11 +13,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import utez.app.daos.DaoArea;
 import utez.app.daos.DaoEditorial;
-import utez.app.model.AreaBean;
 import utez.app.model.EditorialBean;
-import utez.app.web.eq4.util.DbConnection;
+import utez.app.utilidades.Biblioteca;
+import static utez.app.web.Constants.MYSQL;
 
 /**
  *
@@ -46,7 +45,7 @@ public class ServletOptionListEditorial extends HttpServlet {
 		
 		try (PrintWriter out = response.getWriter()) {
 			/* TODO output your page here. You may use following sample code. */
-			Connection con = new DbConnection().getConnection();
+			Connection con = new Biblioteca(MYSQL).getConection();
 			
 			DaoEditorial dao = new DaoEditorial(con);
 			

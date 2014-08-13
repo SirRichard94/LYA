@@ -7,19 +7,17 @@
 package utez.app.web.prestamo;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import utez.app.daos.DaoPrestamo;
 import utez.app.daos.DaoUsuario;
 import utez.app.model.PrestamoBean;
 import utez.app.model.UsuarioBean;
 import utez.app.utilidades.Biblioteca;
-import utez.app.web.eq4.util.DbConnection;
+import static utez.app.web.Constants.MYSQL;
 
 /**
  *
@@ -43,7 +41,7 @@ public class ServletPago extends HttpServlet {
 		int usuarioId = Integer.parseInt(request.getParameter("u"));
 		int prestamoId = Integer.parseInt(request.getParameter("p"));
 		
-		Connection con = DbConnection.getConnection();
+		Connection con = new Biblioteca(MYSQL).getConection();
 		DaoPrestamo daoP = new DaoPrestamo(con);
 		PrestamoBean prestamo = daoP.get(prestamoId);
 		DaoUsuario daoU = new DaoUsuario(con);

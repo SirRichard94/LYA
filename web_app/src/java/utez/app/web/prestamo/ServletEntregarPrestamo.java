@@ -7,7 +7,6 @@
 package utez.app.web.prestamo;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,8 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import utez.app.daos.DaoPrestamo;
 import utez.app.model.PrestamoBean;
-import utez.app.model.UsuarioBean;
-import utez.app.web.eq4.util.DbConnection;
+import utez.app.utilidades.Biblioteca;
+import static utez.app.web.Constants.MYSQL;
 
 /**
  *
@@ -39,15 +38,15 @@ public class ServletEntregarPrestamo extends HttpServlet {
 		
 		Integer prestamoId = Integer.parseInt(request.getParameter("p_id"));
 		
-		Connection con = DbConnection.getConnection();
+		Connection con = new Biblioteca(MYSQL).getConection();
 		DaoPrestamo dao = new DaoPrestamo(con);
 		PrestamoBean prestamo = dao.get(prestamoId);
 		
 		
-		if(dao.penalizacion(prestamo, true) > 0){ // mysql
-			request.setAttribute("dias", dao.diasDeRetraso(prestamo, true)); // mysql
+		if(dao.penalizacion(prestamo, MYSQL) > 0){ // mysql
+			request.setAttribute("dias", dao.diasDeRetraso(prestamo, MYSQL)); // mysql
 			request.setAttribute("prestamo", prestamo);
-			request.setAttribute("monto", dao.penalizacion(prestamo, true)); //mysql
+			request.setAttribute("monto", dao.penalizacion(prestamo, MYSQL)); //mysql
 			
 			this.getServletConfig().getServletContext()
 				.getRequestDispatcher("/entregar_penalizacion.jsp")

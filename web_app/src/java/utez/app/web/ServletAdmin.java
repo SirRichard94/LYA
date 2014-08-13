@@ -6,22 +6,11 @@
 
 package utez.app.web;
 
-import java.awt.SystemColor;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.rmi.ServerException;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import utez.app.daos.DaoUsuario;
-import utez.app.model.UsuarioBean;
-import utez.app.web.eq4.util.DbConnection;
 
 /**
  *
