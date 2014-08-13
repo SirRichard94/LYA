@@ -229,6 +229,7 @@ public class Prestamo extends javax.swing.JFrame {
          
         if (new DaoPrestamo(conexion).nuevoPrestamo(usuario, libro, 3, MYSQL)){
             //creado
+	
             JOptionPane.showMessageDialog(rootPane, "Prestamo Agregado");
             
         }else{

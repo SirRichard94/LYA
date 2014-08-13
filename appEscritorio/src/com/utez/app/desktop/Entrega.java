@@ -39,13 +39,13 @@ public class Entrega extends javax.swing.JFrame {
 
 		daoPrestamo = new DaoPrestamo(conexion);
 		biblioteca.actualizarPenalizaciones(prestamo.getUsuario());
-
-		lblDeuda.setText("$" + prestamo.getUsuario().getDeuda());
+		initComponents();
+		lblDeuda.setText("$" + daoPrestamo.penalizacion(prestamo, MYSQL));
 		lblUser.setText(prestamo.getUsuario().getNombre());
 		lblDias.setText("" + daoPrestamo.diasDeRetraso(prestamo, MYSQL));
 		lblLibro.setText(prestamo.getEjemplar().getLibro().getNombre());
 
-		initComponents();
+		
 		this.setLocationRelativeTo(null);
 
 	}

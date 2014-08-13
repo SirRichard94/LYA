@@ -332,7 +332,9 @@ public class UDLibro extends javax.swing.JFrame {
             boolean agregado = daoLibro.update(consultaBean);
             if (agregado) {
                 JOptionPane.showMessageDialog(rootPane, "Actualizacion Libro Exitosa");
-                new resultadoLibro().setVisible(true);
+                JFrame jf = new resultadoLibro();
+		jf.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		jf.setVisible(true);
                 this.dispose();
 
             } else {
