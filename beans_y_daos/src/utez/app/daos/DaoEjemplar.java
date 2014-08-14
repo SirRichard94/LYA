@@ -244,7 +244,8 @@ public class DaoEjemplar extends AbstractDao<EjemplarBean>{
 	
 	
 	public boolean prestado(int id){
-	String query = "SELECT * FROM EJEMPLAR WHERE ejemplar_id= ? and ejemplar_id in (SELECT ejemplar_id from PRESTAMO);";
+	String query = "SELECT * FROM EJEMPLAR WHERE ejemplar_id= ? and ejemplar_id in"
+		+ " (SELECT ejemplar_id from PRESTAMO);";
 	
 		try {
 			PreparedStatement ps = con.prepareStatement(query);

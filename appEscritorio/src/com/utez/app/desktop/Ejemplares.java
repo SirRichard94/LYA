@@ -79,7 +79,7 @@ public class Ejemplares extends javax.swing.JFrame {
                     
                     Object[] arreglo                           
                             = {bean.getEjemplar_id(), bean.getLocalizacion(), 
-				    daoEjemplar.prestado(bean.getEjemplar_id()) ? "si": "no"};
+				   ( daoEjemplar.prestado(bean.getEjemplar_id()) )? "si": "no"};
                  
                  modeloTabla.addRow(arreglo);
         }

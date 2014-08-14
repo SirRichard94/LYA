@@ -429,10 +429,10 @@ public class AdminData extends javax.swing.JFrame {
 
     private void btnAgregarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarLibroActionPerformed
         // TODO add your handling code here:
-	    JFrame cLib =
+	    JFrame ventanaCrearLibro =
         new CLibro();
-	    cLib.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-	    cLib.setVisible(true);
+	    ventanaCrearLibro.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+	    ventanaCrearLibro.setVisible(true);
        
     }//GEN-LAST:event_btnAgregarLibroActionPerformed
 

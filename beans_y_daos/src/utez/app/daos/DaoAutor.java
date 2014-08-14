@@ -115,12 +115,16 @@ public class DaoAutor extends AbstractDao<AutorBean>{
 
 		return false;
 	}
-
+/**
+ * java 7 en adelante
+ * @param bean
+ * @return 
+ */
 	@Override
 	public boolean delete(AutorBean bean) {
 		String query = "DELETE FROM "+TABLA
 				+" WHERE "+PK+" = ? ;";
-			
+		
 		try(PreparedStatement ps = con.prepareStatement(query)){
 			ps.setInt(1, bean.getAutor_id());
 

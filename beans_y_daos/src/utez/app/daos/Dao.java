@@ -19,6 +19,6 @@ public interface Dao <T> {
 	public List<T> getAll();
 	public T get(int id);
 	public boolean update(T bean);
-	public boolean delete(T id);
+	public boolean delete(T bean);
 	public boolean add(T bean);
 }

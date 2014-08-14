@@ -6,10 +6,6 @@
 
 package com.utez.app.desktop.controlador;
 
-import Utilerias.ConexionSQLServer;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import utez.app.daos.DaoUsuario;
 import utez.app.model.UsuarioBean;
 import utez.app.utilidades.Biblioteca;
@@ -55,7 +51,7 @@ public class ControlSesion {
         return aunt;
     }
 
-    public void logout(){
+    public void logout(){ //cerrar sesion en inglish
         usuario = null;
     }
     
@@ -64,11 +60,11 @@ public class ControlSesion {
     }
     
     public boolean isAdmin(){
-        try{
-     return usuario.isEs_admi();
-        }catch(NullPointerException e){
-            return false;
-        }
+      try {
+		    return usuario.isEs_admi();
+	    } catch (NullPointerException e) {
+		    return false;
+	    }
     }
     public boolean sesionIniciada(){
      return usuario != null;

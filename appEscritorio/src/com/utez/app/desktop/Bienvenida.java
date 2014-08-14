@@ -62,6 +62,7 @@ public class Bienvenida extends javax.swing.JFrame {
     public void busqueda(){
          DaoLibro daoLibro=new DaoLibro(conexion);
         List<LibroBean> resultados = new ArrayList<>();
+	
         if (txtBusqueda.getText().length()==0){
             resultados = daoLibro.getActive();
             
