@@ -105,4 +105,23 @@ public class Biblioteca {
 	public Connection getConection() {
 		return con;
 	}
+        
+        
+        public void enviarCorreos(){
+            DaoUsuario dao = new DaoUsuario(con);
+            DaoPrestamo daoPrestamo = new DaoPrestamo(con);
+            for (UsuarioBean usuario : dao.getActive()){
+                for(PrestamoBean prestamo : daoPrestamo.findByUsuario(usuario)){
+                    
+                    if (daoPrestamo.diasDeRetraso(prestamo, mysql) == -2){
+                        new EnviarMail().enviar(usuario.getCorreo(), 
+                                "Prestamo LYA", 
+                                "El prestamo del Libro: <b>"+ prestamo.getEjemplar().getLibro().getNombre()+"</b> está proximo a vencerse"
+                                        + "<br> Recuerde debera entregarse el día: <b>"+prestamo.getFecha_entrega()+"</b>"
+                                        + "<br> Gracias por su atencion, Biblioteca Lee y Aprende.");
+                    }
+                    
+                }
+            }
+        }
 }

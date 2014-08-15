@@ -11,5 +11,5 @@ package utez.app.web;
  * @author ricardo
  */
 public class Constants {
-	public static final boolean MYSQL = true;
+	public static final boolean MYSQL = false;
 }

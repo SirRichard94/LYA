@@ -54,9 +54,11 @@ class DbConnection {
 		 final String service = "1433";
 		
 		try {
-			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-			String url = "jdbc:sqlserver://" + ipAddress + ":" + service + ";databaseName=" + dbName;
+                    String url = "jdbc:sqlserver://" + ipAddress + ":" + service + ";databaseName=" + dbName;
+                    System.out.println("conexion=DriverManager.getConnection("+url+", "+user+", "+password+");");
+			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");			
 		connection =  DriverManager.getConnection(url, user, password);
+                    
 			
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

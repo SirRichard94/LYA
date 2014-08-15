@@ -51,7 +51,7 @@ public class Updater {
 
 class UpdateThread implements Runnable{
 	Biblioteca biblioteca;
-	private static final long UPDATE_TIME_MIN = 1; //tiempo en minutos
+	private static final long UPDATE_TIME_MIN = 60*24; //tiempo en minutos
 	private boolean running = false;
 	
 	public UpdateThread(boolean mysql) {
@@ -69,7 +69,8 @@ class UpdateThread implements Runnable{
 			biblioteca.actualizarPenalizaciones();
 			//TODO: enviar eMails necesarios
 			System.out.println("Enviando EMails...");
-		
+                        biblioteca.enviarCorreos();
+        
 			
 			
 			try {

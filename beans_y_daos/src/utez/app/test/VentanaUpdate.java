@@ -121,7 +121,7 @@ public class VentanaUpdate extends javax.swing.JFrame {
 
         private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
                 // TODO add your handling code here:
-		utez.app.utilidades.Updater.start(true); // mysql
+		utez.app.utilidades.Updater.start(false); // mysql
 		lblStatus.setText(Updater.getStatus() + "");
         }//GEN-LAST:event_btnStartActionPerformed
 

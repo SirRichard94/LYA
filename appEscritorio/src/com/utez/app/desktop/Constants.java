@@ -14,5 +14,5 @@ public final class Constants {
 	/**
 	 * Establece si es Mysql o no
 	 */
-	public static final boolean MYSQL = true;
+	public static final boolean MYSQL = false;
 }
